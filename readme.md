@@ -1,6 +1,9 @@
-App-Arena App-Template
+## App-Arena App-Template
 
 This template uses javascript MVC technics to provide a flexible and easy usable HTML5-Template.
+
+
+## Components
 
 This Template uses the following components:
 
