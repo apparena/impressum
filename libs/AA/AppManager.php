@@ -48,7 +48,8 @@
       /**
       * construct
       * 
-      * @params array  $params should set  necessary for client
+      * @param array  $params should set  necessary for client
+      *
       */
       function __construct($params) 
       {
@@ -89,7 +90,6 @@
 
       /**
       * init 
-      *
       * you can create subclass of this class, and  rewrite the init method
       * then you can use different soap server url
       */
@@ -127,8 +127,12 @@
       * call a method of server
       * if failed, return false, and set error_msg
       * 
+      * @param  string $method 
+      * @param  array|boolean  $params  which for the $method
+      * 
+      * @return boolean  true or false, when false,you can call  getErrorMsg
       */
-      protected function call($method,$params)
+      public  function call($method,$params)
       {
          try
          {
@@ -153,6 +157,8 @@
 
       /**
       * get error msg, but should only call it after call method from server faild
+      *
+      * @return string  
       */
       function getErrorMsg()
       {
@@ -163,6 +169,8 @@
       //====================== server's methods ==============
       /**
       * get available methods of the client
+      *
+      * @return array
       */
       function getAvailableMethods()
       {
@@ -172,6 +180,8 @@
 
       /**
       * get app's current aa_inst_id, if you only known the fb_page_id
+      *
+      * @return int
       */
       function getInstanceId()
       {
@@ -181,6 +191,8 @@
 
       /**
       * get all data  ,(instance and config)
+      *
+      * @return array
       */
       function getData()
       {
@@ -190,6 +202,8 @@
 
       /**
       * only get instance data
+      *
+      * @return array
       */
       function getInstance()
       {
@@ -201,6 +215,8 @@
       * only get config data
       *
       * @params Mix identifiers , if false , mean get all config data, if is config identifiers array, only get the value of these identifiers
+      *
+      * @return array
       */
       function getConfig($identifiers=false)
       {
@@ -211,6 +227,8 @@
 
       /**
       * get config by type
+      *
+      * @return array
       */
       function getConfigByType($type)
       {
@@ -220,6 +238,8 @@
 
       /**
       * get config by config identifier 
+      *
+      * @return array
       */
       function getConfigById($identifier)
       {
