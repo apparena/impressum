@@ -1,6 +1,13 @@
 <?php
    /**
-   * usage:
+   * Zend Framework
+   *
+   *
+   * @category   AA
+   * @version    2012-02-09-version 1
+   */
+   /**
+   * example:
    $params=array(
       'aa_app_id'=>{APP_ID}
       'aa_app_secret'=>{APP_SECRET},
@@ -16,7 +23,6 @@
    $manager->getConfig();
    $manager->getConfigByType('html');
    $manager->getConfigById('fb_color');
-
    */
 
    //define("ROOT_PATH",realpath(dirname(__FILE__)));
