@@ -100,8 +100,7 @@
       */
       public function init()
       {
-         //$server_url='http://www.app-arena.com/manager/server/soap.php';
-         $server_url='http://fbapps.frd.info/app-arena/server/soap3.php';
+         $server_url='http://www.app-arena.com/manager/server/soap3.php';
 
          $this->setServerUrl($server_url);
          $this->initClient();
