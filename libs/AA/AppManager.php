@@ -1,6 +1,5 @@
 <?php
    /**
-   * Zend Framework
    *
    *
    * @category   AA
@@ -27,8 +26,8 @@
 
    //define("ROOT_PATH",realpath(dirname(__FILE__)));
    //set_include_path(ROOT_PATH.'/../lib/' . PATH_SEPARATOR );
-   //require_once('Zend/Soap/Client.php');
-   require(dirname(__FILE__).'/Zend/Soap/Client.php');
+   //require(dirname(__FILE__).'/Zend/Soap/Client.php');
+   require('Zend/Soap/Client.php');
 
    class AA_AppManager 
    {
@@ -64,7 +63,7 @@
             'aa_app_id','aa_app_secret','aa_inst_id','fb_page_id'
          );
 
-         foreach($keys as $k)
+         foreach($keys as $key)
          {
             if( isset($params[$key]) )
             {
@@ -101,7 +100,8 @@
       */
       public function init()
       {
-         $server_url='http://www.app-arena.com/manager/server/soap.php';
+         //$server_url='http://www.app-arena.com/manager/server/soap.php';
+         $server_url='http://fbapps.frd.info/app-arena/server/soap3.php';
 
          $this->setServerUrl($server_url);
          $this->initClient();
@@ -122,8 +122,8 @@
       {
          //init soap client
          $options = array(
-            'location' => $this->_server_url,
-            'uri'      => $this->_server_url,
+            'location' => $this->server_url,
+            'uri'      => $this->server_url,
          );
 
          $this->client = new Zend_Soap_Client(null, $options);  
@@ -138,11 +138,11 @@
       * 
       * @return boolean  true or false, when false,you can call  getErrorMsg
       */
-      public  function call($method,$params)
+      public  function call($method,$params=array())
       {
          try
          {
-            $result=$this->client->$method($this->soap_params,$params);
+            $result=$this->client->call($method,$this->soap_params,$params);
 
             if($result !== false)
             {
@@ -173,16 +173,6 @@
 
 
       //====================== server's methods ==============
-      /**
-      * get available methods of the client
-      *
-      * @return array
-      */
-      function getAvailableMethods()
-      {
-         $result=$this->call('getAvailableMethods');
-         return $result;
-      }
 
       /**
       * get app's current aa_inst_id, if you only known the fb_page_id
@@ -250,6 +240,16 @@
       function getConfigById($identifier)
       {
          $result = $this->call('getConfigById',$identifier);
+         return $result;
+      }
+
+      /**
+      * active app instance , will deactive another actived app if exists
+      * 
+      */
+      function activeAppInstance()
+      {
+         $result = $this->call('activeAppInstance',$identifier);
          return $result;
       }
 
