@@ -12,9 +12,7 @@ header('P3P: CP=CAO PSA OUR');
 //set inclclude path
 define("ROOT_PATH",realpath(dirname(__FILE__)));
 
-set_include_path(ROOT_PATH.'/lib/' . PATH_SEPARATOR .
-	ROOT_PATH.'/modules/' . PATH_SEPARATOR .
-	ROOT_PATH.'/apps/' . PATH_SEPARATOR );
+set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR);
 
 // Initialize the Zend Autoloader
 require_once "Zend/Loader/Autoloader.php";
