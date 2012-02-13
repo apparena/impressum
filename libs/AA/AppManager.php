@@ -83,9 +83,17 @@
             throw new Exception("missing parameter  aa_app_secret");
          }
 
+
          if( $this->soap_params['aa_inst_id'] == false && $this->soap_params['fb_page_id'] == false)
          {
-            throw new Exception("missing parameter aa_inst_id  or  fb_page_id ");
+            //try get  fb page_id automaticly
+            $this->soap_params['fb_page_id'] = $this->getFbPageId();
+
+            //check again
+            if( $this->soap_params['aa_inst_id'] == false && $this->soap_params['fb_page_id'] == false)
+            {
+               throw new Exception("missing parameter aa_inst_id  or  fb_page_id ");
+            }
          }
 
 
@@ -94,11 +102,60 @@
       }
 
       /**
+      * try get fb page id from $_REQUEST['signed_request']
+      * this will only work in fan page
+      *
+      * @return string|boolean   fb_page_id for success and false for failed
+      */
+      private function getFbPageId()
+      {
+         if(isset($_GET['page_id']))
+         {
+            $fb_page_id=intval($_GET['page_id']);
+         }
+         else if(isset($_POST['fb_sig_page_id']))
+         {
+            $fb_page_id=$_POST['fb_sig_page_id'];
+         }
+         else if(isset($_REQUEST['signed_request']))
+         {
+            $signed_request = $_REQUEST["signed_request"];
+            list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+            $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+
+            if(isset($data['page']))
+            {
+               $fb_page_id=$data['page']['id'];
+            }
+            else
+            {
+               $fb_page_id=false;
+            }
+         }
+         else
+         {
+            $fb_page_id=false;
+         }
+
+         return $fb_page_id;
+      }
+
+      /**
+      * this depend developer how to save instid 
+      *
+      protected function getInstid()
+      {
+         ;
+      }
+      */
+
+      /**
       * init 
       * you can create subclass of this class, and  rewrite the init method
       * then you can use different soap server url
       */
-      public function init()
+      private function init()
       {
          $server_url='http://www.app-arena.com/manager/server/soap3.php';
 
@@ -109,7 +166,7 @@
       /**
       * change server url
       */
-      public function setServerUrl($url)
+      private function setServerUrl($url)
       {
          $this->server_url=$url;
       }
@@ -117,7 +174,7 @@
       /**
       * init client 
       */
-      public function initCLient()
+      private function initCLient()
       {
          //init soap client
          $options = array(
@@ -137,7 +194,7 @@
       * 
       * @return boolean  true or false, when false,you can call  getErrorMsg
       */
-      public  function call($method,$params=array())
+      private  function call($method,$params=array())
       {
          try
          {
@@ -189,11 +246,13 @@
       *
       * @return array
       */
+      /*
       function getData()
       {
          $result = $this->call('getData');
          return $result;
       }
+      */
 
       /**
       * only get instance data
@@ -246,10 +305,12 @@
       * active app instance , will deactive another actived app if exists
       * 
       */
+      /*
       function activeAppInstance()
       {
          $result = $this->call('activeAppInstance',$identifier);
          return $result;
       }
+      */
 
    }
