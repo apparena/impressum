@@ -48,9 +48,9 @@
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
   <!-- scripts concatenated and minified via build script -->
-  <script src="js/mylibs/frd.js"></script>
-  <script src="js/libs/soapclient.js"></script>
-  <script src="js/client.js"></script>
+  <script src="./js/mylibs/frd.js"></script>
+  <script src="./js/libs/soapclient.js"></script>
+  <script src="./js/mylibs/AppManager.js"></script>
   <!-- end scripts -->
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
@@ -72,9 +72,9 @@
     //var data=AppManager.getInstanceId();
     //alert(ret);
 
-    //var ret=AppManager.getInstance();
-    //alert(ret.length)
-    //displayObject(ret[1]);
+    var ret=AppManager.getInstance();
+    alert(ret)
+    displayObject(ret);
 
     //echo "<hr/>";
     var params=new Array();

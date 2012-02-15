@@ -154,8 +154,78 @@ Client.getData=function()
 */
 Client.getInstance=function()
 {
-  result = this.call('getInstance');
-  return result;
+  var result = this.call('getInstance');
+
+  //the identifier not exist
+  if(exists(result) == false)
+  {
+    return false;
+  }
+  /*
+  else if(exists(result.item))
+  {
+    // this is for only one item ,
+    //result format:
+    // {
+    //  IDENTIFIER{
+    //  id:IDENTIFIER,
+    //  identifier:IDENTIFIER,
+    //  value: VALUE, 
+    //  type: TYPE,
+    //  }
+    // }
+    //
+    var data=new Object()
+    result=result.item.value;
+    //displayObject(result);
+
+    for(var i=0; i<  result.length; i++)
+    {
+      var key=result[i].key;
+      var value=result[i].value;
+
+      data[key]=value;
+    }
+
+    data['id']=data['identifier'];
+
+    return data;
+  
+  }
+  */
+  else
+  {
+    // this is for more then one item ,
+    // there are different from one item and multi items, 
+    // seems js soap client's parse problem
+    //
+    //displayObject(result);
+    //handle the result
+    //this js soap client seems strange ..
+    //so handle the result to easy use format
+    //result format:
+    // {
+    //  id:IDENTIFIER,
+    //  identifier:IDENTIFIER,
+    //  value: VALUE, 
+    //  type: TYPE,
+    // }
+    //
+    var data=new Object()
+    //result=result.item.value;
+    //displayObject(result);
+
+    for(var i=0; i<  result.length; i++)
+    {
+        var key=result[i].key;
+        var value=result[i].value;
+
+        data[key]=value;
+    }
+
+    return data;
+  }
+
 };
 
 /**
