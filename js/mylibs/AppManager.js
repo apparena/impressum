@@ -44,8 +44,8 @@
 
 var  Client=new Object();
 
-Client.url="http://fbapps.frd.info/app-arena/server/soap3.php";
-//Client.url="https://www.app-arena.com/manager/server/soap3.php";
+//Client.url="http://fbapps.frd.info/app-arena/server/soap3.php";
+Client.url="https://www.app-arena.com/manager/server/soap3.php";
 
 Client.soap_params={
   aa_app_id:false,
