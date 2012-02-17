@@ -9,6 +9,7 @@ This Template uses the following components:
 
 - HTML5 Boilerplate
 - HTML5 Boilerplate Build Script
+- Bootstrap HTML5 Responsive Design Layout (http://twitter.github.com/bootstrap/)
 - Jquery
 - Jquery UI
 - Facebook JS SDK
