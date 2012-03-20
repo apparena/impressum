@@ -83,7 +83,9 @@
             throw new Exception("missing parameter  aa_app_secret");
          }
 
-
+         if($this->soap_params['aa_inst_id'] == false && isset($_GET['aa_inst_id']) )
+         	$this->soap_params['aa_inst_id']=intval($_GET['aa_inst_id']);
+         
          if( $this->soap_params['aa_inst_id'] == false && $this->soap_params['fb_page_id'] == false)
          {
             //try get  fb page_id automaticly
