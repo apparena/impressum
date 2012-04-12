@@ -13,7 +13,7 @@ function initApp(){
 	
 	// set the first menu item as the landing content.
 	$("#main").slideUp( 0, function(){
-		$("#main").load( "templates/" + landingContent + ".html", function(){
+		$("#main").load( "templates/" + landingContent + ".phtml", function(){
 			$("#main").slideDown();
 		});
 	});

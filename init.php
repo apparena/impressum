@@ -1,29 +1,20 @@
 <?php
-   //disable session expired check
-   //change session path maybe better
-   ini_set('session.gc_probability',0);
-
 /*
  * Initial process to start the app
  */
-// Load config values
-date_default_timezone_set('Europe/Berlin');
-
-//fix ie can not save cookie in iframe
-header('P3P: CP=CAO PSA OUR');
-
-//set include path
-define("ROOT_PATH",realpath(dirname(__FILE__)));
-require_once ROOT_PATH.'/lib/Frd/Frd.php';
-
-set_include_path(ROOT_PATH.'/lib/' . PATH_SEPARATOR );
+date_default_timezone_set('Europe/Berlin'); // Load config values
+ini_set('session.gc_probability',0); //disable session expired check
+header('P3P: CP=CAO PSA OUR'); //fix ie can not save cookie in iframe problem
+define("ROOT_PATH",realpath(dirname(__FILE__))); //set include path
+require_once ROOT_PATH.'/libs/Frd/Frd.php';
+set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR );
 
 /**** init ***/
 $config=array(
    'timezone'=>'Europe/Berlin',
    'root_path'=>ROOT_PATH,
    'include_paths'=>array(
-      ROOT_PATH.'/lib',
+      ROOT_PATH.'/libs',
       ROOT_PATH.'/modules',
    ),
    'module_path'=>ROOT_PATH.'/modules',
@@ -40,14 +31,11 @@ if(file_exists(ROOT_PATH.'/config_local.php'))
 {
    require_once ROOT_PATH.'/config_local.php';
 }
-
-require_once ROOT_PATH.'/lib/Frd/functions.php'; //only for current app
-require_once ROOT_PATH.'/functions.php';
-require_once ROOT_PATH.'/lib/fb-php-sdk/src/facebook.php';
+require_once ROOT_PATH.'/libs/AA/functions.php';
+require_once ROOT_PATH.'/libs/fb-php-sdk/src/facebook.php';
 setConfig($config_data);
 
 //set db
-//db
 addDb(array(
    'adapter'=>'MYSQLI',
    'host'=>getConfig("database_host"),
@@ -58,14 +46,14 @@ addDb(array(
 
 // Add translation management
 $translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
-$translate->addTranslation(ROOT_PATH.'/locale/zh.csv', 'zh');
+$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
 $translate->setLocale('de');
 $global->translate=$translate;
 
 // Initialize App-Manager connection
 $aa = new AA_AppManager(array(
-	'aa_app_id'  => $aa_app_id,
-	'aa_app_secret' => $aa_app_secret,
+	'aa_app_id'  => getConfig("aa_app_id"),
+	'aa_app_secret' => getConfig("aa_app_secret"),
   'aa_inst_id' => getRequest("aa_inst_id"),
 ));
 $aa_instance = $aa->getInstance();

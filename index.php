@@ -1,15 +1,6 @@
 <?php 
 	// init app-arena once, use init_session.php later...
  	include_once( "init.php" );
- 	
- 	// Init app status (is user participating, is app expired, newsletter_activated, ...)
- 	include_once 'init_app.php';
- 	
- 	// Init friends referral tracking
- 	if ($session->config['referral_tracking_activated']['value']){
-	 	include_once 'init_referral_tracking.php';
-	}
- 	
 ?>
 
 <!doctype html>
@@ -22,12 +13,12 @@
          
 	<!-- Facebook Meta Data -->
     <meta property="fb:app_id" content="<?=$session->instance['fb_page_url']."?sk_app".$session->instance['fb_app_id']?>" />
-    <meta property="og:title" content="<?=$session->config['fb_share_name']['value']?>" />
+    <meta property="og:title" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<?=$session->instance['fb_page_url']."?sk=app_".$session->instance['fb_app_id']?>" />
-    <meta property="og:image" content="<?=$session->config['fb_share_image']['value']?>" />
-    <meta property="og:site_name" content="Mein Seitenname statisch" />
-    <meta property="og:description" content="<?=$session->config['fb_share_desc']['value']?>"/>
+    <meta property="og:image" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content=""/>
 
 	<title></title>
 	<meta name="description" content="">
@@ -38,7 +29,6 @@
 	<!-- Include bootstrap css files -->
 	<style type="text/css">
 		<?=$session->config['css_bootstrap']['value'];?>
-		<?=$session->config['css']['value'];?>
 	</style>
 	
 	<script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script>
@@ -49,24 +39,35 @@
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
 	     chromium.org/developers/how-tos/chrome-frame-getting-started -->
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+	
+	<?php // Here you can integrate your fangate
+	if ($session->fb['is_fan'] == false) { ?>
+		<div class="page_non_fans_layer"> 
+			<div class="img_non_fans">
+				<img src="<?=$session->config['page_welcome_nonfans']['value']?>" />
+			</div>
+			<div id="non_fan_background">&nbsp;</div>
+		</div>
+	<?php }?>
+	
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
         	<div class="container-fluid">
             	<nav>
 					<ul class="nav">
 						<li><a class="template-welcome"><?=__p("Homepage");?></a></li>
-						<?php if ($session->fb['is_fan'] == true && $session->app['user_is_participating']
-									&& $session->config['referral_tracking_activated']['value']): ?>
-							<li><a class="template-tickets"><?=__p("My tickets");?></a></li>
-						<?php endif; ?>
+						<li><a class="template-terms"><?=__p("Terms & Conditions");?></a></li>
 					</ul>
 				</nav>
 			</div>
 		</div>
     </div>
 	
+	<!-- this is the div you can append info/alert/error messages to -->
+	<div id="msg-container"></div> 
+	
 	<div class="custom-header">
-		<?=$session->config['custom_header']['value']?>
+		<?php //echo $session->config['custom_header']['value']; ?>
 	</div>
 	
 	<div id="main" class="container">
@@ -74,7 +75,7 @@
 	</div> <!-- #main -->
 	
 	<div class="custom-footer">
-		<?=$session->config['custom_footer']['value']?>
+		<?php //echo $session->config['custom_footer']['value']; ?>
 	</div>
 	
 	<footer>
@@ -86,22 +87,19 @@
 		</div>
 		
 		<div class="branding">
-			<?=$session->config['footer']['value'];?>
+			<?php //echo $session->config['footer']['value'];?>
 		</div>
 	</footer>
-	<?php if ($session->fb['is_fan'] == true && $session->app['user_is_participating']
-				&& $session->config['referral_tracking_activated']['value']): ?>
-		<!-- Just set it to make js work -->
-		<form id="questions" class="form-horizontal"></form><form id="form-registration"></form>
-	<?php endif; ?>
-	<!--<span class="btn" onclick='$("#_debug").toggle();'>Show debug info</span>
+
+	<!-- Debug area -->
+	<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 	<div id="_debug" style="display:none;">
 		<h1>Debug information</h1>
-		<?php //Zend_Debug::dump($session->fb, "session->fb");?>
-		<?php //Zend_Debug::dump($session->app, "session->app");?>
-		<?php //Zend_Debug::dump($_COOKIE, "_COOKIE");?>
-		<?php //Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
-	</div>-->
+		<?php Zend_Debug::dump($session->fb, "session->fb");?>
+		<?php Zend_Debug::dump($session->app, "session->app");?>
+		<?php Zend_Debug::dump($_COOKIE, "_COOKIE");?>
+		<?php Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
+	</div>
 	
 	 	
  	<?php // include the file for the loading screen
@@ -114,7 +112,7 @@
 	<!-- scripts concatenated and minified via ant build script-->
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
-  <script src="js/script.js?v10"></script>
+	<script src="js/script.js"></script>
 	<!-- end scripts-->
 	
 	<!--<script>
@@ -138,16 +136,8 @@
 		aa_inst_id    = '<?=$session->instance["aa_inst_id"]?>';
 		
 		$(document).ready(function() {
-		
-			$(".form-validation").validate(bootstrap_form);
-			
 			userHasAuthorized = false;
-
-			/** Init some app config values */
-			app_referral_tracking_activated = <?=$session->app["referral_tracking_activated"];?>;
-			
 			show_loading();
-			
 			initApp();
 		});
 	
@@ -162,7 +152,6 @@
 		    });
 		    
 		    // Additional initialization code here
-		    FB.Canvas.setAutoGrow();
 			FB.getLoginStatus(function(response) {
 		    	  if (response.status === 'connected') {
 		    	    // the user is logged in and connected to your
@@ -205,7 +194,7 @@
 	<!-- Show admin panel if user is admin -->
 	<?php // Show admin panel, when page admin
 	if (is_admin()) {
-		include_once 'admin/admin_panel.php';?>		
+		//include_once 'admin/admin_panel.php';?>		
 	<?php } ?>
 	
 </body>
