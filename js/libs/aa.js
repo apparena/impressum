@@ -1,33 +1,3 @@
-/** App-Arena java script lib */
-
-var AA=new Object();
-
-AA.init=function(options,id){
-
-};
-
-/**
- * Save values to the current app-arena session
- * @param params json array with parameters
- * @param session_obj name of the session array, that will be updated, e.g. 'fb' to update $session->fb
- */
-AA.save_to_session = function(params, session_obj,callback,failed_callback){
-  params.object = session_obj; 
-  var url="ajax/save_to_session.php?aa_inst_id="+aa_inst_id;
-  jQuery.post(url,params,function(response){
-    if(response.error == 0){
-		if(isFunction(callback)){
-			callback(response);
-		}
-    }else{
-		if(isFunction(callback)){
-			failed_callback(response);
-		}
-    }
-  },'json');
-};
-
-
 /**
  * client for call app manager soap server
  *
@@ -504,6 +474,41 @@ Client.activeAppInstance=function()
   result = this.call('activeAppInstance',identifier);
   return result;
 };
-
-
 var AppManager=Client;
+
+
+/** App-Arena java script lib */
+
+var AA=new Object();
+
+/*
+AA.init=function(options,id){
+};
+*/
+
+AA.init=function(params){
+  AppManager.init(params);
+};
+
+/**
+ * Save values to the current app-arena session
+ * @param params json array with parameters
+ * @param session_obj name of the session array, that will be updated, e.g. 'fb' to update $session->fb
+ */
+AA.save_to_session = function(params, session_obj,callback,failed_callback){
+  params.object = session_obj; 
+  var url="ajax/save_to_session.php?aa_inst_id="+aa_inst_id;
+  jQuery.post(url,params,function(response){
+    if(response.error == 0){
+		if(isFunction(callback)){
+			callback(response);
+		}
+    }else{
+		if(isFunction(callback)){
+			failed_callback(response);
+		}
+    }
+  },'json');
+};
+
+
