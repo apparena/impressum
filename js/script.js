@@ -19,14 +19,14 @@ function initApp() {
 
        $("#main").slideDown(600,function(){
           //reinit facebook
-          FB.init({
-             appId      : fb_app_id, // App ID
-             channelUrl : fb_canvas_url + 'channel.html', // Channel File
-             status     : true, // check login status
-             cookie     : true, // enable cookies to allow the server to access the session
-             xfbml      : true, // parse XFBML
-             oauth    : true
-          });
+			FB.init({
+				appId      : fb_app_id, // App ID
+				channelUrl : fb_canvas_url + 'channel.html', // Channel File
+				status     : true, // check login status
+				cookie     : true, // enable cookies to allow the server to access the session
+				xfbml      : true, // parse XFBML
+				oauth    : true
+			});
 
        });
 			hide_loading();

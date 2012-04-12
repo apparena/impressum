@@ -5,9 +5,9 @@
 $config_data=array(
    // Database settings for facebook application
    'database_host' => "localhost",
-   'database_name' => "apps_lottery_v20",
-   'database_user' => "apps_lottery_v13",
-   'database_pass' => "vFUxjrh8Jp7v47FH",
+   'database_name' => "apps_aa_template",
+   'database_user' => "aa_template",
+   'database_pass' => "aa_template",
 
    // Setup App-Arena App-Manager Connection
    'aa_app_id' => 153,

@@ -12,7 +12,7 @@
 	<meta charset="utf-8">
          
 	<!-- Facebook Meta Data -->
-    <meta property="fb:app_id" content="<?=$session->instance['fb_page_url']."?sk_app".$session->instance['fb_app_id']?>" />
+    <meta property="fb:app_id" content="<?=$session->instance['fb_app_id']?>" />
     <meta property="og:title" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<?=$session->instance['fb_page_url']."?sk=app_".$session->instance['fb_app_id']?>" />
@@ -113,7 +113,7 @@
 	<!-- scripts concatenated and minified via ant build script-->
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
-	<script src="js/script.js?v2"></script>
+	<script src="js/script.js?v3"></script>
 	<!-- end scripts-->
 	
 	<!--<script>
@@ -143,7 +143,7 @@
 		});
 	
 		window.fbAsyncInit = function() {
-		    FB.init({
+			FB.init({
 		      appId      : fb_app_id, // App ID
 			  channelUrl : fb_canvas_url + 'channel.html', // Channel File
 		      status     : true, // check login status
