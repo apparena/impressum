@@ -44,7 +44,8 @@
 	if ($session->fb['is_fan'] == false) { ?>
 		<div class="page_non_fans_layer"> 
 			<div class="img_non_fans">
-				<img src="<?=$session->config['page_welcome_nonfans']['value']?>" />
+				<!--<img src="<?php //echo $session->config['page_welcome_nonfans']['value']?>" />-->
+				
 			</div>
 			<div id="non_fan_background">&nbsp;</div>
 		</div>
@@ -112,7 +113,7 @@
 	<!-- scripts concatenated and minified via ant build script-->
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/script.js?v2"></script>
 	<!-- end scripts-->
 	
 	<!--<script>

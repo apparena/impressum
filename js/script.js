@@ -7,14 +7,30 @@
 /**
  * Initializes the content functionality of the app.
  */
-function initApp(){
+function initApp() {
 	// initialize the menu buttons with onclick functions, which load the according template into the #main-div and save the landing content to display (the first menu-item).
 	var landingContent = initMenu();
 	
+	var date=new Date();
+	var t=date.getTime();
 	// set the first menu item as the landing content.
 	$("#main").slideUp( 0, function(){
-		$("#main").load( "templates/" + landingContent + ".phtml", function(){
-			$("#main").slideDown();
+		$("#main").load( "templates/" + landingContent + ".phtml?aa_inst_id=" + aa_inst_id, function(){
+
+       $("#main").slideDown(600,function(){
+          //reinit facebook
+          FB.init({
+             appId      : fb_app_id, // App ID
+             channelUrl : fb_canvas_url + 'channel.html', // Channel File
+             status     : true, // check login status
+             cookie     : true, // enable cookies to allow the server to access the session
+             xfbml      : true, // parse XFBML
+             oauth    : true
+          });
+
+       });
+			hide_loading();
+
 		});
 	});
 }
