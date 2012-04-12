@@ -479,16 +479,19 @@ var AppManager=Client;
 
 /** App-Arena java script lib */
 
-var AA=new Object();
+//var AA=new Object();
+var AA=cloneAll(AppManager);
 
 /*
 AA.init=function(options,id){
 };
 */
 
+/*
 AA.init=function(params){
   AppManager.init(params);
 };
+*/
 
 /**
  * Save values to the current app-arena session
