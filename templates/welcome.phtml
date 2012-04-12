@@ -1,0 +1,439 @@
+<?php 
+include_once ( '../init_session.php' );
+?>
+<!-- ------------------
+	The App is not started yet 
+-------------------- -->
+<?php if ($session->app['app_state'] == "not_started"):?>
+<div class="welcome not-started">
+	<div class="row">
+		<div class="span10">
+			<div class="welcome-header">
+				<img src="<?=$session->config['welcome_header_teaser_notstarted']['value'];?>">	
+			</div>
+		</div>
+	</div>
+</div>
+<?php endif;?>
+
+<!-- ------------------
+	The App ended 
+-------------------- -->
+<?php if ($session->app['app_state'] == "ended"):?>
+<div class="welcome not-started">
+	<div class="row">
+		<div class="span10">
+			<div class="welcome-header">
+				<img src="<?=$session->config['welcome_header_teaser_ended']['value'];?>">	
+			</div>
+		</div>
+	</div>
+</div>
+<?php endif;?>
+
+<!--------------------
+ User Has Participated
+---------------------->
+<?php
+   // get app_participation id
+   //$lottery = new iCon_Lottery($session->instance['aa_inst_id'],getConfig('aa_app_id'));
+   //$id=$lottery->isUserParticipating($fb_user_id, $aa_inst_id) ;
+?>
+
+
+<!-- ------------------
+	The App is Live 
+-------------------- -->
+<?php if ($session->app['app_state'] == "live"):?>
+<div class="welcome">
+	<?php if ($session->app['user_is_participating']) {?>
+		<div id="msg-container">
+			<div class="alert alert-success">
+				<a class="close" data-dismiss="alert">x</a>
+				<h4 class="alert-heading"><?=__p("You do already participate")?></h4>
+				<p><?=__p("Thank you for taking part in our lottery. All winners will be informed after the end of the lottery.")?></p>
+			</div>
+		</div>
+	<?php } ?>
+	<?php // No Fan Content 
+	if ($session->fb['is_fan'] == false) { ?>
+		<div class="page_non_fans_layer"> 
+			<div class="img_non_fans">
+				<img src="<?=$session->config['page_welcome_nonfans']['value']?>" />
+			</div>
+			<div id="non_fan_background">&nbsp;</div>
+		</div>
+	<?php }?>
+	<div class="row">
+		<div class="span10">
+			<div class="welcome-header">
+				<img src="<?=$session->config['welcome_header_teaser']['value'];?>">	
+			</div>
+		</div>
+	</div>
+	
+	<?php if (!$session->app['user_is_participating']) {?>
+		<div class="hero-unit teaser">
+			<?=$session->config['welcome_header_text']['value'];?>
+		</div>
+		
+		<hr />
+		<div class="row">
+			<!-- Show questions if available (for prize or quiz question) -->
+			<?php if ($session->app['questions_available']){ ?>
+				<div class="span5 question-container">
+					<form id="questions" class="form-vertical form-validation" action="#">
+						<!-- If there are quiz question show them -->
+						<?php if ($session->config['questions_activated']['value']){ ?>
+							<fieldset>
+								<legend><?php __p("Answer these questions to win the prize");?></legend>
+								<div class="control-group question1">
+									<label class="control-label"><?=$session->config['question1']['value']?></label>
+									<div class="controls">
+										<?php 
+										if ($session->config['question_style']['value'] != "radio"){
+											echo '<select id="question1" name="question1" class="required">';
+										}
+										$items=explode(";", $session->config['question1_answers']['value']);
+										$i = 1;
+										foreach($items as $item)
+										{
+											if ($session->config['question_style']['value'] == "radio"){
+												echo '<label class="radio">
+														<input type="radio" name="question1" value="'.$i.'" class="required"> '.$item.
+													 '</label>';
+											} else {
+												echo '<option value="'.$i.'"> '.$item. '</option>';
+											}
+											$i++;
+										}
+										if ($session->config['question_style']['value'] != "radio"){
+											echo '</select>';
+										}
+										?>
+									</div>
+								</div>
+								<?php if (intval($session->config['questions_amount']['value']) > 1){ ?>
+									<div class="control-group question2">
+										<label class="control-label"><?=$session->config['question2']['value']?></label>
+										<div class="controls">
+											<?php 
+											if ($session->config['question_style']['value'] != "radio"){
+												echo '<select id="question2" name="question2" class="required">';
+											}
+											$items=explode(";", $session->config['question2_answers']['value']);
+											$i = 1;
+											foreach($items as $item)
+											{
+												if ($session->config['question_style']['value'] == "radio"){
+													echo '<label class="radio">
+														<input type="radio" name="question2" value="'.$i.'" class="required"> '.$item.
+													 '</label>';
+												} else {
+													echo '<option value="'.$i.'"> '.$item. '</option>';
+												}
+												$i++;
+											}
+											if ($session->config['question_style']['value'] != "radio"){
+												echo '</select>';
+											}
+											?>
+										</div>
+									</div>
+								<?php } ?>
+								<?php if (intval($session->config['questions_amount']['value']) > 2){ ?>
+									<div class="control-group question3">
+										<label class="control-label"><?=$session->config['question3']['value']?></label>
+										<div class="controls">
+											<?php 
+											if ($session->config['question_style']['value'] != "radio"){
+												echo '<select id="question3" name="question3"  class="required">';
+											}
+											$items=explode(";", $session->config['question3_answers']['value']);
+											$i = 1;
+											foreach($items as $item)
+											{
+												if ($session->config['question_style']['value'] == "radio"){
+													echo '<label class="radio">
+														<input type="radio" name="question3" value="'.$i.'" class="required"> '.$item.
+													 '</label>';
+												} else {
+													echo '<option value="'.$i.'"> '.$item. '</option>';
+												}
+												$i++;
+											}
+											if ($session->config['question_style']['value'] != "radio"){
+												echo '</select>';
+											}
+											?>
+										</div>
+									</div>
+								<?php } ?>
+							</fieldset>
+						<?php } ?>
+						<!-- If prize selectable show the prize selection option group -->
+						<?php if ($session->config['award_selection_activated']['value']){ ?>
+							<fieldset>
+								<legend><?php __p("Select your favorite prize");?></legend>
+								<div class="control-group awards">
+									<label class="control-label"><?php __p("Our prizes");?></label>
+									<div class="controls">
+									<?php 
+									if ($session->config['question_style']['value'] != "radio"){
+										echo '<select id="awards" name="awards"  class="required">';
+									}
+									$items=explode(";", $session->config['awards']['value']);
+									$i = 1;
+									foreach($items as $item)
+									{
+										if ($session->config['question_style']['value'] == "radio"){
+											echo '<label class="radio">
+													<input type="radio" name="awards" value="'.$i.'" class="required"> '.$item.
+												'</label>';
+										} else {
+											echo '<option value="'.$i.'"> '.$item. '</option>';
+										}
+										$i++;
+									}
+									if ($session->config['question_style']['value'] != "radio"){
+										echo '</select>';
+									}
+									?>
+									</div>
+								</div>
+							</fieldset>
+						<?php } ?>
+					</form>
+				</div>
+			<?php } else {?>
+				<!-- Show if no questions available -->
+				<div class="span5">
+					<form id="questions" class="form-horizontal">
+						<legend><?=__p("Invite friends");?></legend>
+						<p>
+							<div class="fb-like" data-href="<?=$session->app['fb_share_url'];?>" data-send="true" data-width="395" data-show-faces="true"></div>
+							<div class="fb-comments" data-href="<?=$session->app['fb_share_url'];?>" data-num-posts="5" data-width="395"></div>
+						</p>
+					</form>
+				</div>
+				
+			<?php } ?>
+			<div class="span5">
+				<form id="form-registration" class="form-horizontal">
+					<fieldset>
+						<legend><?=__p("Participate now");?></legend>
+						<?php if ($session->config['use_form_registration']['value']):?>
+							<div class="control-group">
+								<label class="control-label" for="input01">Name:</label>
+								<div class="controls">
+								  <input type="text" class="required" name="name" id="name">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="email">Email:</label>
+								<div class="controls">
+									<input class="required email" name="email" id="email" type="text">
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php 
+						if ($session->app['newsletter_option']):?>
+							<div class="control-group newsletter">
+								<label class="control-label" for="email">Newsletter:</label>
+								<div class="controls">
+									<label class="checkbox">
+										<input type="checkbox" name="newsletter_registration_cb" id="newsletter_registration_cb">
+										<?=__p("I'd like to opt-in to the newsletter as well to stay up to date.")?>
+									</label>
+									<p class="help-block"><?=__p("We don't like spam neither, so you can opt-out any time you want.")?></p>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if (!$session->config['use_form_registration']['value'] && !$session->app['newsletter_option']):?>
+							<p>&nbsp;</p>
+						<?php endif; ?>
+						<div class="form-actions">
+							<span id="participate" class="btn btn-primary btn-large action-participate"><?=__p("Participate now");?></span>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	<?php } else { ?>
+		<hr />
+		<form id="questions"></form><form id="form-registration"></form>
+		<div class="invite-container">
+			<div class="page-header">
+				<h1><?=__p("Invite friends");?> <small><?=__p("Make winners out of your friends");?></small></h1>
+			</div>
+			<?php if ($session->config['referral_tracking_activated']['value']) {?>
+				<div class="alert alert-info">
+					<a class="close" data-dismiss="alert">x</a>
+					<h4 class="alert-heading"><?=__p("Raise your chance to win!");?></h4>
+					<p><?=__p("For each of your friends you invite to participate, you will get an extra ticket for our lottery. Use the Send, Like and Comment functions to inform your friends.");?></p>
+				</div>
+			<?php } ?>
+			<p>
+				<div class="fb-like" data-href="<?=$session->app['fb_share_url'];?>" data-send="true" data-width="790" data-show-faces="true"></div>
+				<div class="fb-comments" data-href="<?=$session->app['fb_share_url'];?>" data-num-posts="5" data-width="790"></div>
+			</p>
+		</div>
+	<?php } ?>
+</div> <!-- End welcome div live -->
+<?php endif;?> 
+
+<!-- hidden modal dialog -->
+   <div class="modal hide fade" id="save_participation_failed_content">
+      <div class="modal-header">
+         <a class="close" data-dismiss="modal">x</a>
+         <h3><?php __p('Warning'); ?></h3>
+      </div>
+      <div class="modal-body">
+         <p></p>
+      </div>
+      <div class="modal-footer">
+         <a href="#" data-dismiss="modal" class="btn">OK</a>
+      </div>
+   </div>
+<!-- hidden modal dialog end -->
+
+<!-- Include js snippet to load the like-button and comment-box -->
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?=$session->instance['fb_app_id'];?>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+$(document).ready( function(){
+	$(".form-validation").validate(bootstrap_form);
+  $("#form-registration").validate(bootstrap_form);
+
+	$(".action-participate").click( function(){
+		// 1. Check if the question form is valid
+
+		if (!$("#questions").valid()){
+			return false;
+		}
+
+    if (!$("#form-registration").valid()){
+			return false;
+		}
+
+		show_loading();
+		
+		// 2. Authenticate the user, ask for permission to auth the lottery app
+    <?php if ($session->config['use_form_registration']['value']):?>
+        save_participation({'aa_inst_id' : aa_inst_id,
+           name:  jQuery("#name").val(),
+           email: jQuery("#email").val()
+           },
+            save_participation_success, 
+            save_participation_fail
+        );
+        save_to_session({'user_is_participating' : true},
+                'app'
+        );
+
+        //login();
+    <?php else: ?>
+       fb_login('email', fb_login_success, fb_login_fail); 	
+    <?php endif; ?>
+	});
+	hide_loading();
+});
+
+var save_participation_success = function(response){
+	log("participation successful");
+	
+	// 3. Check if newsletter is checked and send confirmation email for double opt in
+	if (jQuery("#newsletter_registration_cb").is(':checked')) {
+        send_newsletter(aa_inst_id,response.fb_user_id,response.email,response.name);
+        log("newsletter sent");
+
+        /*
+        if(response.email != false)
+        {
+              send_newsletter(aa_inst_id,response.id,response.email,response.name);
+        }
+        else
+        {
+              FB.api("/me",function(response){
+                    send_newsletter(aa_inst_id,response.id,response.email,response.name);
+                    log("newsletter sent");
+              });
+        }
+        */
+
+    } else {
+		log("No newsletter wanted");
+	}
+
+  //add time parameter to avoid ajax cache
+  var date=new Date();
+  var t=date.getTime();
+
+
+	$("#main").slideUp( 0, function(){
+		$("#main").load( "templates/tickets.phtml?aa_inst_id=" + aa_inst_id+'&v='+t, function(){
+          $("#main").slideDown(function(){
+                //reinit facebook
+                FB.init({
+                      appId      : fb_app_id, // App ID
+                      channelUrl : fb_canvas_url + 'channel.html', // Channel File
+                      status     : true, // check login status
+                      cookie     : true, // enable cookies to allow the server to access the session
+                      xfbml      : true, // parse XFBML
+                      oauth    : true
+                });
+                FB.Canvas.scrollTo(0,0);
+          });
+
+    });
+    hide_loading();
+	});
+};
+
+/* Failed callback functions */
+var fb_login_fail = function(response){
+	hide_loading();
+};
+var save_participation_fail = function(response){
+      //show dialog
+
+      //response.error_msg;
+      jQuery("#save_participation_failed_content .modal-body p").html(response.error_msg);
+
+      jQuery("#save_participation_failed_content").modal();
+
+
+	hide_loading();
+};
+
+var fb_login_success = function(response){
+	log("fb login successful");
+	fb_user_id   = response.authResponse.userID;
+	fb_access_token = response.authResponse.accessToken;
+	fb_status = "connected";
+	save_to_session({'fb_access_token' : fb_access_token,
+					 'fb_user_id' : fb_user_id},
+					'fb'
+	);
+
+  FB.api("/me",function(user){
+         save_participation({'aa_inst_id' : aa_inst_id,
+            user:user
+        },
+        save_participation_success, 
+        save_participation_fail
+        );
+  });
+
+	save_to_session({'user_is_participating' : true},
+					'app'
+	);
+};
+
+</script>

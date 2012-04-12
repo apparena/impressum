@@ -23,63 +23,91 @@ function initApp(){
 /**
  * Initializes the menu buttons.
  * Looks for each menu a-tag if it has a "template-myTemplate" class.
- * If it finds a template class name the template named "myTemplate.html" will be loaded into the #main-div.
- * If it does not find a template class name the "default.html" template will be loaded into the #main-div.
+ * If it finds a template class name the template named "myTemplate.phtml" will be loaded into the #main-div.
+ * If it does not find a template class name the "default.phtml" template will be loaded into the #main-div.
  * 
  * @return the first menu class name, "default" if there is none.
  */
-function initMenu(){
+function initMenu() {
 	var firstMenuItem = "default"; // if no class is found the default class will be loaded and returned at the end.
 	var firstTemplate = true; // determine if it was the first item to only save this for returning it later on.
 	
 	// loop through all menu elements (a-tags)
 	$('a').each( function( index ) {
-    	var foundTemplate = false; // determine after the loop if a template class was found
+    	var foundTemplate = false; // determine after the loop if a template class was found   	 	
     	var loadDefault = true; // determine if there were classes to load the default template at the end if not
-    	var thisClassAttr = $(this).attr("class"); // get all classes from this element
-    	
+		
+		// get all classes from this element
+    	var thisClassAttr = $(this).attr("class");
     	// get an array containing each class in one element (only if there is at least one class, otherwise split() will not work and break the script)
     	if( typeof( thisClassAttr ) != "undefined" ) {
-    		thisClasses   = thisClassAttr.split(" ");
-    		classCount = thisClasses.length; // set the limit for the loop below
+    		thisClasses = thisClassAttr.split(" ");
+    		// set the limit for the loop below
+    		classCount = thisClasses.length;
     		loadDefault = false;
     	} else {
-    		classCount = 0; // do not loop below (this element has no classes)
+    		// do not loop below (this element has no classes)
+    		classCount = 0;
     	}
+    	
     	// loop through the classes 
     	for(var x = 0; x < classCount; x++) {
-    		
     		// check if one of the classes contain a template class
-    		if( thisClasses[x].indexOf("template") >= 0 ) {
-    			var templateToLoad = thisClasses[x].split("-")[1]; // template class found, get the filename (format: "welcome-filename")
-    			$(this).click( function(){ // bind an onclick function to this menu element
-    				
-    				// if clicked, load the template into the #main div (append ".html" to the template filename)
-    				$("#main").slideUp( 0, function(){
-    					$("#main").load( "templates/" + templateToLoad + ".html", function(){
-    						$("#main").slideDown();
-    					});
-    				});
-    			});
-    			
-    			foundTemplate = true;
+    		if( thisClasses[x].indexOf("template") >= 0 ) {			
+    			// template class found, get the filename (format: "welcome-filename")
+    			var templateToLoad = thisClasses[x].split("-")[1];
 
-    			if( firstTemplate == true ) {
-	    			firstMenuItem = templateToLoad;
-	    			firstTemplate = false;
-    			}
-    		}
+    			// bind an onclick function to this menu element
+    			$(this).click( function(){
+    				// show the loading screen
+    				show_loading();
+    				// if clicked, load the template into the #main div (append ".phtml" to the template filename)
+    				$("#main").slideUp( 0, function(){
+    					$("#main").load( "templates/" + templateToLoad + ".phtml?aa_inst_id=" + aa_inst_id, function(){
+							$("#main").slideDown(600,function(){
+								//reinit facebook
+								FB.init({
+								   appId      : fb_app_id, // App ID
+								   channelUrl : fb_canvas_url + 'channel.html', // Channel File
+								   status     : true, // check login status
+								   cookie     : true, // enable cookies to allow the server to access the session
+								   xfbml      : true, // parse XFBML
+								   oauth    : true
+								});
+							});    						
+    					});    					
+    				});   				
+    			});   			
+    			// found a template class, remember that!
+    			foundTemplate = true;
+    			
+    			// if it is the first menu-template item, save it to return it later
+    			if( firstTemplate == true ) {   				
+	    			firstMenuItem = templateToLoad;	    			
+	    			// remember that this was the first one
+	    			firstTemplate = false;	    			
+    			}    			
+    		}    		
     	} // end loop through the classes of this element
-    	
     	// if no template class was found, use the default one
 		if( foundTemplate == false && loadDefault == true ){
 			$(this).click(function(){
 				$("#main").slideUp( 0, function(){
-					$("#main").load( "templates/default.html", function(){
-						$("#main").slideDown();
-					});
-				});
-			});
+					$("#main").load( "templates/default.phtml?aa_inst_id=" + aa_inst_id, function(){
+						$("#main").slideDown(600,function(){
+						   //reinit facebook
+						   FB.init({
+							  appId      : fb_app_id, // App ID
+							  channelUrl : fb_canvas_url + 'channel.html', // Channel File
+							  status     : true, // check login status
+							  cookie     : true, // enable cookies to allow the server to access the session
+							  xfbml      : true, // parse XFBML
+							  oauth    : true
+						   });
+						});
+					});					
+				});				
+			});			
 		}
 	}); // end loop through all menu elements
 	return firstMenuItem;
