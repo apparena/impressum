@@ -93,7 +93,7 @@
 	</footer>
 
 	<!-- Debug area -->
-	<?php if($session->config['admin_debug_mode']['valu']):?>
+	<?php if($session->config['admin_debug_mode']['value']):?>
 		<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 		<div id="_debug" style="display:none;">
 			<h1>Debug information</h1>
