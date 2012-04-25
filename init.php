@@ -80,6 +80,7 @@ $current_app = array();
 $session = new Zend_Session_Namespace( 'aa_' . $aa_instance['aa_inst_id'] );
 $session->config = $aa->getConfig();
 $session->instance = $aa_instance;
+$session->translation = $aa->getTranslation();
 
 foreach($fb_data as $k=>$v)
 {
