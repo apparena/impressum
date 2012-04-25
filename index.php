@@ -99,6 +99,8 @@
 			<h1>Debug information</h1>
 			<?php Zend_Debug::dump($session->fb, "session->fb");?>
 			<?php Zend_Debug::dump($session->app, "session->app");?>
+			<?php Zend_Debug::dump($session->instance, "session->instance");?>
+			<?php Zend_Debug::dump($session->config, "session->config");?>
 			<?php Zend_Debug::dump($_COOKIE, "_COOKIE");?>
 			<?php Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
 		</div>
