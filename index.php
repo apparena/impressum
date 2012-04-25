@@ -93,19 +93,17 @@
 	</footer>
 
 	<!-- Debug area -->
-	<?php if($session->config['admin_debug_mode']['value']):?>
 		<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 		<div id="_debug" style="display:none;">
 			<h1>Debug information</h1>
 			<?php Zend_Debug::dump($session->fb, "session->fb");?>
 			<?php Zend_Debug::dump($session->app, "session->app");?>
 			<?php Zend_Debug::dump($session->instance, "session->instance");?>
-			<?php Zend_Debug::dump($session->config, "session->config");?>
 			<?php Zend_Debug::dump($session->translation, "session->translation");?>
+			<?php Zend_Debug::dump($session->config, "session->config");?>
 			<?php Zend_Debug::dump($_COOKIE, "_COOKIE");?>
 			<?php Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
 		</div>
-	<?php endif;?>
 	 	
  	<?php // include the file for the loading screen
  	require_once( dirname(__FILE__).'/templates/loading_screen.phtml' );

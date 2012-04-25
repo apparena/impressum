@@ -351,7 +351,7 @@
       */
       function getTranslation()
       {
-         $result = $this->call('getTranslate');
+         $result = $this->call('getTranslation');
          return $result;
       }
 
