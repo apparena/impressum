@@ -36,7 +36,8 @@
 
       //soap server url
       //default: http://www.app-arena.com/manager/server/soap.php
-      protected $server_url=false;
+      //protected $server_url=false;
+      protected $server_url='http://www.app-arena.com/manager/server/soap3.php';
 
       //this params will transport each call 
       protected $soap_params=array(
@@ -83,21 +84,25 @@
             throw new Exception("missing parameter  aa_app_secret");
          }
 
-		 if($this->soap_params['aa_inst_id'] == false && isset($_GET['aa_inst_id']) )
-			$this->soap_params['aa_inst_id']=intval($_GET['aa_inst_id']);
-		
+
          if( $this->soap_params['aa_inst_id'] == false && $this->soap_params['fb_page_id'] == false)
          {
             //try get  fb page_id automaticly
             $this->soap_params['fb_page_id'] = $this->getFbPageId();
 
             //check again
+            /*
             if( $this->soap_params['aa_inst_id'] == false && $this->soap_params['fb_page_id'] == false)
             {
                throw new Exception("missing parameter aa_inst_id  or  fb_page_id ");
             }
+            */
          }
 
+         if(isset($params['server_url']) && $params['server_url'] != false)
+         {
+            $this->setServerUrl($params['server_url']);
+         }
 
          //now init 
          $this->init();
@@ -125,6 +130,7 @@
             list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
             $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
+
             if(isset($data['page']))
             {
                $fb_page_id=$data['page']['id'];
@@ -142,6 +148,7 @@
          return $fb_page_id;
       }
 
+
       /**
       * this depend developer how to save aa_inst_id 
       *
@@ -158,18 +165,31 @@
       */
       private function init()
       {
-         $server_url='http://www.app-arena.com/manager/server/soap3.php';
-
-         $this->setServerUrl($server_url);
+         /*
+         if($this->getServerUrl() == false)
+         {
+            $server_url='http://www.app-arena.com/manager/server/soap3.php';
+            $this->setServerUrl($server_url);
+         }
+         */
          $this->initClient();
       }
 
       /**
       * change server url
       */
-      private function setServerUrl($url)
+      public function setServerUrl($url)
       {
          $this->server_url=$url;
+         $this->initClient();
+      }
+
+      /**
+      * change server url
+      */
+      function getServerUrl()
+      {
+         return $this->server_url;
       }
 
       /**
@@ -313,5 +333,26 @@
          return $result;
       }
       */
+
+      /**
+      * get fb app's info
+      *
+      * @return int
+      */
+      function getFbApp($fb_page_url)
+      {
+         $result=$this->client->getFbApp($fb_page_url);
+         return $result;
+      }
+
+      /**
+      * get Translate
+      * 
+      */
+      function getTranslation()
+      {
+         $result = $this->call('getTranslate');
+         return $result;
+      }
 
    }
