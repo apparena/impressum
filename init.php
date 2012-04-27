@@ -45,10 +45,10 @@ addDb(array(
 ));
 
 // Add translation management
-$translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
-$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
-$translate->setLocale('de');
-$global->translate=$translate;
+//$translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
+//$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
+//$translate->setLocale('de');
+//$global->translate=$translate;
 
 // Initialize App-Manager connection
 $aa = new AA_AppManager(array(
@@ -56,6 +56,8 @@ $aa = new AA_AppManager(array(
 	'aa_app_secret' => getConfig("aa_app_secret"),
   'aa_inst_id' => getRequest("aa_inst_id"),
 ));
+
+$aa->setServerUrl(getConfig("soap_server_url"));
 $aa_instance = $aa->getInstance();
 
 // Build up information array about facebook
@@ -80,7 +82,16 @@ $current_app = array();
 $session = new Zend_Session_Namespace( 'aa_' . $aa_instance['aa_inst_id'] );
 $session->config = $aa->getConfig();
 $session->instance = $aa->getInstance($aa_instance['aa_inst_id']);
-$session->translation = $aa->getTranslation();
+
+$session->translation = array();
+$session->translation['en_US'] = $aa->getTranslation('en_US');
+$session->translation['de_DE'] = $aa->getTranslation('de_DE');
+
+// Add translation management
+$translate = new Zend_Translate('array',$session->translation['en_US'], 'en');
+$translate->addTranslation($session->translation['de_DE'], 'de');
+$translate->setLocale('de');
+$global->translate=$translate;
 
 foreach($fb_data as $k=>$v)
 {

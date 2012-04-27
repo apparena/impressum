@@ -48,10 +48,11 @@ addDb(array(
 ));
 
 // Add translation management
-$translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
-$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
-$translate->setLocale('de');
-$global->translate=$translate;
+//$translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
+//$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
+//$translate->setLocale('de');
+//$global->translate=$translate;
+
 $session = new Zend_Session_Namespace( 'aa_' . $aa_inst_id );
 
 //if session expirated, recreate 
@@ -63,6 +64,7 @@ if($session->instance == false || !isset($session->instance['aa_inst_id']))
       'aa_app_secret' => getConfig("aa_app_secret"),
       'aa_inst_id' => getRequest("aa_inst_id"),
    ));
+   $aa->setServerUrl(getConfig("soap_server_url"));
    $aa_instance = $aa->getInstance();
 
    // Build up information array about facebook
@@ -81,6 +83,17 @@ if($session->instance == false || !isset($session->instance['aa_inst_id']))
       $session->fb[$k] = $v;
    }
    $session->app = $current_app;
+
+   $session->translation = array();
+   $session->translation['en_US'] = $aa->getTranslation('en_US');
+   $session->translation['de_DE'] = $aa->getTranslation('de_DE');
 }
+
+
+// Add translation management
+$translate = new Zend_Translate('array',$session->translation['en_US'], 'en_US');
+$translate->addTranslation($session->translation['de_DE'], 'de');
+$translate->setLocale('de');
+$global->translate=$translate;
 
 ?>

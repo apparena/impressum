@@ -14,5 +14,7 @@ $config_data=array(
    'aa_app_secret' => "770a51440ac4e9c2dbe7345a791fbfc4",
 
    'debugMode' => true,
+
+   'soap_server_url'=>'http://dev.app-arena.com/manager/server/soap3.php',
 );
 ?>
