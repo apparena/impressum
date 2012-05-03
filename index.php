@@ -59,6 +59,7 @@
 						<li><a class="template-welcome"><?=__p("Homepage");?></a></li>
 						<li><a class="template-english"><?=__p("English");?></a></li>
 						<li><a class="template-germany"><?=__p("Germany");?></a></li>
+						<li><a class="template-form_validation"><?=__p("Form Validation");?></a></li>
 						<li><a class="template-fb_demo"><?=__p("Facebook DEMO");?></a></li>
 						<li><a class="template-terms"><?=__p("Terms & Conditions");?></a></li>
 					</ul>

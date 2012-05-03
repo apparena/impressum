@@ -148,6 +148,12 @@ class Frd_Html_Form_Abstract
 
     return $html;
   }
+
+  function render()
+  {
+     return $this->__toString();
+  }
+     
 }
 
 ?>

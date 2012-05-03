@@ -109,10 +109,59 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $this->_primary; 
   }
 
+  /**
+   * if a recored exists
+   * usage:
+   *   $table->exists($id);
+   *   $table->exists($key1,$key2,....)
+   */
+  function exists()
+  {
+    $select=$this->_db->select();
+    $select->from($this->_name,'count(*)');
+
+    $args=func_get_args();
+
+    if(is_array($this->primary_key))
+    {
+      $where=array();
+      foreach($args as $k=>$v)
+      {
+        $select->where($this->primary_key[$k]."=?",$v);
+      }
+    }
+    else
+    {
+      $select->where($this->primary_key."=?",$args[0]);
+    }
+
+    $count=$this->_db->fetchOne($select);
+    if($count > 0) 
+      return true;
+    else
+      return false;
+  }
+
   function __set($key,$value)
   {
      $this->_data[$key]=$value;	
      return $value;
+
+     /*
+    if(count($this->columns) > 0 && !isset($this->columns[$key]) )
+    {
+      //echo "field $key not exists in columns (".implode(",",array_keys($this->getColumns())).")";
+      //echo "field $key not exists in columns (".implode(",",array_keys($this->columns)).")";
+
+      //exit();
+
+      return false; //do not save not exists column
+    }
+    else
+    {
+       $this->_data[$key]=$value;	
+    }
+    */
   }
 
   /**
@@ -158,10 +207,6 @@ class Frd_Db_Table  extends Zend_Db_Table
               $data[$k]=$new_data[$k];
         }
 
-     }
-     else
-     {
-        return $new_data;
      }
 
      return $data;
@@ -226,31 +271,35 @@ class Frd_Db_Table  extends Zend_Db_Table
     if($this->has_load == true)
     {
        //update
-      $where=$this->buildWhere($this->primary_key,$this->primary_value);
 
+      if(is_array($this->primary_key))
+      {
+        $where=array();
+        foreach($this->primary_value as $k=>$v)
+        {
+          $where[]=$this->_db->quoteInto($this->primary_key[$k]."=?",$v);
+        }
+      }
+      else
+      {
+        $where=$this->_db->quoteInto($this->primary_key."=?",$this->primary_value);
+        //$where=array($this->primary_key."=?",$this->primary_value);
+      }
 
       //set update modify field
       if($this->modified_at_field != false)
-      {
-         $this->_data[$this->modified_at_field]=date("Y-m-d H:i:s");
-      }
+        $this->_data[$this->modified_at_field]=date("Y-m-d H:i:s");
 
-      //extra fields
-      foreach($this->extra_fields as $field=>$value)
-      {
-         $this->_data[$field]=$value;
-      }
-
-      $count=$this->update($this->_data,$where);
-      return $count;
+        $count=$this->update($this->_data,$where);
+        return $count;
     }
     else
     {
        //insert
        if($this->created_at_field != false)
-          $this->_data[$this->created_at_field]=date("Y-m-d H:i:s");
+       $this->_data[$this->created_at_field]=date("Y-m-d H:i:s");
        if($this->modified_at_field != false)
-          $this->_data[$this->modified_at_field]=date("Y-m-d H:i:s");
+       $this->_data[$this->modified_at_field]=date("Y-m-d H:i:s");
 
        //extra fields
        foreach($this->extra_fields as $field=>$value)
@@ -258,8 +307,10 @@ class Frd_Db_Table  extends Zend_Db_Table
           $this->_data[$field]=$value;
        }
 
+       $data=$this->getFilterData();
 
-       $this->last_insert_id=$this->insert($this->_data);
+
+       $this->last_insert_id=$this->insert($data);
 
        //extra table with id
        $data=$this->_data;
@@ -267,6 +318,8 @@ class Frd_Db_Table  extends Zend_Db_Table
        {
           $data[$this->primary_key]=$this->last_insert_id;
        }
+
+       $this->doAddRelation($data);
 
        return $this->last_insert_id;
     }
@@ -284,86 +337,69 @@ class Frd_Db_Table  extends Zend_Db_Table
   {
     $success=false;
 
-    if (is_array($this->primary_key))
+    if(is_array($keys))
     {
-       if(is_array($keys))
-       {
-          $where=$this->buildWhere($this->primary_key,$keys);
-       }
-       else
-       {
-          $where=$this->buildWhere($this->primary_key,func_get_args());
-       }
+      $args=$keys;
+      $nums=count($keys);
     }
     else
     {
-       $where=array($this->primary_key=>$keys);
+      $args=func_get_args();
+      $nums=func_num_args();
     }
 
-    $row=$this->getRow($where);
 
-    if($row == false)
+    //pass not known number parameters, can only with hardcode,
+    //maybe can dynamic ,i do not known
+    //so that's a ugly way,and only support 5 numbers, 
+    //if more, need add by manual
+    if($nums == 1)
+      $rows=$this->find($args[0]);
+    else if($nums == 2)
+      $rows=$this->find($args[0],$args[1]);
+    else if($nums == 3)
+      $rows=$this->find($args[0],$args[1],$args[2]);
+    else if($nums == 4)
+      $rows=$this->find($args[0],$args[1],$args[2],$args[3]);
+    else if($nums == 5)
+      $rows=$this->find($args[0],$args[1],$args[2],$args[3],$args[4]);
+    else
+    {
+      echo "Sorry,i can not support more  primary key numbers,please add more number to support it";
+      echo "\n<br/>";
+      echo __FILE__;
+      echo ":";
+      echo __LINE__;
+      exit();
+    }
+
+    $rows=$rows->toArray(); 
+    if($rows == false)
     {
        return false;
     }
+    $row=$rows[0];
 
-    $this->_load($row);
+    $success=$this->_load($row);
 
-    return true;
+    return $success;
   }
-
-  function buildWhere($key,$value)
-  {
-     $where=array();
-
-     if(is_array($key))
-     {
-        $amount=count($key);
-
-        for($i=0;$i<$amount;++$i)
-        {
-           $k=$key[$i];
-           $v=$value[$i];
-
-           if(strpos($k,"?") !== false)
-           {
-              $where[]=$this->_db->quoteInto($k,$v);
-           }
-           else
-           {
-              $where[]=$this->_db->quoteInto($k."=?",$v);
-           }
-        }
-     }
-     else
-     {
-        if(strpos($key,"?") !== false)
-        {
-           $where[]=$this->_db->quoteInto($key,$value);
-        }
-        else
-        {
-           $where[]=$this->_db->quoteInto($key."=?",$value);
-
-        }
-     }
-     return $where;
-  }
-
 
   /**
   * load data ,return true for success  or false 
   */
-  protected function _load($row)
+  protected function _load($rows)
   {
-     if(empty($row))
+     if(empty($rows))
      {
         $this->_data=array();
+        $success=false;
         $this->has_load=false;
      }
      else
      {
-        $this->_data=$row;
+        $success=true;
+        $this->_data=$rows;
         $this->has_load=true;
 
         if (is_array($this->primary_key))
@@ -371,7 +407,7 @@ class Frd_Db_Table  extends Zend_Db_Table
            $this->primary_value=array();
            foreach($this->primary_key as $key)
            {
-              $this->primary_value[$key]=$this->_data[$key];
+              $this->primary_value[]=$this->_data[$key];
            }
         }
         else
@@ -380,23 +416,69 @@ class Frd_Db_Table  extends Zend_Db_Table
         }
      }
 
+     return $success;
   }
+  /**
+   * load by another column
+   *
+   * @return array   recored which column = $value , if do not have any recored, return array()
+   */
+  function loadBy($name,$value)
+  {
+    $success=false;
+
+    //handle column name
+    $name=$this->handleColumnName($name);
+
+    $select=$this->_db->select();
+
+    $select->from($this->_name);
+    $select->where($name."=?",$value);
+    $select->limit(1);
+
+    try
+    {
+      //if not exists, result is array()
+      //so it can used in 
+      //foreach($rows as $row)
+      // ....
+      // or == false
+
+      $row=$this->_db->fetchRow($select);
+
+      $success=$this->_load($row);
+
+      return $success;
+    }
+    catch(Exception $e)
+    {
+      echo $e->getMessage(); 
+      echo "<br/>\n";
+      echo __FILE__;
+      echo ' : ';
+      echo __LINE__;
+    }
+  }
+
 
   /**
   * @param Array where ,format:  array('name'=>'test','age'=>'11',...)
   */
 
-  function loadWhere($where)
+  function loadWhere($wheres)
   {
-     $row=$this->getRow($where);
-     if($row == false)
+     $select=$this->_db->select();
+     $select->from($this->_name,'*');
+     foreach($wheres as $k=>$v)
      {
-        return false;
+        $select->where($k.'=?',$v);
      }
 
-     $this->_load($row);
+     $row=$this->_db->fetchRow($select);
 
-     return $true;
+     $success=$this->_load($row);
+
+     return $success;
   }
 
   /**
@@ -418,6 +500,59 @@ class Frd_Db_Table  extends Zend_Db_Table
   }
 
   /**
+   * delete recored
+   *
+   * @param key    primary key ,or array of primary key
+   *
+   *
+   */
+  function delete($key)
+  {
+     if( $this->beforeDelete() == false)
+     {
+        return false;
+     }
+
+    if(is_array($key))
+    {
+      foreach($key as $k)
+      {
+        $where=$this->_db->quoteInto($this->primary_key."=?",$key);
+
+        $this->doDeleteRelation($where);
+        $count=parent::delete($where);
+      }
+    }
+    else
+    {
+      $args=func_get_args();
+
+      if(is_array($this->primary_key))
+      {
+        $where=array();
+        foreach($args as $k=>$v)
+        {
+          $where[]=$this->_db->quoteInto($this->primary_key[$k]."=?",$v);
+        }
+      }
+      else
+      {
+        $where=$this->_db->quoteInto($this->primary_key."=?",$key);
+      }
+
+      $this->doDeleteRelation($where);
+      $count=parent::delete($where);
+    }
+
+     if( $this->afterDelete() == false)
+     {
+        //return false;
+     }
+
+    return $count;
+  }
+
+  /**
   * will execute after mehod delete
   *
   * @return boolean true or false
@@ -425,6 +560,14 @@ class Frd_Db_Table  extends Zend_Db_Table
   function afterDelete()
   {
     return true;
+  }
+
+  /**
+   * return column data 
+   */
+  function toArray()
+  {
+    return $this->_data;
   }
 
   /**
@@ -449,24 +592,24 @@ class Frd_Db_Table  extends Zend_Db_Table
   /**
    * add a record
    */
-   function add($data)
-   {
-      if( $this->beforeAdd() == false)
-      {
-         return false; 
-      }
+  function add($data)
+  {
+     if( $this->beforeAdd() == false)
+     {
+        return false; 
+     }
 
-      $this->setData($data);
+    $this->setData($data);
 
-      $ret=$this->save();
+    $ret=$this->save();
 
-      if( $this->afterAdd() == false)
-      {
-         return false; 
-      }
+     if( $this->afterAdd() == false)
+     {
+        return false; 
+     }
 
-      return $ret;
-   }
+    return $ret;
+  }
 
   function afterAdd()
   {
@@ -481,6 +624,23 @@ class Frd_Db_Table  extends Zend_Db_Table
   /**
    * edit a recored
    */
+   /*
+  function edit($key,$data)
+  {
+     if( $this->beforeEdit() == false)
+     {
+        return false; 
+     }
+
+    $this->load($key);
+    $this->setData($data);
+    $ret=$this->save();
+
+    $this->afterEdit();
+    return $ret;
+  }
+  */
+
   function afterEdit()
   {
     return true;
@@ -510,25 +670,18 @@ class Frd_Db_Table  extends Zend_Db_Table
   }
 
   /** fetch methods **/
-  function getOne($column,$where=array())
+  function getOne($column,$wheres=array())
   {
-     if($where == false)
+     if($wheres == false)
      {
         $where=array(); 
      }
 
      $select=$this->_db->select();
      $select->from($this->_name,$column);
-     foreach($where as $k=>$v)
+     foreach($wheres as $k=>$v)
      {
-        if(strpos($k,"?") !== false)
-        {
-           $select->where($k,$v);
-        }
-        else
-        {
-           $select->where($k.'=?',$v);
-        }
+        $select->where($k,$v);
      }
 
      $select->limit(1);
@@ -540,26 +693,18 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $rows;
   }
 
-  function getRow($where=array())
+  function getRow($wheres=array())
   {
-     if($where == false)
+     if($wheres == false)
      {
         $where=array(); 
      }
 
      $select=$this->_db->select();
      $select->from($this->_name,'*');
-
-     foreach($where as $k=>$v)
+     foreach($wheres as $k=>$v)
      {
-        if(strpos($k,"?") !== false)
-        {
-           $select->where($k,$v);
-        }
-        else
-        {
-           $select->where($k.'=?',$v);
-        }
+        $select->where($k,$v);
      }
 
      $select->limit(1);
@@ -569,9 +714,9 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $rows;
   }
 
-  function getAll($where=array(),$order=false)
+  function getAll($wheres=array(),$order=false)
   {
-     if($where == false)
+     if($wheres == false)
      {
         $where=array(); 
      }
@@ -579,22 +724,15 @@ class Frd_Db_Table  extends Zend_Db_Table
      $select=$this->_db->select();
      $select->from($this->_name,'*');
 
-     if(is_string($where))
+     if(is_string($wheres))
      {
-        $select->where($where);
+        $select->where($wheres);
      }
      else
      {
-        foreach($where as $k=>$v)
+        foreach($wheres as $k=>$v)
         {
-           if(strpos($k,"?") !== false)
-           {
-              $select->where($k,$v);
-           }
-           else
-           {
-              $select->where($k.'=?',$v);
-           }
+           $select->where($k,$v);
         }
      }
 
@@ -608,150 +746,22 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $rows;
   }
 
-  function getAssoc($where=array(),$key_column=false)
+  function editWhere($wheres,$data)
   {
-     if($where == false)
-     {
-        $where=array(); 
-     }
-
-     $select=$this->_db->select();
-
-     if($key_column != false)
-     {
-        $select->from($this->_name,array($key_column,'*'));
-     }
-     else
-     {
-        $select->from($this->_name,'*');
-     }
-
-     if(is_string($where))
-     {
-        $select->where($where);
-     }
-     else
-     {
-        foreach($where as $k=>$v)
-        {
-           if(strpos($k,"?") !== false)
-           {
-              $select->where($k,$v);
-           }
-           else
-           {
-              $select->where($k.'=?',$v);
-           }
-        }
-     }
-
-     /*
-     if($order != false)
-     {
-        $select->order($order);
-     }
-     */
-
-     $rows=$this->_db->fetchAssoc($select);
-
-     return $rows;
+     //return $this->_db->update($this->_name,$data,$wheres);
+     return $this->update($data,$wheres);
   }
 
-  /**
-  * get multi records ,and merge records 
-  * each records  should has a key, which is the last parameter of this mehtod
-  * it need at least 3 parameters, where1, where2, key_column_name
-  */
-  function getMulti()
+  function deleteWhere($wheres)
   {
-     if(func_num_args() <= 2)
-     {
-        trigger_error("invalid parameter: getMulti ");
-     }
-
-     $args=func_get_args();
-
-     $key_column_name=array_pop($args);
-
-     //query records
-     $rows=array();
-     foreach($args as $where)
-     {
-        $rows=array_merge($rows,$this->getAssoc($where,$key_column_name));
-     }
-
-     return $rows;
+     return $this->_db->delete($this->_name,$wheres);
   }
 
-
-  /**
-  * edit column, if not exist, do nothing
-  */
-  function editWhere($where,$data)
+  function addWhere($wheres,$data)
   {
-     if($this->existsWhere($where))
+     if($this->existsWhere($wheres))
      {
-        $real_where=array();
-
-        foreach($where as $k=>$v)
-        {
-           if(strpos($k,"?") !== false)
-           {
-              $real_where[$k]=$v;
-           }
-           else
-           {
-              $real_where[$k.'=?']=$v;
-           }
-        }
-
-        return $this->update($data,$real_where);
-     }
-  }
-
-  /**
-  * delete records ,if not exists , do nothing
-  */
-  function deleteWhere($where)
-  {
-     $real_where=array();
-
-     foreach($where as $k=>$v)
-     {
-        if(strpos($k,"?") !== false)
-        {
-           $real_where[$k]=$v;
-        }
-        else
-        {
-           $real_where[$k.'=?']=$v;
-        }
-     }
-     return $this->delete($real_where);
-  }
-
-  /**
-  * add record, if exists, edit, 
-  */
-  function addWhere($where,$data)
-  {
-     $real_where=array();
-
-     foreach($where as $k=>$v)
-     {
-        if(strpos($k,"?") !== false)
-        {
-           $real_where[$k]=$v;
-        }
-        else
-        {
-           $real_where[$k.'=?']=$v;
-        }
-     }
-
-     if($this->existsWhere($real_where))
-     {
-        return $this->update($data,$real_where);
+        return $this->_db->update($this->_name,$data,$wheres);
      }
      else
      {
@@ -759,12 +769,9 @@ class Frd_Db_Table  extends Zend_Db_Table
      }
   }
 
-  /**
-  * check if record exists
-  */
-  function existsWhere($where)
+  function existsWhere($wheres)
   {
-     $data=$this->getRow($where);
+     $data=$this->getRow($wheres);
      if($data != false)
      {
         return true; 
@@ -785,7 +792,8 @@ class Frd_Db_Table  extends Zend_Db_Table
   */
   function update(array $data, $where)
   {
-     //$this->doUpdateRelation($data,$where);
+
+     $this->doUpdateRelation($data,$where);
      $data=$this->getFilterData($data);
 
      if($data == false)
@@ -796,182 +804,95 @@ class Frd_Db_Table  extends Zend_Db_Table
      parent::update($data,$where);
   }
 
-  function insert(array $data)
-  {
-     $data=$this->getFilterData($data);
-     $pkData=parent::insert($data);
-     return $pkData;
-  }
+  protected $_relations=array();
 
-  /**
-   * delete recored
-   *
-   * @param key    primary key ,or array of primary key
-   *
-   *
-   */
-  function delete($key)
+  function addRelation($table,$type,$columns)
   {
-     if( $this->beforeDelete() == false)
+     if(is_string($columns))
      {
-        return false;
+        $columns=array($columns);
      }
 
-     /*
-    if(is_array($key))
-    {
-      foreach($key as $k)
-      {
-        $where=$this->_db->quoteInto($this->primary_key."=?",$key);
-
-        //$this->doDeleteRelation($where);
-        $count=parent::delete($where);
-      }
-    }
-    else
-    */
-
-    if(is_array($this->primary_key))
-    {
-       $args=func_get_args();
-       $where=array();
-       foreach($args as $k=>$v)
-       {
-          $where[]=$this->_db->quoteInto($this->primary_key[$k]."=?",$v);
-       }
-    }
-    else
-    {
-       if(is_array($key))
-       {
-          foreach($key as $k=>$v)
-          {
-             $where[]=$this->_db->quoteInto($k,$v);
-          }
-       }
-       else
-       {
-          $where=$this->_db->quoteInto($this->primary_key."=?",$key);
-       }
-    }
-
-    //$this->deleteRelation($where);
-    $count=parent::delete($where);
-
-     if( $this->afterDelete() == false)
-     {
-        //return false;
-     }
-
-    return $count;
-  }
-
-  /*** ***/
-  /*
-  protected $_delete_relations=array();
-  function addDeleteRelation($key,$table)
-  {
-     $this->_delete_relations[]=array(
-        'key'=>$key,
+     $this->_relations[]=array(
+        'type'=>$type,
         'table'=>$table,
+        'columns'=>$columns,
      );
   }
 
-  function deleteRelation($where)
+  function doUpdateRelation($new_data,$where)
   {
-     if ($this->_delete_relations == false)
+     foreach($this->_relations as $relation)
      {
-        return false;
-     }
-
-     $data=$this->getRow($where);
-     if($data == false)
-     {
-        return false;
-     }
-
-     foreach($this->_delete_relations as $relation)
-     {
-        $where=array();
-
-        $key=$relation['key'];
+        $type=$relation['type'];
         $table=$relation['table'];
+        $columns=$relation['columns'];
 
-        if(is_string($key))
+        if($type == '1:1' || $type == '1:n') 
         {
-           $where["$key=?"]=$data[$key];
-        }
-        else if(is_array($key))
-        {
-           foreach($key as $k)
+           $rows=$this->getAll($where);
+           foreach($rows as $row)
            {
-              $where["$k=?"]=$data[$k];
+              $primary_value=$row[$this->primary_key];
+              $data=array();
+
+              //only set data to be edit which the current table will edit
+              /*
+              foreach($columns as $column)
+              {
+                 if(isset($new_data[$column]))
+                 {
+                    $data[$column]=$new_data[$column];
+                 }
+              }
+              */
+              $data=$new_data;
+
+              //set where
+              $key=$this->primary_key."=?";
+              $where=array($key=>$primary_value);
+
+              //var_dump($data);
+              //var_dump($where);
+              //exit();
+              $table->editWhere($where,$data);
            }
+
         }
 
-        $table->deleteWhere($where);
      }
-
   }
-  */
 
-
-  /** table relation **/
-  protected $relations=array();
-  function addRelation($name,$table)
+  function doDeleteRelation($where)
   {
-     $this->relations[$name]=$table;
+     foreach($this->_relations as $relation)
+     {
+        $type=$relation['type'];
+        $table=$relation['table'];
+        $columns=$relation['columns'];
+
+        if($type == '1:1' || $type == '1:n') 
+        {
+           $table->deleteWhere($where);
+        }
+
+     }
   }
 
-  function getRelation($name)
+  function doAddRelation($data)
   {
-     if(!isset($this->relations[$name]))
+     foreach($this->_relations as $relation)
      {
-        return false;
-     }
+        $type=$relation['type'];
+        $table=$relation['table'];
+        $columns=$relation['columns'];
 
-     if($this->getData() == false)
-     {
-        return false;
-     }
-
-     $table=$this->relations[$name];
-     $primary=$table->getPrimary();
-
-     if(is_array($primary))
-     {
-        foreach($primary as $k)
+        if($type == '1:1' || $type == '1:n') 
         {
-           if(isset($this->$k) == false)
-           {
-              return false;
-           }
+           $table->add($data);
         }
 
-        if( $table->load($this->$primary) == true)
-        {
-           return $table;
-        }
-
-        return false;
-     
      }
-     else if(is_string($primary))
-     {
-        if(isset($this->$primary) == false)
-        {
-           return false;
-        }
-
-        if( $table->load($this->$primary) == true)
-        {
-           return $table;
-        }
-
-        return false;
-     }
-  
   }
-
 
 }

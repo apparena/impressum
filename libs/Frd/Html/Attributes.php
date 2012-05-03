@@ -52,8 +52,10 @@ class Frd_Html_Attributes
         $html.=$key;
       }
     }
+    $html=trim($html);
 
-    return " ".trim($html)."";
+    return $html;
+    //return " ".trim($html)."";
   }
 
   function __toString()
@@ -67,8 +69,11 @@ class Frd_Html_Attributes
    */
   function handleValue($value)
   {
-    //$value=htmlentities($value,ENT_QUOTES,"UTF-8"); 
-    $value=Frd_String::toJsVar($value);
+    $value=htmlentities($value,ENT_QUOTES,"UTF-8"); 
+    //$value=Frd_String::toJsVar($value);
+    //$value=str_replace('"','\"',$value);
+    //$value=str_replace('"','\"',$value);
+    $value='"'.$value.'"';
 
     return $value;
   }

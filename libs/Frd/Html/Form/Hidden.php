@@ -1,10 +1,10 @@
 <?php
 
-class Frd_Html_Form_Hidden extends Frd_Form_Abstract
+class Frd_Html_Form_Hidden extends Frd_Html_Form_Abstract
 {
   function __construct($name,$value,$params=array())
   {
-    $params['type']='hidden`';
+    $params['type']='hidden';
 
     parent::__construct($name,$value,$params);
   }

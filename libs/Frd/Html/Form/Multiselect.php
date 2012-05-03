@@ -1,31 +1,16 @@
 <?php
-class Frd_Html_Form_Multiselect extends Frd_Html_Form_Abstract
+class Frd_Html_Form_MultiSelect extends Frd_Html_Form_Select
 {
-  function __construct($name,$value=null,$params=array(),$options=array())
+  function __construct($name,$value=null,$options=array(),$params=array())
   {
-    $this->options=$options;
     $params['multiple']=null;
+    $this->options=$options;
 
     parent::__construct($name,$value,$params);
+    unset($this->params['value']);
+
+    $this->value=$value;
   }
 
-
-  function __toString()
-  {
-    $selected=$this->params['value'];
-    unset($this->params['selected']);
-
-    $element=new Frd_Html_Element('select',$params);
-    foreach($options as $value=>$text)
-    {
-      if(is_array($selected)  && in_array($value,$selected))
-        $element->add('option',array('value'=>$value,'selected'=>'selected'),$text);
-      else
-        $element->add('option',array('value'=>$value),$text);
-    }
-
-    $html= $element->toHtml();
-    return $html;
-  }
 }
 ?>

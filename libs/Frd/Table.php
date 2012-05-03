@@ -297,6 +297,7 @@ class Frd_Db_Table  extends Zend_Db_Table
     }
     else
     {
+       //$where=$this->buildWhere($this->primary_key,$keys);
        $where=array($this->primary_key=>$keys);
     }
 
@@ -309,7 +310,8 @@ class Frd_Db_Table  extends Zend_Db_Table
 
     $this->_load($row);
 
-    return true;
+    //return true;
+    return $this;
   }
 
   function buildWhere($key,$value)
@@ -347,6 +349,7 @@ class Frd_Db_Table  extends Zend_Db_Table
 
         }
      }
+
      return $where;
   }
 
@@ -608,85 +611,6 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $rows;
   }
 
-  function getAssoc($where=array(),$key_column=false)
-  {
-     if($where == false)
-     {
-        $where=array(); 
-     }
-
-     $select=$this->_db->select();
-
-     if($key_column != false)
-     {
-        $select->from($this->_name,array($key_column,'*'));
-     }
-     else
-     {
-        $select->from($this->_name,'*');
-     }
-
-     if(is_string($where))
-     {
-        $select->where($where);
-     }
-     else
-     {
-        foreach($where as $k=>$v)
-        {
-           if(strpos($k,"?") !== false)
-           {
-              $select->where($k,$v);
-           }
-           else
-           {
-              $select->where($k.'=?',$v);
-           }
-        }
-     }
-
-     /*
-     if($order != false)
-     {
-        $select->order($order);
-     }
-     */
-
-     $rows=$this->_db->fetchAssoc($select);
-
-     return $rows;
-  }
-
-  /**
-  * get multi records ,and merge records 
-  * each records  should has a key, which is the last parameter of this mehtod
-  * it need at least 3 parameters, where1, where2, key_column_name
-  */
-  function getMulti()
-  {
-     if(func_num_args() <= 2)
-     {
-        trigger_error("invalid parameter: getMulti ");
-     }
-
-     $args=func_get_args();
-
-     $key_column_name=array_pop($args);
-
-     //query records
-     $rows=array();
-     foreach($args as $where)
-     {
-        $rows=array_merge($rows,$this->getAssoc($where,$key_column_name));
-     }
-
-     return $rows;
-  }
-
-
-  /**
-  * edit column, if not exist, do nothing
-  */
   function editWhere($where,$data)
   {
      if($this->existsWhere($where))
@@ -709,9 +633,6 @@ class Frd_Db_Table  extends Zend_Db_Table
      }
   }
 
-  /**
-  * delete records ,if not exists , do nothing
-  */
   function deleteWhere($where)
   {
      $real_where=array();
@@ -730,9 +651,6 @@ class Frd_Db_Table  extends Zend_Db_Table
      return $this->delete($real_where);
   }
 
-  /**
-  * add record, if exists, edit, 
-  */
   function addWhere($where,$data)
   {
      $real_where=array();
@@ -759,9 +677,6 @@ class Frd_Db_Table  extends Zend_Db_Table
      }
   }
 
-  /**
-  * check if record exists
-  */
   function existsWhere($where)
   {
      $data=$this->getRow($where);

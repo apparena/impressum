@@ -1,0 +1,22 @@
+<?php 
+include_once ( '../init_session.php' );
+
+$form=new Frd_Form();
+
+$form->addField("text","name",'','Name');
+$form->addField("text","email",'','Email');
+
+$form->addSubmitButton("Save");
+
+
+?>
+
+
+<?php echo $form->render(); ?>
+
+
+<script>
+<?php echo $form->renderJs(); ?>
+</script>
+
+
