@@ -120,6 +120,7 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/script.js?v3"></script>
+	<script src="js/jquery.validate.min.js?v3"></script>
 	<!-- end scripts-->
 	
 	<!--<script>
