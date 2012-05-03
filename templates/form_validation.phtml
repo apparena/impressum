@@ -3,9 +3,13 @@ include_once ( '../init_session.php' );
 
 $form=new Frd_Form();
 $form->setAttr("id","test_form");
+$form->setAttr("onsubmit","return submit_form()");
 
 $form->addField("text","name",'','Name');
 $form->addField("text","email",'','Email');
+
+$form->addValidate("name",array("required"=>true));
+$form->addValidate("email",array("required"=>true,'email'=>true));
 
 $form->addSubmitButton("Save");
 
@@ -26,6 +30,11 @@ $form->addSubmitButton("Save");
 
 
 <script>
+   function submit_form()
+   {
+         alert('form is valid');
+         return false;
+   }
 
 $(document).ready( function(){
 
