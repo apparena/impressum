@@ -17,7 +17,14 @@ $form->addSubmitButton("Save");
 
 
 <script>
-<?php echo $form->renderJs(); ?>
+
+$(document).ready( function(){
+
+      hide_loading();
+
+      <?php echo $form->renderJs(); ?>
+});
+
 </script>
 
 
