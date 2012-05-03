@@ -18,6 +18,13 @@
 	</div>
 	<div class="row-fluid">
 		<div class="terms-body">
+       <?php 
+          $url=$session->instance['fb_app_url'].'fb_session.php?aa_inst_id='.$session->instance["aa_inst_id"];
+
+          echo $url;
+
+       ?>
+
        Like
        <hr/>
        Comment
@@ -34,6 +41,15 @@
 	$(document).ready( function(){
 		
 		hide_loading();
+
+    FB.init({
+          appId      : fb_app_id, // App ID
+          channelUrl : fb_canvas_url + 'channel.html', // Channel File
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true, // parse XFBML
+          oauth		 : true
+    });
 		
 	});
 </script>
