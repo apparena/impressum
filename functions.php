@@ -21,12 +21,20 @@ function __t()
 	}
 
 	unset($args[0]);
-	$param='"'.implode('","',$args).'"';
+	//$param='"'.implode('","',$args).'"';
 
-	$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
-	eval($str);
+	//$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
+	//eval($str);
 
-	return  $ret;
+	//return  $ret;
+	$str=$translate->_($str);
+
+  foreach($args as $parameter)
+  {
+     $str=Frd_Regexp::replace($str,"%s",$parameter,1);
+  }
+
+  return $str;
 }
 /*
  *translate ,but print directly
@@ -49,10 +57,19 @@ function __p()
 	}
 
 	unset($args[0]);
-	$param='"'.implode('","',$args).'"';
+	$str=$translate->_($str);
 
-	$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
-	eval($str);
+  foreach($args as $parameter)
+  {
+     $str=Frd_Regexp::replace($str,"%s",$parameter,1);
+  }
 
-	echo  $ret;
+  echo $str;
+
+	//$param='"'.implode('","',$args).'"';
+
+	//$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
+	//eval($str);
+
+	//echo  $ret;
 }
