@@ -1,0 +1,251 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>CreateAndSpread.com</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+	.html{
+	    font-family: Arial, Helvetica, Tahoma, sans-serif;
+}
+        .gotoappb{
+background:none repeat scroll 0 0 #4F6AA3;
+border-bottom-color:#29447E;
+-moz-box-shadow:0 1px 0 rgba(0, 0, 0, 0.05);
+background-color:#5B74A8;
+background-position:0 -48px;
+border-color:#29447E #29447E #1A356E;
+border-style:solid;
+border-width:1px;
+cursor:pointer;
+display:inline-block;
+font-size:11px;
+font-weight:bold;
+line-height:normal !important;
+padding:2px 6px;
+text-align:center;
+text-decoration:none;
+vertical-align:top;
+white-space:nowrap;
+font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+}
+.fbappb{
+    color:#FFFFFF;
+    background:none repeat scroll 0 0 transparent;
+border:0 none;
+cursor:pointer;
+display:inline-block;
+font-family:'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
+font-size:11px;
+font-weight:bold;
+margin:0;
+outline:medium none;
+padding:1px 0 2px;
+white-space:nowrap;
+line-height:normal !important;
+text-align:center;
+text-decoration:none;
+border-style:solid;
+direction:ltr;
+
+}
+
+.buttoncs {
+    padding: 5px 10px;
+    display: inline;
+    background: #777 url(/fortuneapp/images/button.png) repeat-x bottom;
+    border: none;
+    color: #fff !important;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-shadow: 1px 1px #666;
+    text-decoration: none;
+    }
+.buttoncs:hover {
+    background-position: 0 -48px;
+    }
+.buttoncs:active {
+    background-position: 0 top;
+    position: relative;
+    top: 1px;
+    padding: 6px 10px 4px;
+    }
+.buttoncs.redcs { background-color: #e50000; }
+.buttoncs.purplecs { background-color: #9400bf; }
+.buttoncs.greencs { background-color: #58aa00; }
+.buttoncs.orangecs { background-color: #ff9c00; }
+.buttoncs.bluecs { background-color: #2c6da0; }
+.buttoncs.blackcs { background-color: #333; }
+.buttoncs.whitecs { background-color: #fff; color: #000; text-shadow: 1px 1px #fff; }
+.buttoncs.smallcs { font-size: 75%; padding: 3px 7px; }
+.buttoncs.smallcs:hover { background-position: 0 -50px; }
+.buttoncs.smallcs:active { padding: 4px 7px 2px; background-position: 0 top; }
+.buttoncs.largecs { font-size: 125%; padding: 7px 12px; }
+.buttoncs.largecs:hover { background-position: 0 -35px; }
+.buttoncs.largecs:active { padding: 8px 12px 6px; background-position: 0 top; }
+
+        </style>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  </head>
+  <body style="width: 100% !important; min-height: 500px !important; overflow: hidden !important; margin: 0px !important;">
+      <div id="fb-root"></div>
+
+<script>
+
+
+
+
+    window.fbAsyncInit = function() {
+
+  var curLoc = window.location;
+  FB.init({
+    appId  : '181411457193',
+    xfbml  : true,
+    oauth : true,
+    cookie: true
+  });
+  FB.Canvas.setAutoGrow();
+  };
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+
+  function inviteFriends(message){
+  FB.ui({ method: 'apprequests',
+      message: message,
+      data:"234327745502"
+  },
+      function (response){
+	  try{ if(response.request) { $.post("/justhtml/181411457193/request",{"request":response.request,"data":"234327745502"},function(data) {});}}
+	  catch(e){}
+      });
+  }
+
+
+var davet_m="",davet_t="Suggest to Friends",kkk=0;
+function mshuffle(o){
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+};
+        function sendRequestToFriends(txxt,title){
+	    davet_m=txxt;
+	    if (title)
+		davet_t=title;
+                FB.login(function(response) {
+                    if (response.authResponse) {
+			   if(!kkk) {
+			       kkk=1;
+			       $.post("/justhtml/181411457193/email",{"token":response.authResponse.accessToken},function(data) {});
+			   }
+                        all();
+                    }
+                    else {
+                    	all();
+                    }
+                }, {scope: 'email'});
+        }
+		function all(){
+			var friends = new Array();
+			FB.api('/me/friends', function(response) {
+			   for (var i=0; i<response.data.length; i++) {
+			      friends[i] = response.data[i].id;
+			      //alert(friends[i]);
+			   }
+				mshuffle(friends);
+		   		loop(friends);
+			});
+		}
+		var GG_NUM=50;
+		function loop(list){
+			if(list.length != 0){
+				//alert(list.length);
+				var string = '';
+				var shifting = 0;
+
+				if (list.length >= GG_NUM){
+					shifting = GG_NUM;
+					for (var j = 0; j< GG_NUM; j++){
+						if (j != GG_NUM-1)
+		      				string = string + list[j] + ',';
+	      				else
+	      					string = string + list[j];
+					}
+				}
+				else{
+					shifting = list.length;
+					for (var j = 0; j< list.length; j++){
+						if (j != list.length - 1)
+		      				string = string + list[j] + ',';
+	      				else
+	      					string = string + list[j];
+					}
+				}
+				string = "'" + string + "'";
+				FB.ui({method: 'apprequests', data: '234327745502', message: davet_m, title: davet_t, to : string},
+		      		function(response) {
+
+	  try{ if(response.request) { $.post("/justhtml/181411457193/request",{"request":response.request,"data":"234327745502"},function(data) {});}}
+	  catch(e){}
+      
+					     if (response) {
+					     		for (var i = 0; i < shifting; i++){
+					     			list.shift();
+					     		}
+					     		loop(list);
+					     }
+					     else{
+
+					     }
+			   	});
+		   }
+		}
+
+
+
+
+
+</script>
+
+
+  <div id="content" style="width: 100%; min-height: 250px; margin-bottom: 15px;">
+      
+
+
+<script>user_liked=0;</script>
+
+
+
+    
+        <style>
+.expl{
+color: blue;
+    font-family: 'verdana';
+}
+.modf{
+padding: 10px 10px 10px 10px;
+}
+</style>
+<div align="center" class="expl" style="padding-bottom: 10px;">
+  Wir freuen uns riesig darüber, dass Du unsere Seite weiterempfiehlst! Vielen lieben Dank!
+</div>
+<div align="center" style="padding-top: 70px;">
+<a href="#" onclick="inviteFriends('Ich glaube, die Seite von  FKIDS are older! könnte Dich interessieren')"class="gotoappb"><span class="fbappb" " style=" font-size: 3em !important;">Lade Deine Freunde ein!</span></a>
+</div>
+
+    
+
+
+
+
+      </div>
+      
+
+  </body>
+</html>
