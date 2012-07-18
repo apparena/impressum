@@ -44,21 +44,43 @@ addDb(array(
    'dbname'=>getConfig("database_name"),
 ));
 
-// Add translation management
-//$translate = new Zend_Translate('csv', ROOT_PATH.'/locale/de.csv', 'de',array('delimiter' => ';'));
-//$translate->addTranslation(ROOT_PATH.'/locale/es.csv', 'es');
-//$translate->setLocale('de');
-//$global->translate=$translate;
-
 // Initialize App-Manager connection
 $aa = new AA_AppManager(array(
 	'aa_app_id'  => getConfig("aa_app_id"),
 	'aa_app_secret' => getConfig("aa_app_secret"),
   'aa_inst_id' => getRequest("aa_inst_id"),
 ));
-
-$aa->setServerUrl(getConfig("soap_server_url"));
+$aa->setServerUrl('http://dev.app-arena.com/manager/server/soap4.php');
 $aa_instance = $aa->getInstance();
+
+// Start session
+$session = new Zend_Session_Namespace( 'aa_' . $aa_instance['aa_inst_id'] );
+$session->config = $aa->getConfig();
+$session->instance = $aa_instance;
+
+// Try to get a the current locale from cookie
+$cur_locale = $session->instance['aa_inst_locale'];
+$cookie_index_locale = 'aa_' . $session->instance['aa_inst_id'] . "_locale";
+$lang_switch = false;
+if (isset($_COOKIE[$cookie_index_locale])) {
+	$cur_locale = $_COOKIE[$cookie_index_locale];
+	$session->app['testme'] = $cur_locale . "_cookie";
+} else {
+	if (isset($session->fb["user"]["locale"]) && $session->fb["user"]["locale"] != "de_DE") {
+		$lang_switch = true;
+	}
+}
+$aa->setLocale($cur_locale);
+// Add translation management
+$session->translation = array();
+$session->translation[$cur_locale] = $aa->getTranslation($cur_locale);
+if (!isset($session->translation[$cur_locale])) {
+	$translate = new Zend_Translate('array',$session->translation[0], $cur_locale);
+} else {
+	$translate = new Zend_Translate('array',$session->translation[$cur_locale], $cur_locale);
+}
+$translate->setLocale($cur_locale);
+$global->translate=$translate;
 
 // Build up information array about facebook
 $session->fb = array();
@@ -76,22 +98,10 @@ if (isset($fb_signed_request['page']['id'])){
 if (isset($fb_signed_request['user_id'])){
 	$fb_data['fb_user_id'] = $fb_signed_request['user_id'];
 }
-					
+
 $current_app = array();
 
-$session = new Zend_Session_Namespace( 'aa_' . $aa_instance['aa_inst_id'] );
-$session->config = $aa->getConfig();
-$session->instance = $aa->getInstance($aa_instance['aa_inst_id']);
 
-$session->translation = array();
-$session->translation['en_US'] = $aa->getTranslation('en_US');
-$session->translation['de_DE'] = $aa->getTranslation('de_DE');
-
-// Add translation management
-$translate = new Zend_Translate('array',$session->translation['en_US'], 'en');
-$translate->addTranslation($session->translation['de_DE'], 'de');
-$translate->setLocale('de');
-$global->translate=$translate;
 
 foreach($fb_data as $k=>$v)
 {
@@ -102,4 +112,7 @@ if(!isset($session->app))
 {
    $session->app = $current_app;
 }
+
+// Url for facebook sharing
+$session->app['fb_share_url'] = "https://apps.facebook.com/" . $session->instance['fb_app_url']."/fb_share.php?aa_inst_id=".$session->instance['aa_inst_id'];
 ?>

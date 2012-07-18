@@ -90,10 +90,28 @@ if($session->instance == false || !isset($session->instance['aa_inst_id']))
 }
 
 
+// Try to get a the current locale from cookie
+$cur_locale = $session->instance['aa_inst_locale'];
+$cookie_index_locale = 'aa_' . $session->instance['aa_inst_id'] . "_locale";
+$lang_switch = false;
+if (isset($_COOKIE[$cookie_index_locale])) {
+	$cur_locale = $_COOKIE[$cookie_index_locale];
+	$session->app['testme'] = $cur_locale . "_cookie";
+} else {
+	if (isset($session->fb["user"]["locale"]) && $session->fb["user"]["locale"] != "de_DE") {
+		$lang_switch = true;
+	}
+}
+$aa->setLocale($cur_locale);
 // Add translation management
-$translate = new Zend_Translate('array',$session->translation['en_US'], 'en_US');
-$translate->addTranslation($session->translation['de_DE'], 'de');
-$translate->setLocale('de');
+$session->translation = array();
+$session->translation[$cur_locale] = $aa->getTranslation($cur_locale);
+if (!isset($session->translation[$cur_locale])) {
+	$translate = new Zend_Translate('array',$session->translation[0], $cur_locale);
+} else {
+	$translate = new Zend_Translate('array',$session->translation[$cur_locale], $cur_locale);
+}
+$translate->setLocale($cur_locale);
 $global->translate=$translate;
 
 ?>

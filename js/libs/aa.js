@@ -208,6 +208,37 @@ function loadTemplate(filename, aa_inst_id){
 }
 
 
+/**
+ * Save values to the current app-arena session
+ * @param params json array with parameters
+ * @param session_obj name of the session array, that will be updated, e.g. 'fb' to update $session->fb
+ */
+function save_to_session(params, session_obj,callback,failed_callback)
+{
+  params.object = session_obj; 
+  var url="ajax/save_to_session.php?aa_inst_id="+aa_inst_id;
+  jQuery.post(url,params,function(response){
+    if(response.error == 0)
+    {
+      //success
+      if(isFunction(callback))
+      {
+        callback(response);
+      }
+    }
+    else
+    {
+      //error
+      //alert(response.error_msg);
+      
+      if(isFunction(callback))
+      {
+        failed_callback(response);
+      }
+    }
+  },'json');
+}
+
 
 
 /**

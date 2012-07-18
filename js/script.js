@@ -129,3 +129,12 @@ function initMenu() {
 	return firstMenuItem;
 };
 
+/**
+ * This function will set a class name to the body element. It will remove all other class-names before.
+ * @param class_name
+ */
+function set_body_class(class_name) {
+	$("body").removeClass();
+	$("body").addClass(class_name);
+}
+	
