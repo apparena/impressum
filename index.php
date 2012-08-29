@@ -40,7 +40,7 @@
 				 * (-> see debug info button)
 				 */
 				echo $session->config['css_bootstrap']['value'];
-				echo $global->config['css']['value']; // The application css can overwrite the bootstrap css - the bootstrap css should not be modified!
+				echo $session->config['css']['value']; // The application css can overwrite the bootstrap css - the bootstrap css should not be modified!
 				
 			?>
 		</style>

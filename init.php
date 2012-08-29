@@ -58,6 +58,8 @@ $session = new Zend_Session_Namespace( 'aa_' . $aa_instance['aa_inst_id'] );
 $session->config = $aa->getConfig();
 $session->instance = $aa_instance;
 
+$global = $session;
+
 // Try to get a the current locale from cookie
 $cur_locale = $session->instance['aa_inst_locale'];
 $cookie_index_locale = 'aa_' . $session->instance['aa_inst_id'] . "_locale";
