@@ -25,7 +25,7 @@ $config=array(
    'root_path'=>ROOT_PATH,
    'include_paths'=>array(
 ROOT_PATH.'/libs',
-ROOT_PATH.'/modules',
+ROOT_PATH.'/modules'
 ),
 
    'module_path'=>ROOT_PATH.'/modules'
