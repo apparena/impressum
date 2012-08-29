@@ -300,19 +300,20 @@ if ( sizeof( $request_id ) > 0 ) {
 	$send_request_ids .= implode( ',', $request_id );
 }
 
-
+echo "111111111111111111111111111111111111111111111111111111111";
 // check if the user comes from an invitation (notification) and was redirected to the canvas page.
 if ( isset( $aa_inst_id_canvas ) && strlen( $aa_inst_id_canvas ) > 0 ) {
 	$redirect_url = $global->instance["fb_page_url"] . '?sk=app_' . $global->instance["fb_app_id"] . '&app_data=' . $send_request_ids;
 	redirect( $redirect_url );
 }
-
+echo "222222222222222222222222222222222222222222222222222222222";
 // check if the user comes from the redirection above.
 // if so, the signed request param 'app_data' will be available.
 $app_data = false;
 if ( isset( $session->fb[ 'app_data' ] ) ) {
 	$app_data = $session->fb[ 'app_data' ];
 }
+echo "333333333333333333333333333333333333333333333333333333333";
 /*
 $session->inv_message = '';
 $session->from_id = '';
