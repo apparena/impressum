@@ -40,11 +40,12 @@ require_once ROOT_PATH.'/config.php';
 /*********************************************************************
  * Check if the user comes from an invitation (from a notification). *
  * If so, get the right request id.                                  *
- *********************************************************************//*
+ *********************************************************************/
 // $request_id = '';
 $request_id = array();
 $aa_inst_id_canvas = '';
 $request_to_ids = array();
+/*
 $connection = mysql_connect( $database_host, $database_user, $database_pass );
 if ( !$connection ) {
 	die( 'sql connection failed: ' . mysql_error() );
@@ -136,6 +137,7 @@ try{
 //necessary files
 
 //db
+/*
 addDb(array(
    'adapter'=>'MYSQLI',
    'host'=>$database_host,
@@ -143,6 +145,7 @@ addDb(array(
    'password'=>$database_pass,
    'dbname'=>$database_name,
 ));
+*/
 
 
 
@@ -310,6 +313,7 @@ $app_data = false;
 if ( isset( $session->fb[ 'app_data' ] ) ) {
 	$app_data = $session->fb[ 'app_data' ];
 }
+/*
 $session->inv_message = '';
 $session->from_id = '';
 $session->from_name = '';
@@ -362,4 +366,5 @@ if ( $app_data == false || strlen( $app_data ) <= 0 ) {
 	}
 }
 // exit(0);
+*/
 ?>
