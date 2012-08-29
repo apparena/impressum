@@ -285,11 +285,11 @@ try {
 	}
 }
 //log
-app_log_fb();
+//app_log_fb();
 // echo "\n".$global->config["tournament"]["value"];
 // echo "\n".$session->config["tournament"]["value"];
 
-if ( $global->config[ 'admin_debug_mode' ][ 'value' ] == '1' ) {
+if ( isset($global->config[ 'admin_debug_mode' ][ 'value' ]) && $global->config[ 'admin_debug_mode' ][ 'value' ] == '1' ) {
 	ini_set('display_errors', 1);
 } else {
 	ini_set('display_errors', 0);
