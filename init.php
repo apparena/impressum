@@ -28,7 +28,7 @@ ROOT_PATH.'/libs',
 ROOT_PATH.'/modules',
 ),
 
-   'module_path'=>ROOT_PATH.'/modules',
+   'module_path'=>ROOT_PATH.'/modules'
 );
 require_once ROOT_PATH.'/config.php';
 
