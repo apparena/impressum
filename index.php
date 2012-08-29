@@ -1,5 +1,4 @@
 <?php 
-	// init app-arena once, use init_session.php later...
  	include_once( "init.php" );
 ?>
 <!-- HTML5 standard doctype -->
