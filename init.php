@@ -245,7 +245,7 @@ $session->instance = $global->instance;
 $session->app['fb_share_url'] = "https://apps.facebook.com/" . $session->instance['fb_app_url']."/fb_share.php?aa_inst_id=".$session->instance['aa_inst_id'];
 
 // Switch language if activated
-if ( $session->config['admin_lang_activated']['value'] && $lang_switch) {
+if ( isset($session->config['admin_lang_activated']['value']) && $session->config['admin_lang_activated']['value'] == '1' && $lang_switch) {
 	$cur_locale = "en_US";
 	$aa->setLocale($cur_locale);
 	$global->config = $aa->getConfig();

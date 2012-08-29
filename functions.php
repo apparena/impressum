@@ -705,5 +705,45 @@ function format_datetime($datetime,$format="Y-m-d H:i:s")
    return date($format,strtotime($datetime)) ;
 }
 
+/**
+* log fb parameters
+*/
+function app_log_fb()
+{
+	$fb=getModule("app_log")->getTable("fb");
 
+	$data=array();
+	$data['get']=array();
+
+	foreach($_GET as $k=>$v)
+	{
+		if(strpos($k,"fb_") === 0)
+		{
+			$data['get'][$k]=$v;
+		}
+	}
+
+	//if no fb_*  parameter, do not log
+	if($data['get'] ==  false)
+	{
+		return false;
+	}
+
+	//$data['post']=print_r($_POST,true);
+	$data['signed_request']='';
+
+	$signed_request=getRequest('signed_request',false);
+
+	if($signed_request != false)
+	{
+		list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+		$signed_data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+		$data['signed_request']=print_r($signed_data,true);
+	}
+
+	$data=array('data'=>print_r($data,true));
+
+
+	$fb->add($data);
+}
 ?>
