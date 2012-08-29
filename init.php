@@ -18,7 +18,6 @@ set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR .
 
 /**** init ***/
 require_once ROOT_PATH.'/libs/Frd/functions.php';
-require_once ROOT_PATH.'/libs/AA/functions.php'; 
 require_once ROOT_PATH.'/libs/Frd/Frd.php';
 
 $config=array(
