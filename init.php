@@ -13,18 +13,18 @@ require_once 'functions.php';
 //auto load
 //set inclclude path
 define("ROOT_PATH",realpath(dirname(__FILE__)));
-set_include_path(ROOT_PATH.'/lib/' . PATH_SEPARATOR .
+set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR .
    ROOT_PATH.'/modules/' . PATH_SEPARATOR );
 
 /**** init ***/
-require_once ROOT_PATH.'/lib/Frd/functions.php'; 
-require_once ROOT_PATH.'/lib/Frd/Frd.php';
+require_once ROOT_PATH.'/libs/Frd/functions.php'; 
+require_once ROOT_PATH.'/libs/Frd/Frd.php';
 
 $config=array(
    'timezone'=>'Europe/Berlin',
    'root_path'=>ROOT_PATH,
    'include_paths'=>array(
-ROOT_PATH.'/lib',
+ROOT_PATH.'/libs',
 ROOT_PATH.'/modules',
 ),
 
