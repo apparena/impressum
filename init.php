@@ -17,7 +17,7 @@ $config=array(
       ROOT_PATH.'/libs',
       ROOT_PATH.'/modules',
    ),
-   'module_path'=>ROOT_PATH.'/modules',
+   'module_path'=>ROOT_PATH.'/modules'
 );
 Frd::init($config);
 

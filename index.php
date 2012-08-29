@@ -160,6 +160,10 @@
 				?>
 			</div>
 		</footer>
+		
+		<hr><hr><hr><hr>
+			<?php var_dump($session->config);?>
+		<hr><hr><hr><hr>
 	
 		<!-- 
 			Debug area
