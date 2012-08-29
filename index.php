@@ -161,6 +161,10 @@
 			</div>
 		</footer>
 	
+	<hr /><hr /><hr /><hr />
+		<?php print_r($session);?>
+	<hr /><hr /><hr /><hr />
+	
 		<!-- 
 			Debug area
 			This will show the App-Arena app-instance config values
@@ -249,7 +253,8 @@
 			      xfbml      : true, // parse XFBML
 			      oauth		 : true
 			    });
-			    
+
+/*
 			    // Additional initialization code here
 				FB.getLoginStatus(function(response) {
 			    	  if (response.status === 'connected') {
@@ -280,6 +285,8 @@
 			    	  }
 				});
 			};
+*/
+			
 			// Load the SDK Asynchronously
 			(function(d){
 				var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
