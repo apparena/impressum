@@ -239,7 +239,8 @@
 				// If this is not called, the menu items (<a> tags) have to be handled manually!
 				initApp();
 			});
-		
+			
+/*
 			window.fbAsyncInit = function() {
 				FB.init({
 			      appId      : fb_app_id, // App ID
@@ -250,7 +251,6 @@
 			      oauth		 : true
 			    });
 
-/*
 			    // Additional initialization code here
 				FB.getLoginStatus(function(response) {
 			    	  if (response.status === 'connected') {
