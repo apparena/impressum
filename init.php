@@ -40,7 +40,7 @@ require_once ROOT_PATH.'/config.php';
 /*********************************************************************
  * Check if the user comes from an invitation (from a notification). *
  * If so, get the right request id.                                  *
- *********************************************************************/
+ *********************************************************************//*
 // $request_id = '';
 $request_id = array();
 $aa_inst_id_canvas = '';
@@ -108,7 +108,7 @@ if( isset( $_REQUEST[ 'request_ids' ] ) ) {
 }
 
 // exit(0);
-
+*/
 
 
 
