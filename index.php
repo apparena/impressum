@@ -161,10 +161,6 @@
 			</div>
 		</footer>
 	
-	<hr /><hr /><hr /><hr />
-		<?php print_r($session);?>
-	<hr /><hr /><hr /><hr />
-	
 		<!-- 
 			Debug area
 			This will show the App-Arena app-instance config values
