@@ -162,7 +162,7 @@
 		</footer>
 		
 		<hr><hr><hr><hr>
-			<?php var_dump($session->config);?>
+			<?php print_r($session->config);?>
 		<hr><hr><hr><hr>
 	
 		<!-- 
