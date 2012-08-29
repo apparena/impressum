@@ -746,4 +746,26 @@ function app_log_fb()
 
 	$fb->add($data);
 }
+function get_fb_app_info($fb_page_url)
+{
+	return false;
+	global $aa_app_id,$aa_api_key;
+
+	$params=array(
+      'aa_app_id'=>$aa_app_id,
+      'aa_app_secret'=>$aa_api_key,
+      'aa_inst_id'=>'',
+      'fb_page_id'=>'',
+	);
+
+
+	$fluttery = new Fluttery();
+	$params['fb_page_url']=$fb_page_url;
+
+
+	$fluttery->init($params);
+	$data=$fluttery->getFbApp($fb_page_url);
+
+	return $data;
+}
 ?>
