@@ -160,10 +160,6 @@
 				?>
 			</div>
 		</footer>
-		
-		<hr><hr><hr><hr>
-			<?php print_r($session->config);?>
-		<hr><hr><hr><hr>
 	
 		<!-- 
 			Debug area
