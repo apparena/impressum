@@ -15,6 +15,6 @@ $config_data=array(
 
    'debugMode' => true,
 
-   'soap_server_url'=>'http://dev.app-arena.com/manager/server/soap3.php',
+   'soap_server_url'=>'http://dev.app-arena.com/manager/server/soap4.php'
 );
 ?>

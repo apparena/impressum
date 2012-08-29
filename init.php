@@ -207,8 +207,8 @@ if(($fb_page_id == false && $aa_inst_id == false ) || $forceRedirect == true)
 
 // Setup app-manager connection
 $aa = new AA_AppManager(array(
-	'aa_app_id'  	=> $aa_app_id,
-	'aa_app_secret' => $aa_api_key,
+	'aa_app_id'  	=> $config_data['aa_app_id'],
+	'aa_app_secret' => $config_data['aa_app_secret'],
 	'aa_inst_id' 	=> $aa_inst_id
 ));
 $aa->setServerUrl('http://dev.app-arena.com/manager/server/soap4.php');
