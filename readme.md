@@ -18,7 +18,7 @@ File structure:
 	- plugins.js			--> All javascript libraries will be merged in this file (this will reduce the number of http-requests for loading external js libs)
 	- scripts.js			--> All custom js functions merged in one file (this will reduce the number of http-requests for loading external js libs)
 -  libs
-	- AA					--> Main App-Arena files to connect to the App-Manager and receive content
+	- AA					--> Main App-Arena files to connect to the App-Manager and some helper classes
 	- fb-php-sdk			--> Official facebook php sdk 
 - modules					--> App modules, which can be integrated easily into this app-template
 - templates					--> Template files which can be loaded easily via ajax
