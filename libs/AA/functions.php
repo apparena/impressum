@@ -1,5 +1,551 @@
 <?php
 
+function get_page_id()
+{
+  if(isset($_GET['page_id']))
+  {
+    $page_id=intval($_GET['page_id']);
+  }
+  else if(isset($_POST['fb_sig_page_id']))
+  {
+    $page_id=$_POST['fb_sig_page_id'];
+  }
+  else if(isset($_REQUEST['signed_request']))
+  {
+     $signed_request = $_REQUEST["signed_request"];
+     list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+     $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+
+     if(isset($data['page']))
+       $page_id=$data['page']['id'];
+     else
+       $page_id=false;
+  }
+  else
+  {
+    $page_id=false;
+  }
+
+  return $page_id;
+}
+
+function is_fan()
+{
+   $is_fan=false;
+
+  if(isset($_REQUEST['signed_request']))
+  {
+    $signed_request = $_REQUEST["signed_request"];
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+    if(isset($data['page']))
+    {
+       $is_fan=$data['page']['liked'];
+    }
+  }
+
+  return $is_fan;
+}
+//check if is in fan page
+function is_fan_page()
+{
+  if(isset($_REQUEST['signed_request']))
+  {
+    $signed_request = $_REQUEST["signed_request"];
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+    if(isset($data['page']))
+    {
+       return true;
+    }
+  }
+
+
+  return false;
+}
+
+
+function is_admin()
+{
+  if(isset($_REQUEST['signed_request']))
+  {
+    $signed_request = $_REQUEST["signed_request"];
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+    if(isset($data['page']['admin']))
+      $is_admin=$data['page']['admin'];
+    else
+      $is_admin=false;
+  }
+  else
+  {
+    $is_admin=false;
+  }
+
+  return $is_admin;
+}
+
+/**
+ * check if current user is admin of this app
+ */
+function app_is_admin($aa_inst_id)
+{
+  $session=new Zend_Session_Namespace("instance_".$aa_inst_id);
+  if(!isset($session->is_admin) || $session->is_admin == false )
+    return  false;
+  else
+    return true;
+}
+
+function get_user_id($app_id=false,$app_secret=false)
+{
+  if(isset($_REQUEST['signed_request']))
+  {
+    $signed_request = $_REQUEST["signed_request"];
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+    if(isset($data['user_id']))
+      $user_id=$data['user_id'];
+    else
+      $user_id=false;
+  }
+  else
+  {
+    $user_id=false;
+  }
+
+  if($user_id == false && $app_id != false && $app_secret != false )
+  {
+	  $facebook = new Facebook(array(
+				  'appId' => $app_id,
+				  'secret' => $app_secret,
+				  'cookie' => true));
+
+	  $user_id=$facebook->getUser();
+  }
+
+
+
+  return $user_id;
+}
+
+
+/*
+ * load a record from table
+ *
+ * @return table object of this recored, or false if not exists
+ */
+function app_load_record($table,$primary,$value)
+{
+  $table=new Frd_Db_Table($table,$primary);
+  if( $table->load($value) == false)
+    return false;
+  else
+    return $table;
+}
+
+
+
+/*
+ * get current uri
+ */
+function app_current_uri()
+{
+  $url='http://'.$_SERVER['HTTP_HOST'].'/'.$_SERVER['REQUEST_URI'];
+  return $url;
+}
+
+
+/**
+ * if is https , replace url's link with https://
+ */
+function handle_link($link)
+{
+  if(is_https() == true)
+  {
+    $link=str_replace("http://","https://",$link); 
+  }
+
+  return $link;
+}
+
+
+/*
+ * redirect to other url ,form iframe app
+ * @param url string 
+ */
+function redirect($url)
+{
+  global $global;
+  echo '<script>top.location="' . $url . '";</script>';
+  exit();
+}
+
+
+
+//get current url
+//this url is  rewrited uri
+//like  appmodel/index/...
+//do not have host and baseurl
+function get_current_url()
+{
+  $uri= $_SERVER['REQUEST_URI'];
+
+  $uri=str_replace(baseurl(false).'index.php',"",$uri);
+
+  return $uri;
+}
+/**
+ * string to html attr
+ * so can not contain  ' " > < \n \r 
+ */
+function tohtmlattr($str)
+{
+  $str=str_replace("\n","",$str);
+  $str=htmlentities($str,ENT_QUOTES,"utf-8");
+  return $str;
+}
+
+/**
+* filter  ' "  for used in js code
+*/
+function filter_for_js($str)
+{
+   $str=str_replace("\n","",$str);
+   $str=str_replace("\r","",$str);
+   $str=str_replace("'","",$str);
+   $str=str_replace('"',"",$str);
+   $str=htmlentities($str,ENT_QUOTES,"utf-8");
+   return $str;
+}
+
+/**
+ * check if a variable is string
+ */
+function checkString($str,$msg='invalid string')
+{
+  if(!is_string($str))
+  {
+    error("invalid string ".$str);
+  }
+
+  $str=trim($str);
+  if($str == false)
+  {
+    error("invalid string ".$str);
+  }
+}
+
+
+/**
+* check if  user can upload image 
+*/
+function  can_upload($aa_inst_id,$user_id)
+{
+	global $global;
+	$db=$global->db; 
+
+	$select=$db->select();
+	$select->from('competition_join','count(*)');
+	$select->where('aa_inst_id=?',$aa_inst_id);
+	$select->where('fb_userid=?',$user_id);
+	//echo $select; 
+	$ret=$db->fetchOne($select);
+	if($ret >= 2)
+		return false;
+	else
+		return true;
+}
+//get a user  information record from table participants 
+function get_user_info_byjoinid($join_id)
+{
+	$join=new Frd_Db_Table('competition_join','id');
+	$join->load($join_id);
+	$fbuserid=$join->fb_userid;
+
+  if($fbuserid == false)
+    return false;
+
+	global $global;
+	$db=$global->db; 
+
+	$select=$db->select();
+	$select->from('participants','*');
+	$select->where('userId=?',$fbuserid);
+
+	$ret=$db->fetchRow($select);
+
+  return $ret;
+}
+
+/**
+ * must with aa_inst_id in the  key ,otherwise will conflict
+ */
+function generateSessionKey($aa_inst_id)
+{
+  return "instance_".$aa_inst_id;
+}
+
+function parse_signed_request($signed_request)
+{
+   if($signed_request == false)
+   {
+      return array();
+   }
+
+	//$signed_request = $_REQUEST["signed_request"];
+	list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+	$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+	return $data;
+
+}
+
+/**
+* auth facebook
+*/
+function authFacebook($app_id,$app_secret,$next='',$cancel_url='')
+{
+
+	if($app_id == false || $app_secret == false)
+	{
+		throw new Exception("app id or app secret not exists");
+	}
+
+	//$facebook=new Facebook($api_key,$secret);
+	$facebook = new Facebook(array(
+    'appId' => $app_id,
+    'secret' => $app_secret,
+    'cookie' => true));
+
+	try
+	{
+		$fbme = $facebook->api('/me');
+	}
+	catch (FacebookApiException $e)
+	{
+		$fbme = false;
+		error_log($e);
+		//echo $e->getMessage();
+	}
+
+	if ($fbme == false)
+	{
+		$params['canvas'] =1;
+		$params['fbconnect'] = 0;
+		$params['req_perms'] = 'publish_stream, email,user_likes';
+
+		if($next != false)
+		$params['next'] = $next;
+
+		if($cancel_url != false)
+		$params['cancel_url'] = $cancel_url;
+
+		$login_url = $facebook->getLoginUrl($params);
+
+		echo '<script>top.location="' . $login_url . '";</script>';
+		//header("Location:$login_url");
+		exit();
+	}
+
+	return true;
+}
+
+function app_is_fan($aa_inst_id)
+{
+	$session=new Zend_Session_Namespace("instance_".$aa_inst_id);
+	if(!isset($session->is_fan) || $session->is_fan == false )
+	return  false;
+	else
+	return true;
+}
+
+/** jquery ui helper functions **/
+function ui_info_msg($msg,$id='')
+{
+   if($id != false)
+   {
+      $id='id="'.$id.'"';
+   }
+
+  $html=<<<HTML
+     <div class="ui-widget" $id>
+        <div style="padding: 0 .7em;" class="ui-state-highlight ui-corner-all"> 
+           <p style="padding:10px;">
+           <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+           <strong>
+           {$msg}
+           </strong>
+           </p>
+        </div>
+     </div>
+HTML;
+
+  echo $html;
+}
+
+/**
+* get client's ip
+*/
+function getClientIp()
+{
+   // Get client ip address
+   if ( isset($_SERVER["REMOTE_ADDR"]))
+   $client_ip = $_SERVER["REMOTE_ADDR"];
+   else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+   $client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+   else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
+   $client_ip = $_SERVER["HTTP_CLIENT_IP"];
+
+   return $client_ip;
+}
+
+/**
+* save question
+*/
+function save_question($aa_inst_id,$fb_user_id,$data)
+{
+   if($data == false)
+   {
+      return false;
+   }
+
+   global $session;
+
+   $award_selection =$data['award'];
+   $question1_answer=$data['question1'];
+   $question2_answer=$data['question2'];
+   $question3_answer=$data['question3'];
+
+
+   // get app_participation id
+   $lottery = new iCon_Lottery($aa_inst_id,getConfig('aa_app_id'));
+   $id=$lottery->isUserParticipating($fb_user_id, $aa_inst_id) ;
+
+   $table=new Table_Participation();
+   $table->load($id);
+
+   $table->fb_user_id=$fb_user_id;
+   $table->aa_inst_id=$aa_inst_id;
+   //check if answers is correct
+   //if questions > 0 && == correct answer , it means  correct
+   $answers_correct=true;
+
+   if($question1_answer > 0 && $question1_answer != $session->config['question1_correct_answer']['value'])
+   {
+      $answers_correct = false;
+   }
+
+   if($question2_answer > 0 && $question2_answer != $session->config['question2_correct_answer']['value'])
+   {
+      $answers_correct = false;
+   }
+
+   if($question3_answer > 0 && $question3_answer != $session->config['question3_correct_answer']['value'])
+   {
+      $answers_correct = false;
+   }
+
+   if($question1_answer == false && $question2_answer == false && $question3_answer == false)
+   {
+      $answers_correct=false;
+   }
+
+   $table->answers_correct =$answers_correct;
+
+
+   $table->award_selection =$award_selection;
+   $table->question1_answer=$question1_answer;
+   $table->question2_answer=$question2_answer;
+   $table->question3_answer=$question3_answer;
+
+   $table->ip= getClientIp();
+
+   $lastinsert_id=$table->save();
+
+   return $lastinsert_id;
+}
+
+/**
+* change a datetime to stand datetime format: Y-m-d H:i:s 
+*/
+function format_datetime($datetime,$format="Y-m-d H:i:s")
+{
+   return date($format,strtotime($datetime)) ;
+}
+
+/**
+* log fb parameters
+*/
+function app_log_fb()
+{
+	$fb=getModule("app_log")->getTable("fb");
+
+	$data=array();
+	$data['get']=array();
+
+	foreach($_GET as $k=>$v)
+	{
+		if(strpos($k,"fb_") === 0)
+		{
+			$data['get'][$k]=$v;
+		}
+	}
+
+	//if no fb_*  parameter, do not log
+	if($data['get'] ==  false)
+	{
+		return false;
+	}
+
+	//$data['post']=print_r($_POST,true);
+	$data['signed_request']='';
+
+	$signed_request=getRequest('signed_request',false);
+
+	if($signed_request != false)
+	{
+		list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+		$signed_data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+		$data['signed_request']=print_r($signed_data,true);
+	}
+
+	$data=array('data'=>print_r($data,true));
+
+
+	$fb->add($data);
+}
+function get_fb_app_info($fb_page_url)
+{
+	return false;
+	global $aa_app_id,$aa_api_key;
+
+	$params=array(
+      'aa_app_id'=>$aa_app_id,
+      'aa_app_secret'=>$aa_api_key,
+      'aa_inst_id'=>'',
+      'fb_page_id'=>'',
+	);
+
+
+	$fluttery = new Fluttery();
+	$params['fb_page_url']=$fb_page_url;
+
+
+	$fluttery->init($params);
+	$data=$fluttery->getFbApp($fb_page_url);
+
+	return $data;
+}
+?>
+
+<?php
+
 /** translate functions **/
 /*
  *translate , may be for the future
