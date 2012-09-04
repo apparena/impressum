@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * The signed Request will be parsed and returned as array
+ * @param string $signed_request facebook signed request
+ * @return array decoded signed request
+ */
+function parse_signed_request( $signed_request ) {
+	if($signed_request == false) {
+	  return array();
+	}
+
+	list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+	$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+	return $data;
+}
 
 /**
  * Will return, if the current user is fan or no fan of the current fanpage

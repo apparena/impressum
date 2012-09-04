@@ -12,10 +12,10 @@
 		<meta charset="utf-8">
 	    
 		<!-- Facebook Meta Data -->
-	    <meta property="fb:app_id" content="<?php echo $session->instance['fb_app_id']?>" />
+	    <meta property="fb:app_id" content="<?php echo $aa['instance']['fb_app_id']?>" />
 	    <meta property="og:title" content="" />
 	    <meta property="og:type" content="website" />
-	    <meta property="og:url" content="<?php echo $session->instance['fb_page_url']."?sk=app_".$session->instance['fb_app_id']?>" />
+	    <meta property="og:url" content="<?php echo $aa['instance']['fb_page_url']."?sk=app_".$aa['instance']['fb_app_id']?>" />
 	    <meta property="og:image" content="" />
 	    <meta property="og:site_name" content="" />
 	    <meta property="og:description" content=""/>
@@ -27,20 +27,11 @@
 		
 		<meta name="viewport" content="width=device-width">
 		
-		<!-- Include bootstrap css files -->
+		<!-- Include css config values here -->
 		<style type="text/css">
 			<?php 
-				
-				/*
-				 * There are usually two CSS config sets in App-Arena apps.
-				 * One is for the twitter bootstrap stuff and the other is for customizing the page. 
-				 * You can access the App-Arena Content by using the
-				 * $session or the $global variable.
-				 * (-> see debug info button)
-				 */
-				echo $session->config['css_bootstrap']['value'];
-				echo $session->config['css']['value']; // The application css can overwrite the bootstrap css - the bootstrap css should not be modified!
-				
+				echo $aa['config']['css_bootstrap']['value'];
+				echo $aa['config']['css']['value'];
 			?>
 		</style>
 		
@@ -60,12 +51,12 @@
 			 * a fan of this page or if he is the page admin.
 			 * (-> see debug info button)
 			 * Config values have to be fetched by adding the ['value'] index.
-			 * $session->fb or $session->instance values do not need the ['value'] index.
+			 * $session->fb or $aa['instance'] values do not need the ['value'] index.
 			 */
-			if ($session->fb['is_fan'] == false && $global->config['nofan_image_activated']['value']) { ?>
+			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
 				<div class="page_non_fans_layer"> 
 					<div class="img_non_fans">
-						<!--<img src="<?php echo $session->config['nofan_image']['value']?>" />-->
+						<!--<img src="<?php echo $aa['config']['nofan_image']['value']?>" />-->
 					</div>
 					<div id="non_fan_background">&nbsp;</div>
 				</div>
@@ -124,8 +115,8 @@
 		
 		<div class="custom-header">
 			<?php 
-				if ( isset( $session->config['custom_header_activated']['value'] ) && $session->config['custom_header_activated']['value'] == '1' ) {
-					echo $session->config['custom_header']['value'];
+				if ( isset( $aa['config']['custom_header_activated']['value'] ) && $aa['config']['custom_header_activated']['value'] == '1' ) {
+					echo $aa['config']['custom_header']['value'];
 				} 
 				?>
 		</div>
@@ -136,8 +127,8 @@
 		
 		<div class="custom-footer">
 			<?php 
-				if ( isset( $session->config['custom_footer_activated']['value'] ) && $session->config['custom_footer_activated']['value'] == '1' ) {
-					echo $session->config['custom_footer']['value'];
+				if ( isset( $aa['config']['custom_footer_activated']['value'] ) && $aa['config']['custom_footer_activated']['value'] == '1' ) {
+					echo $aa['config']['custom_footer']['value'];
 				}
 			?>
 		</div>
@@ -153,8 +144,8 @@
 			<div class="branding">
 				<?php 
 					// The app arena branding will be shown if the app instance is a basic one.
-					if ( isset( $session->config['footer_activated']['value'] ) && $session->config['footer_activated']['value'] == '1' ) {
-						echo $session->config['footer']['value'];
+					if ( isset( $aa['config']['footer_activated']['value'] ) && $aa['config']['footer_activated']['value'] == '1' ) {
+						echo $aa['config']['footer']['value'];
 					}
 				?>
 			</div>
@@ -174,9 +165,9 @@
 				<h1>Debug information</h1>
 				<?php Zend_Debug::dump($session->fb, "session->fb");?>
 				<?php Zend_Debug::dump($session->app, "session->app");?>
-				<?php Zend_Debug::dump($session->instance, "session->instance");?>
+				<?php Zend_Debug::dump($aa['instance'], "session->instance");?>
 				<?php Zend_Debug::dump($session->translation, "session->translation");?>
-				<?php Zend_Debug::dump($session->config, "session->config");?>
+				<?php Zend_Debug::dump($aa['config'], "session->config");?>
 				<?php Zend_Debug::dump($_COOKIE, "_COOKIE");?>
 				<?php Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
 			</div>
@@ -225,9 +216,9 @@
 			 * instead, this would initialize a LOCAL variable which is NOT
 			 * available from other functions in other files!
 			 */
-			fb_app_id     = '<?php $session->instance["fb_app_id"]?>';
-			fb_canvas_url = '<?php $session->instance["fb_canvas_url"]?>';
-			aa_inst_id    = '<?php $session->instance["aa_inst_id"]?>';
+			fb_app_id     = '<?php $aa['instance']["fb_app_id"]?>';
+			fb_canvas_url = '<?php $aa['instance']["fb_canvas_url"]?>';
+			aa_inst_id    = '<?php $aa['instance']["aa_inst_id"]?>';
 
 			// jquerys document ready function gets fired when the DOM has been finished loading.
 			$(document).ready(function() {
@@ -294,7 +285,7 @@
 		
 		<!-- Show admin panel if user is admin -->
 		<?php // Show admin panel, when page admin
-		if (is_admin()) {
+		if (is_fb_user_admin()) {
 			//include_once 'admin/admin_panel.php';?>		
 		<?php } ?>
 		

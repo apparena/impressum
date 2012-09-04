@@ -16,8 +16,8 @@ function app_current_uri()
 */
 function __t()
 {
-	global $global;
-	$translate=$global->translate;
+	global $aa_translate;
+	$translate=$aa_translate->translate;
 	
 	$args=func_get_args();
 	$num=func_num_args();
@@ -45,8 +45,8 @@ function __t()
 function __p()
 {
 	//$translate=Frd::getGlobal("translate");
-	global $global;
-	$translate=$global->translate;
+	global $aa_translate;
+	$translate=$aa_translate->translate;
 
 	$args=func_get_args();
 	$num=func_num_args();
