@@ -1,6 +1,6 @@
 <?php
 /*
- * Initial process to start the app
+ * Setup the environment
  */
 date_default_timezone_set('Europe/Berlin'); // Load config values
 ini_set('session.gc_probability',0); //disable session expired check
@@ -9,40 +9,15 @@ define("ROOT_PATH",realpath(dirname(__FILE__))); //set include path
 require_once ROOT_PATH.'/libs/Frd/Frd.php';
 set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR );
 
-/**** init ***/
-$config=array(
-   'timezone'=>'Europe/Berlin',
-   'root_path'=>ROOT_PATH,
-   'include_paths'=>array(
-      ROOT_PATH.'/libs',
-      ROOT_PATH.'/modules',
-   ),
-   'module_path'=>ROOT_PATH.'/modules'
-);
-Frd::init($config);
-
-//start session
-Zend_Session::start();
-
-/**** config and init other resource ***/
-//necessary files
+/**
+ * Include necessary libraries
+ */
 require_once ROOT_PATH.'/config.php';
-if(file_exists(ROOT_PATH.'/config_local.php'))
-{
-   require_once ROOT_PATH.'/config_local.php';
-}
-require_once ROOT_PATH.'/libs/AA/functions.php';
 require_once ROOT_PATH.'/libs/fb-php-sdk/src/facebook.php';
-setConfig($config_data);
 
-//set db
-addDb(array(
-   'adapter'=>'MYSQLI',
-   'host'=>getConfig("database_host"),
-   'username'=>getConfig("database_user"),
-   'password'=>getConfig("database_pass"),
-   'dbname'=>getConfig("database_name"),
-));
+// Start session
+
+
 
 // Initialize App-Manager connection
 $aa = new AA_AppManager(array(
@@ -115,6 +90,15 @@ if(!isset($session->app))
 {
    $session->app = $current_app;
 }
+
+//set db
+addDb(array(
+   'adapter'=>'MYSQLI',
+   'host'=>getConfig("database_host"),
+   'username'=>getConfig("database_user"),
+   'password'=>getConfig("database_pass"),
+   'dbname'=>getConfig("database_name"),
+));
 
 // Url for facebook sharing
 $session->app['fb_share_url'] = "https://apps.facebook.com/" . $session->instance['fb_app_url']."/fb_share.php?aa_inst_id=".$session->instance['aa_inst_id'];
