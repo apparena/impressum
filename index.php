@@ -115,9 +115,7 @@
 		
 		<div class="custom-header">
 			<?php 
-				if ( isset( $aa['config']['custom_header_activated']['value'] ) && $aa['config']['custom_header_activated']['value'] == '1' ) {
-					echo $aa['config']['custom_header']['value'];
-				} 
+				echo $aa['config']['custom_header']['value'];
 				?>
 		</div>
 		
@@ -127,9 +125,7 @@
 		
 		<div class="custom-footer">
 			<?php 
-				if ( isset( $aa['config']['custom_footer_activated']['value'] ) && $aa['config']['custom_footer_activated']['value'] == '1' ) {
-					echo $aa['config']['custom_footer']['value'];
-				}
+				echo $aa['config']['custom_footer']['value'];
 			?>
 		</div>
 		
@@ -204,7 +200,6 @@
 		<![endif]-->
 		
 		<div id="fb-root"></div>
-		
 		<script type="text/javascript">
 			/*
 			 * Init AppManager vars for js.
@@ -216,9 +211,9 @@
 			 * instead, this would initialize a LOCAL variable which is NOT
 			 * available from other functions in other files!
 			 */
-			fb_app_id     = '<?php $aa['instance']["fb_app_id"]?>';
-			fb_canvas_url = '<?php $aa['instance']["fb_canvas_url"]?>';
-			aa_inst_id    = '<?php $aa['instance']["aa_inst_id"]?>';
+			fb_app_id     = '<?php echo $aa['instance']["fb_app_id"]?>';
+			fb_canvas_url = '<?php echo $aa['instance']["fb_canvas_url"]?>';
+			aa_inst_id    = '<?php echo $aa['instance']["aa_inst_id"]?>';
 
 			// jquerys document ready function gets fired when the DOM has been finished loading.
 			$(document).ready(function() {
