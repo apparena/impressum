@@ -1,62 +1,24 @@
 <?php 
-	if( isset( $_GET['aa_inst_id'] ) ) {
-		
-		/*********************************************************************************
-		 * The GET parameter will be transferred to the init_session.php automatically!! *
-		 *********************************************************************************/
-		include_once ( '../init.php' );
-	
-	} else {
-	
-		die( "invalid session! exiting..." );
-		exit( -1 );
-	}
+include_once ( '../init.php' );
 ?>
-<div class="terms-and-conditions">
+<div class="aa-fb-demo">
 	<div class="page-header well">
-	    <h1><?=__p("Terms & Conditions")?> <small><?=__p("What are the prizes? Who can participate?")?></small></h1>
+	    <h1><?=__p("Facebook Demo")?> <small><?=__p("See Facebook Plugins and functionality in action?")?></small></h1>
 	</div>
-	<div class="row-fluid">
-		<div class="terms-body">
-       <?php $fb_share_url = "https://apps.facebook.com/" . $session->instance['fb_app_url']."/fb_share.php?aa_inst_id=".$session->instance['aa_inst_id']; ?>
-       <div class="fb-like" data-href="http://www.example.com" data-send="true" data-width="450" data-show-faces="true"></div>
-
-       Like
-
-       Login
-       <div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div>
-       <hr/>
-
-       SEND
-       <div class="fb-send" data-href="http://example.com"></div>
-
-       Comment
-       <div class="fb-comments" data-href="http://example.com" data-num-posts="2" data-width="470"></div>
-
-       <hr/>
-
-       <hr/>
-
-
-
+	<div class="row">
+		<div class="span5">
+			<h3>Like-Button</h3>
+			<p>
+				<div class="fb-like" data-href="<?php echo $aa['fb']['share_url']; ?>" data-send="true" data-width="400" data-show-faces="true"></div>
+				For more info check the <a href="https://developers.facebook.com/docs/reference/plugins/like/" target="_blank">Facebook Like Button Documentation</a>.
+			</p>
+		</div>
+		<div class="span5">
+			<h3>Send-Button</h3>
+			<p>
+				<div class="fb-like" data-href="<?php echo $aa['fb']['share_url']; ?>" data-send="true" data-width="400" data-show-faces="true"></div>
+				For more info check the <a href="https://developers.facebook.com/docs/reference/plugins/send/" target="_blank">Facebook Send Button Documentation</a>.
+			</p>
 		</div>
 	</div>
 </div>
-<script>
-	$(document).ready( function(){
-		
-		hide_loading();
-
-    alert('init');
-    alert(fb_app_id);
-    FB.init({
-          appId      : fb_app_id, // App ID
-          channelUrl : fb_canvas_url + 'channel.html', // Channel File
-          status     : true, // check login status
-          cookie     : true, // enable cookies to allow the server to access the session
-          xfbml      : true, // parse XFBML
-          oauth		 : true
-    });
-		
-	});
-</script>

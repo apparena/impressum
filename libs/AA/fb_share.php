@@ -5,11 +5,11 @@
  * So if a friend of the user which liked this page, clicks the link to that, page he will be redirected.
  */
 require_once 'init.php';
-$fb_share_url = "https://apps.facebook.com/" . $session->instance['fb_app_url']."/fb_share.php?aa_inst_id=".$session->instance['aa_inst_id'];
+$fb_share_url = "https://apps.facebook.com/" . $aa['instance']['fb_app_url']."/fb_share.php?aa_inst_id=".$aa['instance']['aa_inst_id'];
 
-$fb_share_url = $session->instance["fb_canvas_url"]. "fb_share.php?aa_inst_id=".$session->instance['aa_inst_id'];
+$fb_share_url = $aa['instance']["fb_canvas_url"]. "fb_share.php?aa_inst_id=".$aa['instance']['aa_inst_id'];
 
-$redirect_url = $session->instance['fb_page_url'] . "?sk=app_" . $session->instance['fb_app_id'];
+$redirect_url = $aa['instance']['fb_page_url'] . "?sk=app_" . $aa['instance']['fb_app_id'];
 
 // Check if app_data exists and concatinate it to the sharing url 
 if (isset($_GET['app_data'])){
@@ -22,13 +22,13 @@ if (isset($_GET['app_data'])){
 <html>
 <head>
 	<!-- Facebook Meta Data -->
-    <meta property="fb:app_id" content="<?=$session->instance['fb_app_id']?>" />
-    <meta property="og:title" content="<?=$session->config['fb_share_name']['value']?>" />
+    <meta property="fb:app_id" content="<?=$aa['instance']['fb_app_id']?>" />
+    <meta property="og:title" content="<?=$aa['config']['fb_share_name']['value']?>" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<?=$fb_share_url;?>" />
-    <meta property="og:image" content="<?=$session->config['fb_share_image']['value']?>" />
+    <meta property="og:image" content="<?=$aa['config']['fb_share_image']['value']?>" />
     <meta property="og:site_name" content="Mein Seitenname statisch" />
-    <meta property="og:description" content="<?=$session->config['fb_share_desc']['value']?>"/>
+    <meta property="og:description" content="<?=$aa['config']['fb_share_desc']['value']?>"/>
 </head>
 
 <body>
