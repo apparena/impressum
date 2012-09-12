@@ -177,8 +177,7 @@
 		<script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/plugins.js"></script>
-		<script src="js/script.js?v3"></script>
-		<script src="js/jquery.validate.min.js?v3"></script>
+		<script src="js/script.js?v4"></script>
 		<!-- end scripts-->
 		
 		<!-- google analytics stuff -->
