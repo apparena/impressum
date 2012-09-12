@@ -99,11 +99,7 @@
 								the App-Arena app-model / app-instance.
 							 -->
 							<li><a class="template-welcome"><?php __p("Homepage");?></a></li>
-							<li><a class="template-english"><?php __p("English");?></a></li>
-							<li><a class="template-germany"><?php __p("Germany");?></a></li>
-							<li><a class="template-form_validation"><?php __p("Form Validation");?></a></li>
-							<li><a class="template-fb_demo"><?php __p("Facebook DEMO");?></a></li>
-							<li><a class="template-terms"><?php __p("Terms & Conditions");?></a></li>
+							<li><a onclick="aa_tmpl_load('terms.phtml');"><?php __p("Terms and conditions");?></a></li>
 						</ul>
 					</nav>
 				</div>
