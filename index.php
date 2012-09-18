@@ -44,15 +44,6 @@
 		<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 		
 		<?php 
-			/*
-			 * Here you can integrate your fangate.
-			 * The App-Arena framework will get the FB-object
-			 * and store some information, like if the user is
-			 * a fan of this page or if he is the page admin.
-			 * (-> see debug info button)
-			 * Config values have to be fetched by adding the ['value'] index.
-			 * $session->fb or $aa['instance'] values do not need the ['value'] index.
-			 */
 			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
 				<div class="page_non_fans_layer"> 
 					<div class="img_non_fans">
@@ -62,42 +53,12 @@
 				</div>
 		<?php }?>
 		
-		<!-- 
-			This is a standard twitter bootstrap menu block.
-			The classes for the <a> tags will be used by Javascript initialization later,
-			where all <a> elements in the menu will be parsed and the "template-xxx" classes
-			will be interpreted as links to the "/templates"-folder and put on the <a> tags
-			as links (this is done by initApp() ).
-			These links do not reload the page, but load the according content into the main-div.
-			So a class in this section with a "template-welcome" class will automatically be
-			a menu button to load the "/templates/welcome.phtml" file content into the main-div,
-			if the method initApp() is called when the DOM has finished loading (as here later on
-			@jquerys document.ready function).
-		 -->
+		
 	    <div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 	        	<div class="container-fluid">
 	            	<nav>
 						<ul class="nav">
-							<!-- 
-								The __p() and __t() functions are used to show translated content
-								from the App-Arena translation settings.
-								__p(): print a translation - no need to echo, will always be shown.
-								__t(): translate only - need to echo this if it shall be shown.
-									-> use __e() function from js, which translates only.
-									-> use variable values for formatted printing:
-										translation var definition in aa:
-											var name		translation english			  translation german				 ...
-											"user_votes" -> "user %s has voted %s times", "nutzer %s hat %s mal abgestimmt", "...probably some other languages", ...
-										usage in php/js:
-											__p('user_votes', $username, $howoften);
-											echo __t('user_votes', $username, $howoften);
-											alert( __e('user_votes', $username, $howoften) );
-								The passed parameter is automatically translated to the current
-								locale setting, which may be switched by a language selector.
-								The language selector should only be shown if it is activated in
-								the App-Arena app-model / app-instance.
-							 -->
 							<li><a class="template-welcome"><?php __p("Homepage");?></a></li>
 							<li><a onclick="aa_tmpl_load('terms.phtml');"><?php __p("Terms and conditions");?></a></li>
 						</ul>
@@ -174,20 +135,24 @@
 		<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 		
 		<!-- scripts concatenated and minified via ant build script-->
-		<script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script>
+		<!-- <script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script> -->
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/plugins.js"></script>
 		<script src="js/script.js?v4"></script>
 		<!-- end scripts-->
 		
 		<!-- google analytics stuff -->
-		<!--<script>
-			var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
+		<script>
+			var _gaq = _gaq || [];
+			var ga_id = '<?php if ( isset( $aa['config']["ga_id"]["value"] ) ) echo $aa['config']["ga_id"]["value"];?>';	
+			_gaq.push(['_setAccount', ga_id]);
+			_gaq.push(['_gat._anonymizeIp']);
+			_gaq.push(['_trackPageview']);
+			_gaq.push(['_setCustomVar', 1, 'aa_inst_id', '<?php if ( isset( $aa['instance']["aa_inst_id"] ) ) echo $aa['instance']["aa_inst_id"];?>']);
 			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
 			g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
 			s.parentNode.insertBefore(g,s)}(document,'script'));
-		</script>-->
-		<!-- /google analytics stuff -->
+		</script>
 		
 		<!--[if lt IE 7 ]>
 			<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
@@ -220,48 +185,6 @@
 				initApp();
 			});
 			
-/*
-			window.fbAsyncInit = function() {
-				FB.init({
-			      appId      : fb_app_id, // App ID
-				  channelUrl : fb_canvas_url + 'channel.html', // Channel File
-			      status     : true, // check login status
-			      cookie     : true, // enable cookies to allow the server to access the session
-			      xfbml      : true, // parse XFBML
-			      oauth		 : true
-			    });
-
-			    // Additional initialization code here
-				FB.getLoginStatus(function(response) {
-			    	  if (response.status === 'connected') {
-			    	    // the user is logged in and connected to your
-			    	    // app, and response.authResponse supplies
-			    	    // the users ID, a valid access token, a signed
-			    	    // request, and the time the access token 
-			    	    // and signed request each expire
-			    	    fb_user_id   = response.authResponse.userID;
-						fb_user_name = response.authResponse.userName;
-			    	    fb_status = "connected";
-						
-			    	    var fb_accessToken = response.authResponse.accessToken;
-			    	    userHasAuthorized = true; // To auth one time and not always let the auth popup go crazy ;).
-		
-			    	    // get user name
-			    	    FB.api('/me', function(response) {
-							fb_user_name = response.name;
-				     	});
-			    	  } else if (response.status === 'not_authorized') {
-			    	    // the user is logged in to Facebook, 
-			    	    //but not connected to the app
-						//alert("not connected");
-							fb_status = "not_authorized";
-			    	  } else {
-			    	    // the user isn't even logged in to Facebook.
-			    		  fb_status = "not_logged_in";
-			    	  }
-				});
-			};
-*/
 			
 			// Load the SDK Asynchronously
 			(function(d){
@@ -274,9 +197,9 @@
 		</script>
 		
 		<!-- Show admin panel if user is admin -->
-		<?php // Show admin panel, when page admin
+		<?php
 		if (is_fb_user_admin()) {
-			//include_once 'admin/admin_panel.php';?>		
+			include_once 'modules/admin_panel/admin_panel.php';?>		
 		<?php } ?>
 		
 	</body>
