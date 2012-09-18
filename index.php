@@ -111,18 +111,32 @@
 			changed for this instance.
 		-->
 		<?php 
-			if ( isset( $global->config['admin_debug_mode']['value'] ) && $global->config['admin_debug_mode']['value'] == '1' ) {
+			if ( isset( $aa['config']['admin_debug_mode']['value'] ) && $aa['config']['admin_debug_mode']['value'] ) {
 		?>
 			<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 			<div id="_debug" style="display:none;">
 				<h1>Debug information</h1>
-				<?php Zend_Debug::dump($session->fb, "session->fb");?>
-				<?php Zend_Debug::dump($session->app, "session->app");?>
-				<?php Zend_Debug::dump($aa['instance'], "session->instance");?>
-				<?php Zend_Debug::dump($session->translation, "session->translation");?>
-				<?php Zend_Debug::dump($aa['config'], "session->config");?>
-				<?php Zend_Debug::dump($_COOKIE, "_COOKIE");?>
-				<?php Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
+				<h3>$aa['fb']</h3>
+				<pre>
+				<?php var_dump($aa['fb']);?>
+				</pre>
+				<h3>$aa['instance']</h3>
+				<pre>
+				<?php var_dump($aa['instance']);?>
+				</pre>
+				<h3>$aa['translation']</h3>
+				<pre>
+				<?php var_dump($aa['translation']);?>
+				</pre>
+				<h3>$aa['config']</h3>
+				<pre>
+				<?php var_dump($aa['config']);?>
+				</pre>
+				<h3>$_COOKIE</h3>
+				<pre>
+				<?php var_dump($_COOKIE);?>
+				</pre>
+				<?php //Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
 			</div>
 		<?php } ?>
 		
