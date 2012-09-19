@@ -104,15 +104,8 @@
 			</div>
 		</footer>
 	
-		<!-- 
-			Debug area
-			This will show the App-Arena app-instance config values
-			which are inherited from the app-model and might have been
-			changed for this instance.
-		-->
-		<?php 
-			if ( isset( $aa['config']['admin_debug_mode']['value'] ) && $aa['config']['admin_debug_mode']['value'] ) {
-		?>
+		<!-- Debug mode -->
+		<?php if ( isset( $aa['config']['admin_debug_mode']['value'] ) && $aa['config']['admin_debug_mode']['value'] ) {?>
 			<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 			<div id="_debug" style="display:none;">
 				<h1>Debug information</h1>
@@ -136,7 +129,6 @@
 				<pre>
 				<?php var_dump($_COOKIE);?>
 				</pre>
-				<?php //Zend_Debug::dump(parse_signed_request($_REQUEST['signed_request']), "decoded fb signed request");?>
 			</div>
 		<?php } ?>
 		

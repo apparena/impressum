@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Setup the environment
  */
 date_default_timezone_set('Europe/Berlin'); 		// Set timezone
