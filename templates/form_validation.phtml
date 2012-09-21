@@ -15,7 +15,7 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="void();">
+		<form class="form-horizontal" action="void();" id="form-modal">
 			<div class="control-group">
 				<label class="control-label" for="inputName">Name</label>
 				<div class="controls">
@@ -52,7 +52,7 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="void();">
+		<form class="form-horizontal" action="void();" id="form-newsletter">
 			<div class="control-group">
 				<label class="control-label" for="inputName">Name</label>
 				<div class="controls">
@@ -82,7 +82,8 @@ include_once ( '../init.php' );
 <script>
 
 $(document).ready(function() {
-	$(".form-horizontal").validate(bootstrap_form);
+	$("#form-modal").validate(bootstrap_form);
+	$("#form-newsletter").validate(bootstrap_form);
 });
 
 /* This will make the jQuery validation plugin work with bootstrap forms */
