@@ -61,6 +61,7 @@
 						<ul class="nav">
 							<li><a class="template-welcome"><?php __p("Homepage");?></a></li>
 							<li><a onclick="aa_tmpl_load('terms.phtml');"><?php __p("Terms and conditions");?></a></li>
+							<li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Form validation");?></a></li>
 						</ul>
 					</nav>
 				</div>
@@ -167,28 +168,15 @@
 		
 		<div id="fb-root"></div>
 		<script type="text/javascript">
-			/*
-			 * Init AppManager vars for js.
-			 * These variables, which are initialized here,
-			 * will be available from ALL javascript functions!
-			 * (just like a global variable)
-			 * If you would be writing:
-			 * "var fb_app_id = '...';"
-			 * instead, this would initialize a LOCAL variable which is NOT
-			 * available from other functions in other files!
-			 */
+
 			fb_app_id     = '<?php echo $aa['instance']["fb_app_id"]?>';
 			fb_canvas_url = '<?php echo $aa['instance']["fb_canvas_url"]?>';
 			aa_inst_id    = '<?php echo $aa['instance']["aa_inst_id"]?>';
 
 			// jquerys document ready function gets fired when the DOM has been finished loading.
 			$(document).ready(function() {
-				userHasAuthorized = false;
 				show_loading(); // uses the formerly included "loading_screen.phtml" files function
-
-				// This actually "arms" the app so the menu will be working.
-				// If this is not called, the menu items (<a> tags) have to be handled manually!
-				initApp();
+				aa_tmpl_load("welcome.phtml");
 			});
 			
 			
@@ -204,9 +192,9 @@
 		
 		<!-- Show admin panel if user is admin -->
 		<?php
-		if (is_fb_user_admin()) {
-			include_once 'modules/admin_panel/admin_panel.php';?>		
-		<?php } ?>
+		//if (is_fb_user_admin()) {
+			//include_once 'modules/admin_panel/admin_panel.php';?>		
+		<?php //} ?>
 		
 	</body>
 </html>
