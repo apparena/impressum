@@ -19,7 +19,7 @@ if ( isset( $aa['config']['nl_text']['value'] ) )
 $ret = Newsletter::send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
 
 if($ret == true) {
-   echo successMsg();
+   //echo successMsg();
 } else {
    echo errorMsg($ret);
 }
