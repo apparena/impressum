@@ -31,7 +31,7 @@ include_once ( '../init.php' );
 			<div class="control-group">
 				<div class="controls">
 					<label class="checkbox"> <input type="checkbox"> Yes, we can!</label>
-					<button type="submit" class="btn">Close</button>
+					<button type="submit" class="btn">Submit</button>
 				</div>
 			</div>
 		</form>
@@ -82,7 +82,7 @@ include_once ( '../init.php' );
 <script>
 
 $(document).ready(function() {
-	$("form").validate(bootstrap_form);
+	$(":form").validate(bootstrap_form);
 });
 
 /* This will make the jQuery validation plugin work with bootstrap forms */
