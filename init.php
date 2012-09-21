@@ -90,4 +90,12 @@ if ( isset ( $_REQUEST["signed_request"] ) ) {
 	}
 	$aa['fb']['share_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url']."/libs/AA/fb_share.php?aa_inst_id=".$aa['instance']['aa_inst_id'];
 }
+
+/**
+ * Setup database connection
+ */
+if ($db_activated){
+	require_once ROOT_PATH.'/libs/AA/1.0/src/aa_db.php';
+	$db = new AA_Db($db_host, $db_name, $db_user, $db_pass);
+}
 ?>
