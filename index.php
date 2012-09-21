@@ -117,9 +117,9 @@
 				<pre>
 				<?php var_dump($aa['instance']);?>
 				</pre>
-				<h3>$aa['translation']</h3>
+				<h3>$aa['locale']</h3>
 				<pre>
-				<?php var_dump($aa['translation']);?>
+				<?php var_dump($aa['locale']);?>
 				</pre>
 				<h3>$aa['config']</h3>
 				<pre>
