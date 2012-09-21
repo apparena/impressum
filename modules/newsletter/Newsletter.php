@@ -1,6 +1,6 @@
 <?php
 require_once( 'Zend/Mail.php' );
-require_once( 'Zend/Mail/Transport/Smtp' );
+require_once( 'Zend/Mail/Transport/Smtp.php' );
 include_once('config.php');
 
 class Newsletter {
