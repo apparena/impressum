@@ -82,7 +82,8 @@ include_once ( '../init.php' );
 <script>
 
 $(document).ready(function() {
-	$("form").validate(bootstrap_form).css("border","9px solid red");
+	$("form").validate(bootstrap_form);
+	$("form").css("border","9px solid red");
 });
 
 /* This will make the jQuery validation plugin work with bootstrap forms */
