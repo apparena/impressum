@@ -11,7 +11,7 @@ function send_newsletter(aa_inst_id, email, name) {
 		rec_name : name
 	};
 
-	var url = "send_newsletter_confirmation.php?aa_inst_id=" + aa_inst_id;
+	var url = "modules/newsletter/send_newsletter_confirmation.php?aa_inst_id=" + aa_inst_id;
 	jQuery.post(url, data, function(response) {
 		if (response.error == 0) {
 			//success
