@@ -1,5 +1,6 @@
 <?php
 require_once( 'Zend/Mail.php' );
+include_once('config.php');
 
 class Newsletter {
 	
@@ -14,9 +15,11 @@ class Newsletter {
 	 * @param String $body HTML email body. Please use {{confirmation_link}} to place your confirmation link into your body text.
 	 */
 	function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
-		require_once('config.php');
-		// Create confirmation link
-
+		global $smtp_host;
+		global $smtp_port;
+		global $smtp_user;
+		global $smtp_pass;
+		
 		$path = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["REQUEST_URI"]);
 		$confirmationURL = $path . "/confirm_newsletter_registration.php";
 		$decode = base64_encode($rec_email . ";" . $rec_name.";");
