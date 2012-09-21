@@ -1,11 +1,12 @@
 <?php
-require_once '../init_session.php';
+require_once '../../init.php';
+require_once 'Newsletter.php';
+
 
 //parse id parameter
 $id=getGet("id");
 list($rec_email,$rec_name,$fb_user_id)=explode(";",base64_decode($id));
 
-$aa_inst_id=getRequest("aa_inst_id");
 
 //update confirm state in app_participation
 if($aa_inst_id != false && $fb_user_id != false)

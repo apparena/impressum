@@ -1,27 +1,22 @@
 <?php
-require_once '../init.php';
+require_once '../../init.php';
+require_once 'Newsletter.php';
 
-$aa_inst_id=getRequest("aa_inst_id");
-?>
-<?php
-$rec_email = $_POST['rec_email'];
-$rec_name = $_POST['rec_name'];
-$fb_user_id = $_POST['fb_user_id'];
+$rec_email 	= $_POST['rec_email'];
+$rec_name 	= $_POST['rec_name'];
 
-$send_email = $session->config['newsletter_sender_email']['value'];
-$send_name = $session->config['company_name']['value'];
-$title = $session->config['newsletter_title']['value'];
-$text = $session->config['newsletter_text']['value'];
+/* Use App-Manager variables to send out the email */
+$nl_sender_email 	= $aa['config']['nl_sender_email']['value'];
+$nl_sender_name		= $aa['config']['nl_sender_name']['value'];
+$nl_subject 		= $aa['config']['nl_subject']['value'];
+$nl_text 			= $aa['config']['nl_text']['value'];
 
-$ret = iCon_Newsletter::sendConfirmationEmail($rec_email, $rec_name, $send_email, $send_name, $title, $text, $aa_inst_id,$fb_user_id);
+$ret = Newsletter::send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
 
 
-if($ret == true)
-{
+if($ret == true) {
    echo successMsg();
-}
-else
-{
+} else {
    echo errorMsg($ret);
 }
 
