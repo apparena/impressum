@@ -19,10 +19,7 @@ class Newsletter {
 
 		$result = $this->db->query($sql);
 
-		var_dump($result);
-
-		var_dump($this->array_searchRecursive("nl_registration", $result));
-		if( !in_array("nl_registration", $result)) {
+		if( !$this->array_searchRecursive("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
