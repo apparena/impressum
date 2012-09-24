@@ -18,6 +18,7 @@ class Newsletter {
 		$sql = "SELECT nl_registration
 				FROM information_schema.tables
 				WHERE table_name = 'nl_registration';";
+		var_dump($this->db);
 		exit($this->db->query($sql));
 		
 		
