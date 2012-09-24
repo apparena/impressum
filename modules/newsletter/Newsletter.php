@@ -31,6 +31,7 @@ class Newsletter {
 			`is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+			var_dump($sql);
 			$res = $this->db->query($sql);
 			var_dump($res);
 				
