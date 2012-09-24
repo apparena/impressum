@@ -149,14 +149,14 @@ class Newsletter {
 	 * @mixed array_searchRecursive ( mixed needle,
 	 * array haystack [, bool strict[, array path]] )
 	 */
-	function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
+	private function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
 	{
 		if( !is_array($haystack) ) {
 			return false;
 		}
 	
 		foreach( $haystack as $key => $val ) {
-			if( is_array($val) && $subPath = array_searchRecursive($needle, $val, $strict, $path) ) {
+			if( is_array($val) && $subPath = $this->array_searchRecursive($needle, $val, $strict, $path) ) {
 				$path = array_merge($path, array($key), $subPath);
 				return $path;
 			} elseif( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
