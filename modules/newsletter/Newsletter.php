@@ -82,7 +82,7 @@ class Newsletter {
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
 	 */
 	public static function register_new_subscription($data, $aa_inst_id){
-		$this->init_db();
+		Newsletter::init_db();
 		
 		global $db;
 
