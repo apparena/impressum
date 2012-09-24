@@ -5,6 +5,11 @@ include_once('config.php');
 
 class Newsletter {
 	
+	private $db; // DB connection
+	
+	function __construct($db) {
+		$this->db = $db;
+	}
 	
 	/**
 	 * Initialize the database structure for using this module
@@ -13,9 +18,9 @@ class Newsletter {
 		$sql = "SELECT nl_registration
 				FROM information_schema.tables
 				WHERE table_name = 'nl_registration';";
-		exit($db->query($sql));
+		exit($this->db->query($sql));
 		
-		global $db;
+		
 		$sql = "CREATE TABLE `nl_registration` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
@@ -27,7 +32,7 @@ class Newsletter {
 				  `is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-		return $db->query($sql);
+		return $this->db->query($sql);
 	}
 	
 	/**
@@ -40,7 +45,7 @@ class Newsletter {
 	 * @param String $title Title of the newsletter (e.g. iConsultants Social Media Newsletter)
 	 * @param String $body HTML email body. Please use {{confirmation_link}} to place your confirmation link into your body text.
 	 */
-	public static function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
+	function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
 		global $smtp_host;
 		global $smtp_port;
 		global $smtp_user;
@@ -81,12 +86,9 @@ class Newsletter {
 	 * Save a new double opt in newsletter subscription to the database including ip and timestamp
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
 	 */
-	public static function register_new_subscription($data, $aa_inst_id){
-		Newsletter::init_db();
-		
-		global $db;
+	function register_new_subscription($data, $aa_inst_id){
+		$this->init_db();
 
-		
 		
 		// Decode and assign data to variables
 		$data = explode(';', base64_decode($data));
@@ -115,7 +117,7 @@ class Newsletter {
   * the config page update user's confirm state
   *  
   */
-  public static function updateConfirm($aa_inst_id,$fb_user_id)
+  function updateConfirm($aa_inst_id,$fb_user_id)
   {
      //update app_participation
      $lottery = new iCon_Lottery($aa_inst_id,getConfig('aa_app_id'));

@@ -16,7 +16,10 @@ if ( isset( $aa['config']['nl_subject']['value'] ) )
 if ( isset( $aa['config']['nl_text']['value'] ) )
 	$nl_text 			= $aa['config']['nl_text']['value'];
 
-$ret = Newsletter::send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
+global $db;
+$newsletter = new Newsletter($db);
+$ret = $newsletter->send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
+//$ret = Newsletter::send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
 
 if($ret == true) {
    //echo successMsg();
