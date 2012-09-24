@@ -56,10 +56,10 @@ class Newsletter {
 	 * Save a new double opt in newsletter subscription to the database including ip and timestamp
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
 	 */
-	function registerNewSubscription($data, $aa_inst_id){
+	function register_new_subscription($data, $aa_inst_id){
 		//global $global;
 		//$db = $global->db;
-    $db=getDb();
+    	$db=getDb();
 		
 		// Decode and assign data to variables
 		$data = explode(';', base64_decode($data));

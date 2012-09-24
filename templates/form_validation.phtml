@@ -53,7 +53,7 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="javascript:send_newsletter(aa_inst_id, 's.buckpesch@iconsultants.eu', 'Sebastian Buckpesch');" method="post" id="form-newsletter">
+		<form class="form-horizontal" action="javascript:send_newsletter(aa_inst_id, jQuery('inputEmail').val(), jQuery('inputName').val());" method="post" id="form-newsletter">
 			<div class="control-group">
 				<label class="control-label" for="inputName">Name</label>
 				<div class="controls">
