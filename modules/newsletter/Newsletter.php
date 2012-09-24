@@ -19,7 +19,6 @@ class Newsletter {
 				FROM information_schema.tables
 				WHERE table_name = 'nl_registration';";
 		var_dump($this->db->query("SHOW TABLES"));
-		var_dump()
 		
 		exit($this->db->query($sql));
 		
