@@ -4,44 +4,44 @@ require_once( 'Zend/Mail/Transport/Smtp.php' );
 include_once('config.php');
 
 class Newsletter {
-	
+
 	private $db; // DB connection
-	
+
 	function __construct($db) {
 		$this->db = $db;
 	}
-	
+
 	/**
 	 * Initialize the database structure for using this module
 	 */
-	private function init_db() {		
+	private function init_db() {
 		$sql = "SHOW TABLES;";
-		
+
 		$result = $this->db->query($sql);
-		
+
 		var_dump($result);
-		
-		var_dump(array_search("nl_registration", $result));
+
+		var_dump($this->array_searchRecursive("nl_registration", $result));
 		if( !in_array("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
-					  `id` int(11) NOT NULL AUTO_INCREMENT,
-					  `aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
-					  `email` varchar(128) NOT NULL COMMENT 'User''s email address',
-					  `name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
-					  `gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
-					  `timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
-					  `ip` varchar(15) NOT NULL COMMENT 'IP address',
-					  `is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
-					  PRIMARY KEY (`id`)
-					) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
+			`email` varchar(128) NOT NULL COMMENT 'User''s email address',
+			`name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
+			`gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
+			`timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
+			`ip` varchar(15) NOT NULL COMMENT 'IP address',
+			`is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
+			PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 			$res = $this->db->query($sql);
 			var_dump($res);
-			
+				
 		}
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Send a newsletter registration confirmation email to the user. This email contains a confirmation link,
 	 * the user can click to confirm the registration.
@@ -57,7 +57,7 @@ class Newsletter {
 		global $smtp_port;
 		global $smtp_user;
 		global $smtp_pass;
-		
+
 		$path = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["REQUEST_URI"]);
 		$confirmationURL = $path . "/confirm_newsletter_registration.php";
 		$decode = base64_encode($rec_email . ";" . $rec_name.";");
@@ -87,8 +87,8 @@ class Newsletter {
 			return $e->getMessage();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Save a new double opt in newsletter subscription to the database including ip and timestamp
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
@@ -96,10 +96,10 @@ class Newsletter {
 	function register_new_subscription($data, $aa_inst_id){
 		$this->init_db();
 
-		
+
 		// Decode and assign data to variables
 		/*$data = explode(';', base64_decode($data));
-		$email = $data[0];
+		 $email = $data[0];
 		$name = $data[1];
 
 		// Update table app_participation, columns timestam, ip, newsletter_registration
@@ -114,30 +114,57 @@ class Newsletter {
 		else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
 			$client_ip = $_SERVER["HTTP_CLIENT_IP"];
 		// Set newsletter subscription in DB
-		$sql = "UPDATE `app_participation` SET `ip`='" . $client_ip . "', `newsletter_registration`=1 
-				WHERE `aa_inst_id`='$aa_inst_id' AND `fb_user_id`='$fb_user_id'";
+		$sql = "UPDATE `app_participation` SET `ip`='" . $client_ip . "', `newsletter_registration`=1
+		WHERE `aa_inst_id`='$aa_inst_id' AND `fb_user_id`='$fb_user_id'";
 		$res = $db->query($sql);*/
 	}
 
-  /**
-  * after user click the confirm link in email,
-  * the config page update user's confirm state
-  *  
-  */
-  function updateConfirm($aa_inst_id,$fb_user_id)
-  {
-     //update app_participation
-     $lottery = new iCon_Lottery($aa_inst_id,getConfig('aa_app_id'));
-     $id=$lottery->isUserParticipating($fb_user_id, $aa_inst_id) ;
+	/**
+	 * after user click the confirm link in email,
+	 * the config page update user's confirm state
+	 *
+	 */
+	function updateConfirm($aa_inst_id,$fb_user_id)
+	{
+		//update app_participation
+		$lottery = new iCon_Lottery($aa_inst_id,getConfig('aa_app_id'));
+		$id=$lottery->isUserParticipating($fb_user_id, $aa_inst_id) ;
 
-     if($id != false)
-     {
-        $table=new Table_Participation();
-        $table->load($id);
-        $table->newsletter_doubleoptin =1;
-        $table->save();
-     }
+		if($id != false)
+		{
+			$table=new Table_Participation();
+			$table->load($id);
+			$table->newsletter_doubleoptin =1;
+			$table->save();
+		}
 
-  }
+	}
 	
+	/**
+	 * Searches haystack for needle and
+	 * returns an array of the key path if
+	 * it is found in the (multidimensional)
+	 * array, FALSE otherwise.
+	 *
+	 * @mixed array_searchRecursive ( mixed needle,
+	 * array haystack [, bool strict[, array path]] )
+	 */
+	function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
+	{
+		if( !is_array($haystack) ) {
+			return false;
+		}
+	
+		foreach( $haystack as $key => $val ) {
+			if( is_array($val) && $subPath = array_searchRecursive($needle, $val, $strict, $path) ) {
+				$path = array_merge($path, array($key), $subPath);
+				return $path;
+			} elseif( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
+				$path[] = $key;
+				return $path;
+			}
+		}
+		return false;
+	}
+
 }
