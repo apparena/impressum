@@ -17,7 +17,7 @@ class Newsletter {
 	private function init_db() {
 		$sql = "SHOW TABLES;";
 
-		$result = $this->db->query($sql);
+		$result = $this->db->query_unfiltered($sql);
 
 		if( !$this->array_searchRecursive("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
@@ -31,10 +31,7 @@ class Newsletter {
 			`is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-			var_dump($sql);
 			$res = $this->db->query($sql);
-			var_dump($res);
-				
 		}
 		return true;
 
