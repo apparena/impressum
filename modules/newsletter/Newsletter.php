@@ -19,6 +19,8 @@ class Newsletter {
 		
 		$result = $this->db->query($sql);
 		
+		var_dump($result);
+		
 		var_dump(in_array("nl_registration", $result));
 		if( !in_array("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
