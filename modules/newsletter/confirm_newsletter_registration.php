@@ -3,7 +3,7 @@ require_once '../../init.php';
 require_once 'Newsletter.php';
 
 global $db;
-$newsletter = new Newsletter($db)
+$newsletter = new Newsletter($db);
 
 $newsletter->register_new_subscription("test", "1234");
 
