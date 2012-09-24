@@ -28,7 +28,7 @@ class AA_Db {
 	 * Sends a query to the db and returns the complete result in an array
 	 */
 	function query( $sql ) {
-		$sql = $this->cleanQuery($sql);
+		//$sql = $this->cleanQuery($sql);
 		$result = mysql_query( $sql, $this->db_con);
 		$all = array ();
 		if ($result) {
