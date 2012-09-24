@@ -31,7 +31,7 @@ class AA_Db {
 		$sql = $this->cleanQuery($sql);
 		$result = mysql_query( $sql, $this->db_con);
 		$all = array ();
-		if ($result) {
+		if ($result && is_array($result)) {
 			while ( $row = mysql_fetch_assoc( $result ) ) {
 				$all[] = $row;
 			}
@@ -47,7 +47,7 @@ class AA_Db {
 	function query_unfiltered( $sql ) {
 		$result = mysql_query( $sql, $this->db_con);
 		$all = array ();
-		if ($result) {
+		if ($result && is_array($result)) {
 			while ( $row = mysql_fetch_assoc( $result ) ) {
 				$all[] = $row;
 			}
