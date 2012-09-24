@@ -21,7 +21,7 @@ class Newsletter {
 		
 		var_dump($result);
 		
-		var_dump(in_array("nl_registration", $result));
+		var_dump(array_search("nl_registration", $result));
 		if( !in_array("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
