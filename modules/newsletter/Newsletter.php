@@ -19,6 +19,7 @@ class Newsletter {
 		
 		$result = $this->db->query($sql);
 		
+		var_dump(in_array("nl_registration", $result));
 		if( !in_array("nl_registration", $result)) {
 			$sql = "CREATE TABLE `nl_registration` (
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -32,6 +33,8 @@ class Newsletter {
 					  PRIMARY KEY (`id`)
 					) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 			$res = $this->db->query($sql);
+			var_dump($res);
+			
 		}
 		return true;
 		
@@ -93,7 +96,7 @@ class Newsletter {
 
 		
 		// Decode and assign data to variables
-		$data = explode(';', base64_decode($data));
+		/*$data = explode(';', base64_decode($data));
 		$email = $data[0];
 		$name = $data[1];
 
@@ -111,7 +114,7 @@ class Newsletter {
 		// Set newsletter subscription in DB
 		$sql = "UPDATE `app_participation` SET `ip`='" . $client_ip . "', `newsletter_registration`=1 
 				WHERE `aa_inst_id`='$aa_inst_id' AND `fb_user_id`='$fb_user_id'";
-		$res = $db->query($sql);
+		$res = $db->query($sql);*/
 	}
 
   /**
