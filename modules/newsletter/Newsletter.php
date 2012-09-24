@@ -9,8 +9,7 @@ class Newsletter {
 	/**
 	 * Initialize the database structure for using this module
 	 */
-	function init_db() {
-		
+	private function init_db() {		
 		$sql = "SELECT nl_registration
 				FROM information_schema.tables
 				WHERE table_name = 'nl_registration';";
@@ -41,7 +40,7 @@ class Newsletter {
 	 * @param String $title Title of the newsletter (e.g. iConsultants Social Media Newsletter)
 	 * @param String $body HTML email body. Please use {{confirmation_link}} to place your confirmation link into your body text.
 	 */
-	function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
+	public static function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
 		global $smtp_host;
 		global $smtp_port;
 		global $smtp_user;
@@ -82,7 +81,9 @@ class Newsletter {
 	 * Save a new double opt in newsletter subscription to the database including ip and timestamp
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
 	 */
-	function register_new_subscription($data, $aa_inst_id){
+	public static function register_new_subscription($data, $aa_inst_id){
+		$this->init_db();
+		
 		global $db;
 
 		
