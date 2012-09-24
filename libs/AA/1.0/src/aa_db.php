@@ -31,8 +31,10 @@ class AA_Db {
 		$sql = $this->cleanQuery($sql);
 		$result = mysql_query( $sql, $this->db_con);
 		$all = array ();
-		while ( $row = mysql_fetch_assoc( $result ) ) {
-			$all[] = $row;
+		if ($result) {
+			while ( $row = mysql_fetch_assoc( $result ) ) {
+				$all[] = $row;
+			}
 		}
 		return $all;
 	}
