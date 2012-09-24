@@ -5,6 +5,32 @@ include_once('config.php');
 
 class Newsletter {
 	
+	
+	/**
+	 * Initialize the database structure for using this module
+	 */
+	function init_db() {
+		
+		$sql = "SELECT nl_registration
+				FROM information_schema.tables
+				WHERE table_name = 'nl_registration';";
+		exit($db->query($sql));
+		
+		global $db;
+		$sql = "CREATE TABLE `nl_registration` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
+				  `email` varchar(128) NOT NULL COMMENT 'User''s email address',
+				  `name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
+				  `gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
+				  `timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
+				  `ip` varchar(15) NOT NULL COMMENT 'IP address',
+				  `is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
+				  PRIMARY KEY (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		return $db->query($sql);
+	}
+	
 	/**
 	 * Send a newsletter registration confirmation email to the user. This email contains a confirmation link,
 	 * the user can click to confirm the registration.
@@ -57,9 +83,9 @@ class Newsletter {
 	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
 	 */
 	function register_new_subscription($data, $aa_inst_id){
-		//global $global;
-		//$db = $global->db;
-    	$db=getDb();
+		global $db;
+
+		
 		
 		// Decode and assign data to variables
 		$data = explode(';', base64_decode($data));
