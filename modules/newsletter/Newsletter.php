@@ -15,10 +15,7 @@ class Newsletter {
 	 * Initialize the database structure for using this module
 	 */
 	private function init_db() {		
-		$sql = "SELECT nl_registration
-				FROM information_schema.tables
-				WHERE table_name = 'nl_registration';";
-		var_dump($this->db->query("SHOW TABLES"));
+		$sql = "SHOW TABLES;";
 		
 		exit($this->db->query($sql));
 		

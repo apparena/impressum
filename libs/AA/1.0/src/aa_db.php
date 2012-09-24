@@ -35,6 +35,8 @@ class AA_Db {
 			while ( $row = mysql_fetch_assoc( $result ) ) {
 				$all[] = $row;
 			}
+		} else {
+			return false;
 		}
 		return $all;
 	}
