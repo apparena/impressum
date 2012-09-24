@@ -17,21 +17,24 @@ class Newsletter {
 	private function init_db() {		
 		$sql = "SHOW TABLES;";
 		
-		exit($this->db->query($sql));
+		$result = $this->db->query($sql);
 		
+		if( !in_array("nl_registration", $result)) {
+			$sql = "CREATE TABLE `nl_registration` (
+					  `id` int(11) NOT NULL AUTO_INCREMENT,
+					  `aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
+					  `email` varchar(128) NOT NULL COMMENT 'User''s email address',
+					  `name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
+					  `gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
+					  `timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
+					  `ip` varchar(15) NOT NULL COMMENT 'IP address',
+					  `is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
+					  PRIMARY KEY (`id`)
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+			$res = $this->db->query($sql);
+		}
+		return true;
 		
-		$sql = "CREATE TABLE `nl_registration` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `aa_inst_id` int(11) NOT NULL COMMENT 'App-Arena Instance Id',
-				  `email` varchar(128) NOT NULL COMMENT 'User''s email address',
-				  `name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
-				  `gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
-				  `timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
-				  `ip` varchar(15) NOT NULL COMMENT 'IP address',
-				  `is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
-				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-		return $this->db->query($sql);
 	}
 	
 	/**
