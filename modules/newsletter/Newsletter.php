@@ -38,6 +38,8 @@ class Newsletter {
 		if ($aa_inst_id != 0)
 			$this->aa_inst_id = $aa_inst_id; 
 		
+		echo $this->smtp_host . "; " . $this->smtp_user . "; " . $this->smtp_pass . "; " . $this->smtp_port . "; ";
+		
 		$this->set_sender($sender);
 	}
 
