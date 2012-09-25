@@ -156,11 +156,7 @@ class Newsletter {
 		// Get fb_user_id from email-address
 		$sql = "SELECT `email` FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
 				AND `aa_inst_id`=" . $this->aa_inst_id . " LIMIT 1";
-		
-		echo $sql;
 		$receiver_existing = $this->db->query($sql);
-		var_dump($receiver_existing);
-		
 		
 		if ( $receiver_existing ) {
 			$sql = "UPDATE `nl_registration`
@@ -169,8 +165,6 @@ class Newsletter {
 					`ip`='" . $client_ip  . "' 
 					WHERE `email` = '" . $receiver_existing[0] . "'
 					AND aa_inst_id=" . $this->aa_inst_id . ";";
-			echo $sql;
-			var_dump($receiver_existing[0]);
 			return $this->db->query($sql);
 		} else {
 			$sql = "INSERT INTO `nl_registration`
@@ -179,7 +173,6 @@ class Newsletter {
 						`email`='" . $receiver_email  . "',
 						`name`='" . $receiver_name  . "',
 						`ip`='" . $client_ip . "'";
-			echo $sql;
 			return $this->db->query($sql);
 		}
 	}
