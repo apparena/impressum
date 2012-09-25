@@ -11,8 +11,6 @@ If (isset($_GET['data'])) {
 	// Register newsletter subsription
 	var_dump($newsletter->register_new_subscription($receiver, $aa['instance']['aa_inst_id']));
 	
-	
-	
 }
 
 //redirect url
