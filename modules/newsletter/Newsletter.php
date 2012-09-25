@@ -158,7 +158,7 @@ class Newsletter {
 				AND `aa_inst_id`=" . $this->aa_inst_id . " LIMIT 1";
 		$receiver_existing = $this->db->query($sql);
 		echo $sql;
-		var_dump($this->db->query($sql));
+		var_dump($this->db->query_unfiltered($sql));
 		
 		
 		if ( $receiver_existing ) {
