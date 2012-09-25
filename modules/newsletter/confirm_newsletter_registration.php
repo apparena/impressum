@@ -7,7 +7,7 @@ $newsletter = new Newsletter($db);
 
 // Decode receiver data
 If (isset($_GET['data'])) {
-	$receiver = json_decode(base64_decode($_GET['data']));
+	$receiver = json_decode(base64_decode($_GET['data']), true);
 	// Register newsletter subsription
 	var_dump($newsletter->register_new_subscription($receiver, $aa['instance']['aa_inst_id']));
 	
