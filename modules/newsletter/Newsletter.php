@@ -39,6 +39,7 @@ class Newsletter {
 			$this->aa_inst_id = $aa_inst_id; 
 		
 		$this->set_sender($sender);
+		echo $this->sender_email . "; " . $this->sender_name;
 	}
 
 	/**
