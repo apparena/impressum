@@ -4,8 +4,8 @@ require_once 'config.php';
 require_once 'Newsletter.php';
 
 $receiver = array();
-$receiver['email'] 	= $_POST['rec_email'];
-$receiver['name']	= $_POST['rec_name'];
+$receiver['email'] 	= $_POST['receiver_email'];
+$receiver['name']	= $_POST['receiver_name'];
 
 /* Use App-Manager variables to send out the email */
 if ( isset( $aa['config']['nl_sender_email']['value'] ) )
