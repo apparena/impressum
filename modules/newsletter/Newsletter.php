@@ -39,7 +39,6 @@ class Newsletter {
 			$this->aa_inst_id = $aa_inst_id; 
 		
 		$this->set_sender($sender);
-		echo $this->sender_email . "; " . $this->sender_name;
 	}
 
 	/**
@@ -146,9 +145,6 @@ class Newsletter {
 	 * @param array $receiver base64 (name, email) of the newsletter receiver
 	 */
 	function register_new_subscription($receiver=array(), $aa_inst_id){
-		
-		var_dump($receiver);
-		
 		if (array_key_exists('name', $receiver))
 			$receiver_name = $receiver['name'];
 		if (array_key_exists('email', $receiver))
@@ -161,6 +157,9 @@ class Newsletter {
 		$sql = "SELECT email FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
 				AND aa_inst_id=" . $this->aa_inst_id . " LIMIT 1";
 		$receiver_existing = $this->db->query($sql);
+		echo $sql;
+		var_dump($receiver_existing);
+		
 		
 		if ( $receiver_existing ) {
 			$sql = "UPDATE `nl_registration`
