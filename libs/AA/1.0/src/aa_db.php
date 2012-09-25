@@ -36,7 +36,7 @@ class AA_Db {
 				$all[] = $row;
 			}
 		} else {
-			if (!is_object($result))
+			if (is_object($result))
 				return mysql_fetch_row( $result );
 		}
 		return $all;
@@ -53,7 +53,7 @@ class AA_Db {
 				$all[] = $row;
 			}
 		} else {
-			if (!is_object($result))
+			if (is_object($result))
 				return mysql_fetch_row( $result );
 		}
 		return $all;
