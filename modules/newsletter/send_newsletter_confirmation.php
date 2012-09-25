@@ -18,7 +18,7 @@ if ( isset( $aa['config']['nl_email_body']['value'] ) )
 	$email['body']	= $aa['config']['nl_email_body']['value'];
 
 global $db;
-
+var_dump($sender);
 $newsletter = new Newsletter($db, $smtp_config, $_GET['aa_inst_id'], $sender);
 
 
