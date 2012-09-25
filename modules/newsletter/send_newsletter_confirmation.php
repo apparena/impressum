@@ -23,12 +23,10 @@ $newsletter = new Newsletter($db, $smtp_config, $_GET['aa_inst_id'], $sender);
 
 
 $ret = $newsletter->send_confirmation_email($receiver, $email);
-//$ret = Newsletter::send_confirmation_email($rec_email, $rec_name, $nl_sender_email, $nl_sender_name, $nl_subject, $nl_text, $aa_inst_id);
 
 if($ret == true) {
    var_dump($ret);
 } else {
-  echo "<h1>Error</h1>";
   var_dump($ret);
 }
 

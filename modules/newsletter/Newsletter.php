@@ -38,8 +38,6 @@ class Newsletter {
 		if ($aa_inst_id != 0)
 			$this->aa_inst_id = $aa_inst_id; 
 		
-		echo $this->smtp_host . "; " . $this->smtp_user . "; " . $this->smtp_pass . "; " . $this->smtp_port . "; ";
-		
 		$this->set_sender($sender);
 	}
 
@@ -118,8 +116,8 @@ class Newsletter {
 		$mail->setSubject($email_subject);
 
 		try{
-			$mail->send($transport);
-			return true;
+			$return = $mail->send($transport);
+			return $return;
 		} catch(Exception $e) {
 			//send mail failed
 			$return_msg .= "<strong>Receiver: </strong>" . var_dump($receiver);
