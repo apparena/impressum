@@ -169,7 +169,8 @@ class Newsletter {
 					`ip`='" . $client_ip  . "' 
 					WHERE `email` = '" . $receiver_existing[0] . "'
 					AND aa_inst_id=" . $this->aa_inst_id . ";";
-			
+			echo $sql;
+			var_dump($receiver_existing[0]);
 			return $this->db->query($sql);
 		} else {
 			$sql = "INSERT INTO `nl_registration`
@@ -178,6 +179,7 @@ class Newsletter {
 						`email`='" . $receiver_email  . "',
 						`name`='" . $receiver_name  . "',
 						`ip`='" . $client_ip . "'";
+			echo $sql;
 			return $this->db->query($sql);
 		}
 	}
