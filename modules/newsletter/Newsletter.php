@@ -157,6 +157,7 @@ class Newsletter {
 		$sql = "SELECT email FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
 				AND aa_inst_id=" . $this->aa_inst_id . " LIMIT 1";
 		$receiver_existing = $this->db->query($sql);
+		var_dump($this->db);
 		echo $sql;
 		var_dump($receiver_existing);
 		
