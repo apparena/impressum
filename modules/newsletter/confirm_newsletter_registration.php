@@ -3,7 +3,7 @@ require_once '../../init.php';
 require_once 'config.php';
 require_once 'Newsletter.php';
 
-$newsletter = new Newsletter($db);
+$newsletter = new Newsletter($db, $smtp_config, $_GET['aa_inst_id'], $sender);
 
 // Decode receiver data
 If (isset($_GET['data'])) {
