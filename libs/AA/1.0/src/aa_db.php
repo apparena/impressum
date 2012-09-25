@@ -36,8 +36,11 @@ class AA_Db {
 				$all[] = $row;
 			}
 		} else {
-			if (is_object($result))
+			try {
 				return mysql_fetch_row( $result );
+			} catch (Exception $e) {
+				return $e.getMsg();
+			}
 		}
 		return $all;
 	}
