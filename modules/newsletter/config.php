@@ -1,4 +1,7 @@
 <?php
+// DB Setup
+global $db;
+
 //SMTP Setup
 $smtp_config = array("host" => "smtp.mandrillapp.com",
 					"user" => "s.buckpesch@iconsultants.eu",

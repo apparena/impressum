@@ -143,32 +143,48 @@ class Newsletter {
 
 	/**
 	 * Save a new double opt in newsletter subscription to the database including ip and timestamp
-	 * @param String $data base64 encoded email-address and name of the newsletter subscriber (email;name)
+	 * @param array $receiver base64 (name, email) of the newsletter receiver
 	 */
-	function register_new_subscription($data, $aa_inst_id){
-		$this->init_db();
-
-
-		// Decode and assign data to variables
-		/*$data = explode(';', base64_decode($data));
-		 $email = $data[0];
-		$name = $data[1];
+	function register_new_subscription($receiver=array(), $aa_inst_id){
+		
+		if (array_key_exists('name', $receiver))
+			$receiver_name = $receiver['name'];
+		if (array_key_exists('email', $receiver))
+			$receiver_email = $receiver['email'];
+		
 
 		// Update table app_participation, columns timestam, ip, newsletter_registration
 		// Get fb_user_id from email-address
-		$sql = "SELECT `fb_user_id` FROM `user_data` WHERE `email`='" . $email . "'";
-		$fb_user_id = $db->fetchOne($sql);
-		// Get client IP
-		if ( isset($_SERVER["REMOTE_ADDR"]))
-			$client_ip = $_SERVER["REMOTE_ADDR"];
-		else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-			$client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
-			$client_ip = $_SERVER["HTTP_CLIENT_IP"];
+		$sql = "SELECT email FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
+				AND aa_inst_id=" . $this->aa_inst_id . " LIMIT 1";
+		$receiver_existing = $db->query($sql);
+		
+		if ( $receiver_existing ) {
+			$sql = "UPDATE `nl_registration`
+					SET `is_confirmed` = 1,
+					`name`='" . $receiver_name  . "',
+					`ip`='" . $client_ip  . "' 
+					WHERE `email` = '" . $receiver_existing[0] . "'
+					AND aa_inst_id=" . $this->aa_inst_id . ";";
+			
+			$this->db->query($sql);
+		} else {
+			$sql = "INSERT INTO `nl_registration`
+					SET `is_confirmed` = 1, 
+						`aa_inst_id`=" . $this->aa_inst_id  . ",
+						`email`='" . $receiver_email  . "',
+						`name`='" . $receiver_name  . "',
+						`ip`='" . $client_ip . "'";
+			$this->db->query($sql);
+		}
+				
+		
+		$client_ip = $this->get_client_ip();
+		
 		// Set newsletter subscription in DB
 		$sql = "UPDATE `app_participation` SET `ip`='" . $client_ip . "', `newsletter_registration`=1
 		WHERE `aa_inst_id`='$aa_inst_id' AND `fb_user_id`='$fb_user_id'";
-		$res = $db->query($sql);*/
+		$res = $db->query($sql);
 	}
 
 	/**
@@ -217,6 +233,23 @@ class Newsletter {
 			}
 		}
 		return false;
+	}
+	
+	
+	/**
+	 * Returns the IP of the client
+	 * @return String client ip
+	 */
+	private function get_client_ip(){
+		// Get client ip address
+		if ( isset($_SERVER["REMOTE_ADDR"]))
+			$client_ip = $_SERVER["REMOTE_ADDR"];
+		else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+			$client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
+			$client_ip = $_SERVER["HTTP_CLIENT_IP"];
+	
+		return $client_ip;
 	}
 
 }
