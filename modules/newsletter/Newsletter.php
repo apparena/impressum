@@ -118,7 +118,7 @@ class Newsletter {
 
 		try{
 			$return = $mail->send($transport);
-			return $return;
+			return true;
 		} catch(Exception $e) {
 			//send mail failed
 			$return_msg .= "<strong>Receiver: </strong>" . var_dump($receiver);

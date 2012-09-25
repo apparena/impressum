@@ -9,8 +9,8 @@ Requirements:
 In the App-Manager you need to add the following config-values to make this work:
 - nl_sender_name	[text]
 - nl_sender_email	[text]
-- nl_subject		[text]
-- nl_text 			[html]
+- nl_email_subject	[text]
+- nl_email_body		[html]
 
 2. DB connection:
 The database connection can be initialized via "global $db"

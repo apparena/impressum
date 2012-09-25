@@ -18,10 +18,9 @@ if ( isset( $aa['config']['nl_email_body']['value'] ) )
 	$email['body']	= $aa['config']['nl_email_body']['value'];
 
 global $db;
-var_dump($sender);
+
+// Init newsletter object and send email
 $newsletter = new Newsletter($db, $smtp_config, $_GET['aa_inst_id'], $sender);
-
-
 $ret = $newsletter->send_confirmation_email($receiver, $email);
 
 if($ret == true) {
