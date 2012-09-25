@@ -14,7 +14,7 @@ If (isset($_GET['data'])) {
 }
 
 //redirect url
-$fb_app_url=$aa['instance']['fb_page_url']."?sk=app_".$aa['instance']['fb_app_id'];
+$fb_app_url=$aa['instance']['fb_page_url']."?sk=app_".$aa['instance']['fb_app_id'] . "&app_data=" . $_GET['data'];
 ?>
 
 <!doctype html>
