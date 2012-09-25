@@ -147,6 +147,8 @@ class Newsletter {
 	 */
 	function register_new_subscription($receiver=array(), $aa_inst_id){
 		
+		var_dump($receiver);
+		
 		if (array_key_exists('name', $receiver))
 			$receiver_name = $receiver['name'];
 		if (array_key_exists('email', $receiver))
