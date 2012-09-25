@@ -36,7 +36,7 @@ class AA_Db {
 				$all[] = $row;
 			}
 		} else {
-			return $result;
+			return mysql_fetch_row( $result );
 		}
 		return $all;
 	}
@@ -52,7 +52,7 @@ class AA_Db {
 				$all[] = $row;
 			}
 		} else {
-			return $result;
+			return mysql_fetch_row( $result );
 		}
 		return $all;
 	}
