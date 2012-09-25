@@ -47,7 +47,7 @@
 			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
 				<div class="page_non_fans_layer"> 
 					<div class="img_non_fans">
-						<!--<img src="<?php echo $aa['config']['nofan_image']['value']?>" />-->
+						<img src="<?php echo $aa['config']['nofan_image']['value']?>" />
 					</div>
 					<div id="non_fan_background">&nbsp;</div>
 				</div>
