@@ -1,14 +1,44 @@
 <?php
 require_once( 'Zend/Mail.php' );
 require_once( 'Zend/Mail/Transport/Smtp.php' );
-include_once('config.php');
 
 class Newsletter {
 
 	private $db; // DB connection
-
-	function __construct($db) {
+	private $smtp_host = "localhost";
+	private $smtp_port = 587;
+	private $smtp_user = "none";
+	private $smtp_pass = "none";
+	private $sender_name = "";
+	private $sender_email = "";
+	private $aa_inst_id;
+	
+	/**
+	 * Initializes a Newsletter object to send out newsletter using double opt in registration
+	 * @param DBConnection $db Database connection
+	 * @param array $smtp Smtp access data as an array: (host, port, user, pass)
+	 * @param int $aa_inst_id App Arena Instance Id
+	 * @param array $sender Email sender data: (name, email)
+	 */
+	function __construct($db, $smtp=array(), $aa_inst_id=0, $sender=array()) {
 		$this->db = $db;
+		
+		if (array_key_exists('host', $smtp))
+			$this->smtp_host = $smtp['host'];
+		
+		if (array_key_exists('port', $smtp))
+			$this->smtp_port = $smtp['port'];
+		
+		if (array_key_exists('user', $smtp))
+			$this->smtp_user = $smtp['user'];
+		
+		if (array_key_exists('host', $smtp))
+			$this->smtp_pass = $smtp['pass'];
+		
+		if ($aa_inst_id != 0)
+			$this->aa_inst_id = $aa_inst_id; 
+		
+		$this->set_sender($sender);
 	}
 
 	/**
@@ -34,45 +64,56 @@ class Newsletter {
 			$res = $this->db->query_unfiltered($sql);
 		}
 		return true;
-
 	}
 
 	/**
 	 * Send a newsletter registration confirmation email to the user. This email contains a confirmation link,
 	 * the user can click to confirm the registration.
-	 * @param String $rec_email Email-address of the receiver
-	 * @param String $rec_name Name of the newsletter receiver
-	 * @param String $send_email Email-address of the sender
-	 * @param String $send_name Name of the newsletter sender
-	 * @param String $title Title of the newsletter (e.g. iConsultants Social Media Newsletter)
-	 * @param String $body HTML email body. Please use {{confirmation_link}} to place your confirmation link into your body text.
+	 * @param array $receiver (name, email) Array with all receiver information. Everything will be passed in the confirmation link
+	 * @param array $email (subject, body). Use {{confirmation_link}} to place your confirmation link into your body text.
+	 * @return boolean Returns if email could be send out or not
 	 */
-	function send_confirmation_email($rec_email, $rec_name, $send_email, $send_name, $title, $bodyHtml, $aa_inst_id="") {
-		global $smtp_host;
-		global $smtp_port;
-		global $smtp_user;
-		global $smtp_pass;
-
+	function send_confirmation_email($receiver=array(), $email=array()) {
+		
+		$str_receiver = base64_encode(json_encode($receiver));
 		$path = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["REQUEST_URI"]);
-		$confirmationURL = $path . "/confirm_newsletter_registration.php";
-		$decode = base64_encode($rec_email . ";" . $rec_name.";");
-		$confirmationURL = $confirmationURL . '?aa_inst_id=' . $aa_inst_id . '&id=' .$decode;
-		$confirmationLink = "<a href='" . $confirmationURL . "' title='" . __t("confirm_newsletter_registration")
-		. "'>" . __t("confirm_newsletter_registration") . "</a>";
+		$confirmationURL = $path . "/confirm_newsletter_registration.php" . '?aa_inst_id=' . $aa_inst_id . '&data=' . $str_receiver;
 
+		$confirmationLink = "<a href='" . $confirmationURL . "'>" . __t("confirm_newsletter_registration") . "</a>";
+		
+		// Get email content
+		if (array_key_exists('body', $email))
+			$email_body = $email['body'];
+		else $email_body = "";
+		if (array_key_exists('subject', $email))
+			$email_subject = $email['subject'];
+		else $email_subject = "";
+		
+		// Get receiver data
+		if (array_key_exists('name', $receiver))
+			$receiver_name = $receiver['name'];
+		else $receiver_name = "";
+		if (array_key_exists('email', $receiver))
+			$receiver_email = $receiver['email'];
+		else $receiver_email = "";
+		
 		// Replace variables in Email-text
-		$bodyHtml = str_replace("{{confirmation_link}}", $confirmationLink, $bodyHtml);
-		$bodyHtml = str_replace("{{name}}", $rec_name, $bodyHtml);
+		$email_body = str_replace("{{confirmation_link}}", $confirmationLink, $email_body);
+		$email_body = str_replace("{{name}}", $receiver_name, $email_body);
 
 		// Setup Zend SMTP server
-		$config = array('ssl'=>'tls','username' => $smtp_user, 'password' => $smtp_pass,'port'=>$smtp_port,'auth'=>'login');
-		$transport = new Zend_Mail_Transport_Smtp($smtp_host, $config);
+		$smtp_config = array('ssl'		=>'tls',
+							'username' 	=> $this->smtp_user, 
+							'password' 	=> $this->smtp_pass,
+							'port'		=> $this->smtp_port,
+							'auth'		=> 'login');
+		$transport = new Zend_Mail_Transport_Smtp($this->smtp_host, $smtp_config);
 
 		$mail = new Zend_Mail('UTF-8');
-		$mail->setBodyHtml($bodyHtml);
-		$mail->setFrom($send_email, $send_name);
-		$mail->addTo($rec_email, $rec_name);
-		$mail->setSubject($title);
+		$mail->setBodyHtml($email_body);
+		$mail->setFrom($this->sender_email, $this->sender_name);
+		$mail->addTo($receiver_email, $receiver_name);
+		$mail->setSubject($email_subject);
 
 		try{
 			$mail->send($transport);
@@ -81,6 +122,18 @@ class Newsletter {
 			//send mail failed
 			return $e->getMessage();
 		}
+	}
+	
+	/**
+	 * Sets the sender for all sent out emails
+	 * @param array $sender
+	 */
+	function set_sender($sender=array()) {
+		if (array_key_exists('name', $sender))
+			$this->sender_name = $sender['name'];
+		
+		if (array_key_exists('email', $sender))
+			$this->sender_email = $sender['email'];;
 	}
 
 

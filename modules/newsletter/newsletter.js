@@ -7,8 +7,8 @@
  */
 function send_newsletter(aa_inst_id, email, name) {
 	var data = {
-		rec_email : email,
-		rec_name : name
+		receiver_email : email,
+		receiver_name : name
 	};
 
 	var url = "modules/newsletter/send_newsletter_confirmation.php?aa_inst_id=" + aa_inst_id;
