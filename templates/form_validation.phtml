@@ -56,7 +56,7 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="javascript:send_newsletter(aa_inst_id, $('#inputName2').val(), $('#inputEmail2').val());" method="post" id="form-newsletter">
+		<form class="form-horizontal" action="javascript:send_email(aa_inst_id, $('#inputName2').val(), $('#inputEmail2').val());" method="post" id="form-newsletter">
 			<div class="control-group">
 				<label class="control-label" for="inputName2">Name</label>
 				<div class="controls">
@@ -89,9 +89,11 @@ $(document).ready(function() {
 	$("#form-newsletter").validate(bootstrap_form);
 });
 
-function send_email(form_data){
+function send_email(aa_inst_id, name, email){
 
-	console.log(form_data);
+	console.log(aa_inst_id);
+	console.log(name);
+	console.log(email);
 	
 	send_newsletter(aa_inst_id, 's.buckpesch@iconsultants.eu' , 'Sebastian', function() {
 		$("msg-container").append("Email successfully send");
