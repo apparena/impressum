@@ -7,8 +7,8 @@ $smtp_config = array("host" => "smtp.mandrillapp.com",
 					);
 
 // Sender settings
-$sender = array("sender_name" 	=> "App-Arena.com Developer",
-				"smtp_user" 	=> "info@app-arena.com",
+$sender = array("name" 	=> "App-Arena.com Developer",
+				"email" => "info@app-arena.com",
 );
 
 // Default email settings
