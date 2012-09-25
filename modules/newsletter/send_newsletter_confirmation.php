@@ -27,7 +27,8 @@ $ret = $newsletter->send_confirmation_email($receiver, $email);
 if($ret == true) {
    var_dump($ret);
 } else {
-  // echo errorMsg($ret);
+  echo "<h1>Error</h1>";
+  var_dump($ret);
 }
 
 ?>
