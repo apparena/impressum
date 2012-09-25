@@ -77,7 +77,7 @@ class Newsletter {
 		
 		$str_receiver = base64_encode(json_encode($receiver));
 		$path = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["REQUEST_URI"]);
-		$confirmationURL = $path . "/confirm_newsletter_registration.php" . '?aa_inst_id=' . $this->aa_inst_id . '&data=' . $str_receiver;
+		$confirmationURL = $path . "/confirm_newsletter_registration.php" . '?aa_inst_id=' . $thisaa_inst_id . '&data=' . $str_receiver;
 
 		$confirmationLink = "<a href='" . $confirmationURL . "'>" . __t("confirm_newsletter_registration") . "</a>";
 		
