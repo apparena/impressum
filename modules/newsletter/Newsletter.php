@@ -120,7 +120,10 @@ class Newsletter {
 			return true;
 		} catch(Exception $e) {
 			//send mail failed
-			return $e->getMessage();
+			$return_msg = "<strong>Sender: </strong>" . var_dump($sender);
+			$return_msg .= "<strong>Receiver: </strong>" . var_dump($receiver);
+			$return_msg .= "<strong>Email: </strong>" . var_dump($email);
+			return $return_msg . $e->getMessage();
 		}
 	}
 	
