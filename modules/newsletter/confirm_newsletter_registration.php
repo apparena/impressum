@@ -9,7 +9,7 @@ $newsletter = new Newsletter($db);
 If (isset($_GET['data'])) {
 	$receiver = json_decode(base64_decode($_GET['data']));
 	// Register newsletter subsription
-	$newsletter->register_new_subscription($receiver, $aa['instance']['aa_inst_id']);
+	var_dump($newsletter->register_new_subscription($receiver, $aa['instance']['aa_inst_id']));
 	
 	
 	
@@ -26,9 +26,9 @@ $fb_app_url=$aa['instance']['fb_page_url']."?sk=app_".$aa['instance']['fb_app_id
 
 <body>
 
-<script type="text/javascript">
+<!--  <script type="text/javascript">
 top.location="<?php echo $fb_app_url; ?>";
-</script>
+</script>-->
 
 </body>
 </html>

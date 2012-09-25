@@ -152,6 +152,7 @@ class Newsletter {
 		if (array_key_exists('email', $receiver))
 			$receiver_email = $receiver['email'];
 		
+		$client_ip = $this->get_client_ip();
 
 		// Update table app_participation, columns timestam, ip, newsletter_registration
 		// Get fb_user_id from email-address
@@ -167,7 +168,7 @@ class Newsletter {
 					WHERE `email` = '" . $receiver_existing[0] . "'
 					AND aa_inst_id=" . $this->aa_inst_id . ";";
 			
-			$this->db->query($sql);
+			return $this->db->query($sql);
 		} else {
 			$sql = "INSERT INTO `nl_registration`
 					SET `is_confirmed` = 1, 
@@ -175,16 +176,8 @@ class Newsletter {
 						`email`='" . $receiver_email  . "',
 						`name`='" . $receiver_name  . "',
 						`ip`='" . $client_ip . "'";
-			$this->db->query($sql);
+			return $this->db->query($sql);
 		}
-				
-		
-		$client_ip = $this->get_client_ip();
-		
-		// Set newsletter subscription in DB
-		$sql = "UPDATE `app_participation` SET `ip`='" . $client_ip . "', `newsletter_registration`=1
-		WHERE `aa_inst_id`='$aa_inst_id' AND `fb_user_id`='$fb_user_id'";
-		$res = $db->query($sql);
 	}
 
 	/**
