@@ -56,7 +56,7 @@ class Newsletter {
 			`email` varchar(128) NOT NULL COMMENT 'User''s email address',
 			`name` varchar(128) DEFAULT NULL COMMENT 'Name of the user',
 			`gender` varchar(16) DEFAULT NULL COMMENT 'Gender of the user',
-			`timestamp` datetime NOT NULL COMMENT 'Timestamp of registration',
+			`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp of registration',
 			`ip` varchar(15) NOT NULL COMMENT 'IP address',
 			`is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
 			PRIMARY KEY (`id`)
@@ -157,7 +157,7 @@ class Newsletter {
 		$sql = "SELECT `email` FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
 				AND `aa_inst_id`=" . $this->aa_inst_id . " LIMIT 1";
 		$receiver_existing = $this->db->query($sql);
-		var_dump($this->db->query($sql));
+		var_dump($receiver_existing);
 		
 		
 		if ( $receiver_existing ) {
