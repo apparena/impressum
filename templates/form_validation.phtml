@@ -56,17 +56,17 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="javascript:send_email( $(this).serializeArray() );" method="post" id="form-newsletter">
+		<form class="form-horizontal" action="javascript:send_newsletter(aa_inst_id, $('#inputName2').val(), $('#inputEmail2').val());" method="post" id="form-newsletter">
 			<div class="control-group">
-				<label class="control-label" for="inputName">Name</label>
+				<label class="control-label" for="inputName2">Name</label>
 				<div class="controls">
-					<input type="text" id="inputName" placeholder="Your name" class="required">
+					<input type="text" id="inputName2" placeholder="Your name" class="required">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="inputEmail">Email</label>
+				<label class="control-label" for="inputEmail2">Email</label>
 				<div class="controls">
-					<input type="text" id="inputEmail" placeholder="Your email address" class="required email">
+					<input type="text" id="inputEmail2" placeholder="Your email address" class="required email">
 				</div>
 			</div>
 			<div class="control-group">
