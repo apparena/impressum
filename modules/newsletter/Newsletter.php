@@ -61,7 +61,7 @@ class Newsletter {
 			`is_confirmed` tinyint(1) NOT NULL COMMENT 'Is registration confirmed?',
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-			$res = $this->db->query_unfiltered($sql);
+			$res = $this->db->query($sql);
 		}
 		return true;
 	}
@@ -156,8 +156,8 @@ class Newsletter {
 		// Get fb_user_id from email-address
 		$sql = "SELECT `email` FROM `nl_registration` WHERE `email`='" . $receiver_email . "'
 				AND `aa_inst_id`=" . $this->aa_inst_id . " LIMIT 1";
-		$receiver_existing = $this->db->query_unfiltered($sql);
-		var_dump($this->db->query_unfiltered($sql));
+		$receiver_existing = $this->db->query($sql);
+		var_dump($this->db->query($sql));
 		
 		
 		if ( $receiver_existing ) {

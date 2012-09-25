@@ -28,24 +28,7 @@ class AA_Db {
 	 * Sends a query to the db and returns the complete result in an array
 	 */
 	function query( $sql ) {
-		$sql = $this->cleanQuery($sql);
-		$result = mysql_query( $sql, $this->db_con);
-		$all = array ();
-		if ($result && is_array($result)) {
-			while ( $row = mysql_fetch_assoc( $result ) ) {
-				$all[] = $row;
-			}
-		} else {
-			if (is_object($result))
-				return mysql_fetch_row( $result );
-		}
-		return $all;
-	}
-	
-	/**
-	 * Sends a query to the db and returns the complete result in an array
-	 */
-	function query_unfiltered( $sql ) {
+		//$sql = $this->cleanQuery($sql);
 		$result = mysql_query( $sql, $this->db_con);
 		$all = array ();
 		if ($result && is_array($result)) {
