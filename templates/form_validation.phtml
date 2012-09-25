@@ -56,7 +56,7 @@ include_once ( '../init.php' );
 	</div>
 	<div class="modal-body">
 
-		<form class="form-horizontal" action="javascript:send_newsletter(aa_inst_id, 's.buckpesch@iconsultants.eu', 'Sebastian');" method="post" id="form-newsletter">
+		<form class="form-horizontal" action="javascript:send_email();" method="post" id="form-newsletter">
 			<div class="control-group">
 				<label class="control-label" for="inputName">Name</label>
 				<div class="controls">
@@ -88,6 +88,12 @@ $(document).ready(function() {
 	$("#form-modal").validate(bootstrap_form);
 	$("#form-newsletter").validate(bootstrap_form);
 });
+
+function send_email(){
+	send_newsletter(aa_inst_id, 's.buckpesch@iconsultants.eu' , 'Sebastian', function() {
+		$("msg-container").append("Email successfully send");
+	});
+}
 
 /* This will make the jQuery validation plugin work with bootstrap forms */
 var bootstrap_form = {
