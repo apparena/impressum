@@ -93,11 +93,6 @@
 					$terms_and_conditions_link = "<a id='terms-link'>" . __t("terms_and_conditions") . "</a>";
         			__p("footer_terms", $terms_and_conditions_link);
 				?>
-				<script>
-				$(document).ready(function () { 
-					$('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });
-				});
-				</script>
 			</div>
 			
 			<div class="branding">
@@ -182,6 +177,8 @@
 			$(document).ready(function() {
 				show_loading(); // uses the formerly included "loading_screen.phtml" files function
 				aa_tmpl_load("welcome.phtml");
+				
+				$('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });
 			});
 			
 
