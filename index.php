@@ -179,6 +179,19 @@
 				aa_tmpl_load("welcome.phtml");
 			});
 			
+
+			window.fbAsyncInit = function() {
+			    FB.init({
+			      appId      : fb_app_id, // App ID
+			      channelUrl : fb_canvas_url + 'channel.html', // Channel File
+			      status     : true, // check login status
+			      cookie     : true, // enable cookies to allow the server to access the session
+			      xfbml      : true  // parse XFBML
+			    });
+
+			    FB.Canvas.setAutoGrow(); // Grow facebook page, when iframe content is growing (>> no scrollbar)
+			    // Additional initialization code here
+			};
 			
 			// Load the SDK Asynchronously
 			(function(d){
