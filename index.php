@@ -88,11 +88,12 @@
 		</div>
 		
 		<footer>
-			<div class="terms-and-conditions-container">
-				<?php //TODO: check this and make it readable
-					$terms_and_conditions_link = "<a class='template-terms'>" . __t("Terms & Conditions") . "</a>";
-					__p("This promotion is not associated to Facebook and is not promoted, supported or organized by Facebook. Please check the %s for further details", $terms_and_conditions_link);
+			<div class="terms-container">
+				<?php
+					$terms_and_conditions_link = "<a id='terms-link'>" . __t("terms_and_conditions") . "</a>";
+        			__p("footer_terms", $terms_and_conditions_link);
 				?>
+				<script>$('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });</script>
 			</div>
 			
 			<div class="branding">
