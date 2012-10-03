@@ -20,6 +20,7 @@ function aa_tmpl_load(tmpl_filename){
 				   xfbml      : true, // parse XFBML
 				   oauth    : true
 				});
+				FB.Canvas.scrollTo(0,0);
 				hide_loading(); // hide the loading screen
 			});    						
 		});    					
