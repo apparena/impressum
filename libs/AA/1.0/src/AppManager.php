@@ -8,7 +8,7 @@ require('Zend/Soap/Client.php');
 
 class AA_AppManager {
 	protected $client 		= null; 	//soap client
-	protected $server_url 	= 'http://www.app-arena.com/manager/server/soap3.php'; //soap server url
+	protected $server_url 	= 'https://www.app-arena.com/manager/server/api.php'; //soap server url
 	protected $error_msg 	= ''; // Error message on failed soap call
 	
 	//this params will transport each call 

@@ -29,7 +29,6 @@ $appmanager = new AA_AppManager(array(
 	'aa_app_secret' => $aa_app_secret,
 	'aa_inst_id' => $aa_inst_id
 ));
-$appmanager->setServerUrl('http://dev.app-arena.com/manager/server/soap4.php');
 
 /**
  * Start session and initialize App-Manager content
