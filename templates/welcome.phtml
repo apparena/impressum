@@ -6,51 +6,74 @@ include_once ( '../init.php' );
 		<div class="span10">
 			<div class="welcome-header">
 				<h1>App-Arena.com App template</h1>
-				<p>Easy facebook app template, offering a wide set of frequently used functionality.</p>
-				<p>The app template contains many functions which are used in most facebook apps and do not need to be implemented on and on...<br />
+				<p>Easy facebook app template, offering a wide set of frequently used functionality. The app template contains many functions which are used in most facebook apps and do not need to be implemented on and on...<br />
 				
 				<h2>Functionality overview:</h2>
-				<div class="span5">
-					<h3>Content</h3>
-					<ul>
-						<li>Load new templates using jquery animations</li>
-						<li>Localization - Publish apps in different languages</li>
-						<li>Admin panel</li>
-						<li>Twitter Bootstrap: Forms, Navigation, Modals, Carousel, ...</li>
-					</ul>
+				<div class="row">
+					<div class="span5">
+						<h3>Content</h3>
+						<ul>
+							<li>Load new templates using jquery animations</li>
+							<li>Localization - Publish apps in different languages</li>
+							<li>Admin panel</li>
+							<li>Twitter Bootstrap: Forms, Navigation, Modals, Carousel, ...</li>
+						</ul>
+					</div>
+					<div class="span5">
+						<h3>Facebook</h3>
+						<li>Facebook Social functionality (Invite, Send, Share, Like, Comment)</li>
+						<li>Facebook Authentification - Auth user and save him to the database</li>
+						<li>Facebook Open Graph Integration</li>
+						<li>Facebook Fangate</li>
+					</div>
+					<div class="span5">
+						<h3>Data</h3>
+						<li>Database connection</li>
+						<li>Automatic database schema creation</li>
+						<li>Save users</li>
+						<li>Export users to csv</li>
+					</div>
+					<div class="span5">
+						<h3>Developers</h3>
+						<li>Clear file and folder structure</li>
+						<li>App-Arena.com App-Manager connection: Develop once, duplicate on mouse-click</li>
+						<li>Debug mode with information for developers</li>
+						<li>Extensions</li>
+						<li>Sending emails using templates incl. Newsletter double opt in registration</li>
+					</div>
 				</div>
-				<div class="span5">
-					<h3>Facebook</h3>
-					<li>Facebook Social functionality (Invite, Send, Share, Like, Comment)</li>
-					<li>Facebook Authentification - Auth user and save him to the database</li>
-					<li>Facebook Open Graph Integration</li>
-					<li>Facebook Fangate</li>
+				<div class="row">
+					<div class="span5">
+						<h3>Demos</h3>
+						To get to know all the functionality this template is offering you, we created several template files, which integrate examples. So you can just adapt these examples to your needs.
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Demo</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><a onclick="aa_tmpl_load('fb-demo.phtml');">Facebook social features</a></td>
+									<td>Tell me how my app can spread content in Facebook</td>
+								</tr>
+								<tr>
+									<td><a onclick="aa_tmpl_load('localization.phtml');">Localization</a></td>
+									<td>Yes, I want to learn how to create multilingual apps.</td>
+								</tr>
+								<tr>
+									<td><a onclick="aa_tmpl_load('db-demo.phtml');">DB-Demo</a></td>
+									<td>Show me how to work with the database</td>
+								</tr>
+								<tr>
+									<td><a onclick="aa_tmpl_load('terms.phtml');">Terms & conditions</a></td>
+									<td>Show terms and conditions page</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div class="span5">
-					<h3>Data</h3>
-					<li>Database connection</li>
-					<li>Automatic database schema creation</li>
-					<li>Save users</li>
-					<li>Export users to csv</li>
-				</div>
-				<div class="span5">
-					<h3>Developers</h3>
-					<li>Clear file and folder structure</li>
-					<li>App-Arena.com App-Manager connection: Develop once, duplicate on mouse-click</li>
-					<li>Debug mode with information for developers</li>
-					<li>Extensions</li>
-					<li>Sending emails using templates incl. Newsletter double opt in registration</li>
-				</div>
-				
-				<p>
-					To get to know all the functionality this template is offering you, we created several template files, which integrate examples. So you can just adapt these examples to your needs.
-					<ul>
-						<li><a onclick="aa_tmpl_load('terms.phtml');">Terms & conditions</a></li>
-						<li><a onclick="aa_tmpl_load('fb-demo.phtml');">Facebook social features</a></li>
-						<li><a onclick="aa_tmpl_load('localization.phtml');">Localization</a></li>
-						<li><a onclick="aa_tmpl_load('db-demo.phtml');">DB-Demo</a></li>
-					</ul>
-				</p>
 			</div>
 		</div>
 	</div>
