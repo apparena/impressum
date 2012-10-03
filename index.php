@@ -59,9 +59,9 @@
 	        	<div class="container-fluid">
 	            	<nav>
 						<ul class="nav">
-							<li><a class="template-welcome"><?php __p("Homepage");?></a></li>
-							<li><a onclick="aa_tmpl_load('terms.phtml');"><?php __p("Terms and conditions");?></a></li>
-							<li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Form validation");?></a></li>
+							<li><a onclick="aa_tmpl_load('welcome.phtml');"><?php __p("Homepage");?></a></li>
+							<li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("fb_demo");?></a></li>
+							<li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
 						</ul>
 					</nav>
 				</div>
