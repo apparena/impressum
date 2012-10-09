@@ -13,7 +13,8 @@ In the App-Manager you need to add the following config-values to make this work
 - nl_email_body		[html]
 
 2. DB connection:
-The database connection can be initialized via "global $db"
+- The database connection can be initialized via "global $db"
+- The DB User needs rights to "CREATE" tables in the DB
 
 3. Email Content (nl_text):
 This html content element needs should contain these variables, to print a confirmation link. Without these variables a double opt in method is not possible.

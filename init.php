@@ -91,10 +91,15 @@ if ( isset ( $_REQUEST["signed_request"] ) ) {
 }
 
 /**
- * Setup database connection
+ * Setup mysql database connection
  */
 if ($db_activated){
-	require_once ROOT_PATH.'/libs/AA/1.0/src/aa_db.php';
-	$db = new AA_Db($db_host, $db_name, $db_user, $db_pass);
+	require_once ROOT_PATH.'/libs/Zend/Db/Adapter/Pdo/Mysql.php';
+	$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+	    'host'     => $db_host,
+	    'username' => $db_user,
+	    'password' => $db_pass,
+	    'dbname'   => $db_name
+	));
 }
 ?>
