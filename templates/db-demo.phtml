@@ -5,16 +5,41 @@ include_once ( '../init.php' );
 <p>Our app template is using the <a href="http://framework.zend.com/manual/1.12/en/zend.db.adapter.html" target="_blank">Zend-Framework to connect to a database</a>. Here are some basic examples, how to perform queries on your database.</p>
 <h2>Basic setup</h2>
 <p>Just enter your database data in <strong>config.php</strong> and set $db_activated to 'true' to use it.</p>
-<h2>Simple Query</h2>
+<h2>Fetching a Complete Result Set</h2>
 <pre>
 $sql 	= "SELECT * FROM 'app_participant' WHERE 1";
 $result = $db->fetchAll($sql);
 </pre>
-Result:<br />
+
+<h2>Fetching a Single Column from a Result Set</h2>
 <pre>
-<?php 
-$sql 	= "SELECT * FROM 'app_participant' WHERE 1";
-$result = $db->fetchAll($sql);
-var_dump($result);
-?>
+$sql 	= "SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?";
+$result = $db->fetchCol($sql);
+// contains bug_description; bug_id is not returned
+echo $result[0];
+</pre>
+
+<h2>Fetching Key-Value Pairs from a Result Set</h2>
+<pre>
+$sql 	= "SELECT bug_id, bug_status FROM bugs";
+$result = $db->fetchPairs($sql);
+echo $result[2];
+</pre>
+
+<h2>Fetching a Single Row from a Result Set</h2>
+<pre>
+$sql 	= "SELECT * FROM bugs WHERE bug_id = 2";
+$result = $db->fetchRow($sql);
+
+// note that $result is a single object, not an array of objects
+echo $result->bug_description;
+</pre>
+
+<h2>Fetching a Single Scalar from a Result Set</h2>
+<pre>
+$sql 	= "SELECT bug_status FROM bugs WHERE bug_id = 2";
+$result = $db->fetchOne($sql);
+
+// this is a single string value
+echo $result;
 </pre>
