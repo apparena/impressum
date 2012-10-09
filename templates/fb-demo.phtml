@@ -3,8 +3,21 @@ include_once ( '../init.php' );
 ?>
 
 
-<script type="text/javascript">
-/* Facebook Friend-selector */
+<script>
+$(document).ready( function(){
+    FB.init({
+          appId      : fb_app_id, // App ID
+          channelUrl : fb_canvas_url + 'channel.html', // Channel File
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true, // parse XFBML
+          oauth		 : true
+    });
+
+	
+});
+
+// Facebook Friend-selector
 function sendRequestViaMultiFriendSelector() {
 	FB.ui({method: 'apprequests',
           message: 			'<?php echo $aa['config']["fb_share_name"]["value"] ?>',
