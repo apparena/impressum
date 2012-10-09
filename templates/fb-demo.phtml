@@ -4,29 +4,15 @@ include_once ( '../init.php' );
 
 
 <script>
-$(document).ready( function(){
-    FB.init({
-          appId      : fb_app_id, // App ID
-          channelUrl : fb_canvas_url + 'channel.html', // Channel File
-          status     : true, // check login status
-          cookie     : true, // enable cookies to allow the server to access the session
-          xfbml      : true, // parse XFBML
-          oauth		 : true
-    });
-
-	
-});
-
-// Facebook Friend-selector
-function sendRequestViaMultiFriendSelector() {
+function fb_multi_friend_selector() {
 	FB.ui({method: 'apprequests',
           message: 			'<?php echo $aa['config']["fb_share_name"]["value"] ?>',
           redirect_uri :	'<?php echo $aa['fb']['share_url']; ?>',
           data:				'<?php echo $aa['instance']['aa_inst_id']; ?>'
-	}, requestCallback);
+	}, request_callback);
 }
       
-function requestCallback(response) {
-      	
+function request_callback( response ) {
+	
 }
 </script>
