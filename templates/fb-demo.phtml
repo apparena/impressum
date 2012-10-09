@@ -2,3 +2,18 @@
 include_once ( '../init.php' );
 ?>
 
+
+<script type="text/javascript">
+/* Facebook Friend-selector */
+function sendRequestViaMultiFriendSelector() {
+	FB.ui({method: 'apprequests',
+          message: 			'<?php echo $aa['config']["fb_share_name"]["value"] ?>',
+          redirect_uri :	'<?php echo $aa['fb']['share_url']; ?>',
+          data:				'<?php echo $aa['instance']['aa_inst_id']; ?>'
+	}, requestCallback);
+}
+      
+function requestCallback(response) {
+      	
+}
+</script>
