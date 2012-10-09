@@ -7,9 +7,15 @@ include_once ( '../init.php' );
 <p>Just enter your database data in <strong>config.php</strong> and set $db_activated to 'true' to use it.</p>
 <h2>Query demos</h2>
 <h3><a href="http://framework.zend.com/manual/1.12/en/zend.db.adapter.html#zend.db.adapter.select.fetchall" target="_blank">Fetching a Complete Result Set</a></h3>
+
 <pre>
 $sql 	= "SELECT * FROM 'app_participant' WHERE 1";
 $result = $db->fetchAll($sql);
+</pre>
+<pre>
+$stmt = $db->query('SELECT * FROM bugs');
+$rows = $stmt->fetchAll();
+echo $rows[0]['bug_description'];
 </pre>
 
 <h3>Fetching a Single Column from a Result Set</h3>
@@ -29,6 +35,14 @@ echo $result[2];
 
 <h3>Fetching a Single Row from a Result Set</h3>
 <pre>
+$stmt = $db->query('SELECT * FROM bugs');
+ 
+while ($row = $stmt->fetch()) {
+    echo $row['bug_description'];
+}
+</pre>
+
+<pre>
 $sql 	= "SELECT * FROM bugs WHERE bug_id = 2";
 $result = $db->fetchRow($sql);
 
@@ -44,6 +58,8 @@ $result = $db->fetchOne($sql);
 // this is a single string value
 echo $result;
 </pre>
+
+
 <h2>Write to DB demos</h2>
 <h3><a href="http://framework.zend.com/manual/1.12/en/zend.db.adapter.html#zend.db.adapter.write.insert" target="_blank">Inserting data</a></h3>
 <pre>
