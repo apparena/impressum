@@ -176,7 +176,7 @@
 			// jquerys document ready function gets fired when the DOM has been finished loading.
 			$(document).ready(function() {
 				show_loading(); // uses the formerly included "loading_screen.phtml" files function
-				aa_tmpl_load("welcome.phtml");
+				aa_tmpl_load("index.phtml");
 				
 				$('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });
 			});
