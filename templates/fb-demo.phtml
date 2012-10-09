@@ -6,7 +6,7 @@ include_once ( '../init.php' );
 <script>
 function fb_multi_friend_selector() {
 	FB.ui({method: 'apprequests',
-          message: 			'<?php echo $aa['config']["fb_share_name"]["value"] ?>',
+          message: 			'This is your share message',
           redirect_uri :	'<?php echo $aa['fb']['share_url']; ?>',
           data:				'<?php echo $aa['instance']['aa_inst_id']; ?>'
 	}, request_callback);
