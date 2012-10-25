@@ -2,17 +2,59 @@
 include_once ( '../init.php' );
 ?>
 
+<script src="libs/AA"
+<div class="container">
+    <div class="row">
+           <div class="span10">
+               <h1>Basics</h1>
+               <p>
+                   All Facebook sharing functions will share certain information within the network. You can freely
+                   define these information by passing information via <strong>function parameter</strong> (for API calls),
+                   by passing <strong>GET-Params</strong> (for Links using href) or to submit an URL which contains
+                   certain <strong>Facebook Meta-Tags</strong>.
+               </p>
+               <h2>Dependencies</h2>
+               <p>
+                   <ul>
+                        <li>libs/AA/fb_share.js<br>
+                            This library contains examples of all Facebook javascript sharing functions, which can be
+                            called immediately...
+                        </li>
+                   </ul>
+               </p>
+           </div>
+        <div class="span5">
+            <h2>Sharing via js API calls</h2>
+            <a class="btn"><i class="icon-bullhorn"></i> Share</a>
+            <a class="btn"><i class="icon-bullhorn"></i> Send</a>
+        </div>
 
-<script>
-function fb_multi_friend_selector() {
-	FB.ui({method: 'apprequests',
-          message: 			'This is your share message',
-          redirect_uri :	'<?php echo $aa['fb']['share_url']; ?>',
-          data:				'<?php echo $aa['instance']['aa_inst_id']; ?>'
-	}, request_callback);
-}
-      
-function request_callback( response ) {
-	
-}
-</script>
+        <div class="span5">
+            <h2>Sharing via href</h2>
+            <p>
+                <a class="btn"><i class="icon-bullhorn"></i> Share</a>
+                <a class="btn"><i class="icon-bullhorn"></i> Send</a>
+            </p>
+        </div>
+        <div class="span5">
+            <h2>Native Facebook social plugins</h2>
+            <p>Here we will use </p>
+            <ul>
+                <li>Like</li>
+                <li>Send</li>
+                <li>Comment-Box</li>
+
+            </ul>
+        </div>
+
+        <div class="span5">
+            <h2>Sharing via href</h2>
+            <p>
+                <a class="btn"><i class="icon-bullhorn"></i> Share</a>
+                <a class="btn"><i class="icon-bullhorn"></i> Send</a>
+            </p>
+        </div>
+
+
+    </div>
+</div>

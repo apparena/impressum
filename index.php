@@ -9,7 +9,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <html>
 	<head>
-		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="utf-8">
 	    
 		<!-- Facebook Meta Data -->
 	    <meta property="fb:app_id" content="<?php echo $aa['instance']['fb_app_id']?>" />
