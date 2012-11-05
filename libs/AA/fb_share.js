@@ -31,3 +31,41 @@ function urlencode(str) {
 function urldecode(str) {
     return decodeURIComponent((str + '').replace(/\+/g, '%20'));
 }
+
+function postToFeed(link,picture_url,name,caption,desc) {
+
+    // calling the API ...
+    var obj = {
+        method: 'feed',
+        link: link,
+        picture: picture_url,
+        name: name,
+        caption: caption,
+        description: desc
+    };
+
+    function callback(response) {
+        document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+    }
+
+    FB.ui(obj, callback);
+}
+function sendToFriend(link,name) {
+    FB.ui({
+        method: 'send',
+        name: name,
+        link: link
+    });
+}
+function sendRequest(name, desc, data) {
+    // Use FB.ui to send the Request(s)
+    FB.ui({method: 'apprequests',
+        title: name,
+        message: desc,
+        data: data
+    }, callback);
+}
+
+function callback(response) {
+    console.log(response);
+}
