@@ -27,7 +27,17 @@
 		<meta name="author" content="iConsultants UG - www.app-arena.com">
 		
 		<meta name="viewport" content="width=device-width">
-		
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+        <!-- scripts concatenated and minified via ant build script-->
+        <!-- <script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script> -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/script.js?v4"></script>
+        <!-- end scripts-->
+
 		<!-- Include css config values here -->
 		<style type="text/css">
 			<?php 
@@ -145,15 +155,7 @@
 	 		require_once( dirname(__FILE__).'/templates/loading_screen.phtml' );
 	 	?>
 	 	
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-		
-		<!-- scripts concatenated and minified via ant build script-->
-		<!-- <script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script> -->
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/plugins.js"></script>
-		<script src="js/script.js?v4"></script>
-		<!-- end scripts-->
+
 		
 		<!-- google analytics stuff -->
 		<script>
