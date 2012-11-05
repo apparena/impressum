@@ -43,8 +43,15 @@
 		<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
 		     chromium.org/developers/how-tos/chrome-frame-getting-started -->
 		<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-		
-		<?php 
+
+        <?
+        if (is_fb_user_admin()) { ?>
+        <div class="admin_div">
+            <? require_once dirname(__FILE__) . '/modules/admin_panel/admin_panel.php'; ?>
+        </div>
+        <? }
+
+
 			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
 				<div class="page_non_fans_layer"> 
 					<div class="img_non_fans">
