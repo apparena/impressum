@@ -27,7 +27,7 @@ if (is_fb_user_admin()) {
     <? require_once dirname(__FILE__) . '/admin.php'; ?>
 </header>
 <span class="admin_banner">
-<div id="admin_panel_button" class="clickable" onclick="admin_panel_close()"><i
+<div id="admin_panel_button" class="clickable" onclick=""><i
         class="icon-cog"></i>&nbsp;<? __p('admin_panel')?>&nbsp;<i id="arrow" class="icon-chevron-up"></i></div>
 </span>
 <div style="clear:both"></div>
