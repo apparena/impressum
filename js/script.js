@@ -110,3 +110,52 @@ function sendRequest(name, desc, data) {
 function callback(response) {
     console.log(response);
 }
+
+
+
+
+
+/**************************************
+ * this is only for debugging!        *
+ * it will later be put into the      *
+ * registration module folder...      *
+ **************************************/
+function FBConnect( id, callback ) {
+	
+	var scope = 'email';
+	
+	if ( typeof( id ) != 'undefined' && id != null && id.length > 0 ) {
+		scope = $( '#' + id ).val();
+	}
+	
+	authUser( scope, callback );
+	
+}
+
+function registerUser( id, callback ) {
+	
+	
+	
+	
+}
+
+function authUser( scope, callback ) {
+	FB.login( function( response ) {
+		if ( response.authResponse ) {
+			FB.api( '/me', function( response ) {
+				if ( typeof( response.id ) != 'undefined' ) {
+					fb_user_id = response.id;
+					fb_user_name = response.name;
+					fb_user_email = response.email;
+				}
+				
+				if ( typeof( callback ) == 'function' ) {
+					callback();
+				}
+			});
+		} else {
+			aa_tmpl_load( 'no_auth.phtml' );
+		}
+    }, { scope: scope });
+	
+}
