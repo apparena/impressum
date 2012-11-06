@@ -17,13 +17,12 @@ if (is_fb_user_admin()) {
                   onclick="return popup('admin/index.php?p=getwinner&aa_inst_id=<?php echo $session->instance['aa_inst_id']; ?>');"><i
                     class="icon-gift"></i> <?php __p("Select winner")?></span>
         </div>
-    </div>
-
-    <div class="configure-app">
-        <a class="app_config" href="/manager/index.php/wizard/instance_id/<?=$aa['instance']['aa_inst_id'];?>/"
-           target="_blank">
-            <button class="btn btn-mini"><i class="icon-cog"></i> <?php __p("Configure_App")?></button>
-        </a>
+        <div class="configure-app">
+            <a class="app_config" href="/manager/index.php/wizard/instance_id/<?=$aa['instance']['aa_inst_id'];?>/"
+               target="_blank">
+                <button class="btn btn-mini"><i class="icon-cog"></i> <?php __p("Configure_App")?></button>
+            </a>
+        </div>
     </div>
 </div>
 
