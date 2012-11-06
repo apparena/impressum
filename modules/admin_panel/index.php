@@ -14,8 +14,8 @@ include_once("../init_session.php");
 
     <!-- Include bootstrap css files -->
     <style type="text/css">
-        <?=$session->config['css_bootstrap']['value'];?>
-        <?=$session->config['css']['value'];?>
+        <?=$aa['config']['css_bootstrap']['value'];?>
+        <?=$aa['config']['css']['value'];?>
     </style>
     <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.8.18.custom.css"/>
 </head>
@@ -34,7 +34,7 @@ include_once("../init_session.php");
                 <ul class="nav">
                     <li><a class="template-getwinner"><?=__p("Select winner");?></a></li>
                     <li><a class="template-exportparticipants"><?=__p("Export participants");?></a></li>
-                    <?php if ($session->config['admin_reset']['value']) { ?>
+                    <?php if ($aa['config']['admin_reset']['value']) { ?>
                     <li><a class="template-reset"><?=__p("Reset");?></a></li>
                     <?php }?>
                 </ul>
@@ -50,7 +50,7 @@ include_once("../init_session.php");
 
 <footer>
     <div class="branding">
-        <?=$session->config['footer']['value'];?>
+        <?=$aa['config']['footer']['value'];?>
     </div>
 </footer>
 
@@ -101,18 +101,18 @@ if (isset($_GET['p']) && $_GET['p'] != "")
         /***********************
          * Get aa vars for js. *
          ***********************/
-        fb_app_id = '<?=$session->instance["fb_app_id"]?>';
-        aa_inst_id = '<?=$session->instance["aa_inst_id"]?>';
-        fb_canvas_url = '<?=$session->instance["fb_canvas_url"]?>';
+        fb_app_id = '<?=$aa['instance']["fb_app_id"]?>';
+        aa_inst_id = '<?=$aa['instance']["aa_inst_id"]?>';
+        fb_canvas_url = '<?=$aa['instance']["fb_canvas_url"]?>';
 
         /**
-         name          = '<?=$session->config["fb_share_title"]["value"];?>';
-         description   = '<?=$session->config["fb_share_text"]["value"];?>';
+         name          = '<?=$aa['config']["fb_share_title"]["value"];?>';
+         description   = '<?=$aa['config']["fb_share_text"]["value"];?>';
 
          // instance["fb_page_url"] is empty!
-         link          = '<?=$session->config["fb_page_url"];?>';
-         picture       = '<?=$session->config["fb_share_image"]["value"];?>';
-         caption       = '<?=$session->config["fb_share_subtitle"]["value"];?>'; */
+         link          = '<?=$aa['config']["fb_page_url"];?>';
+         picture       = '<?=$aa['config']["fb_share_image"]["value"];?>';
+         caption       = '<?=$aa['config']["fb_share_subtitle"]["value"];?>'; */
 
         show_loading();
 
