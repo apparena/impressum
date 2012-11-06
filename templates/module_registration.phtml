@@ -1,0 +1,50 @@
+<?php 
+include_once ( '../init.php' );
+?>
+<script type="text/javascript" src="modules/newsletter/registration.js"></script>
+
+<h1>Registration demo</h1>
+
+<div class="alert alert-info">
+	Include 'modules/registration/registration.js' to use the registration function:
+	&lt;script src="modules/registration/registration.js" type="text/javascript" /&gt;
+</div>
+
+<hr />
+<div id="container_connect">
+	<h2>Facebook connect</h2>
+	<button class="btn btn-primary"><i class="icon-retweet icon-white"></i> Connect</button>
+	<span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
+</div>
+
+<div id="container_form">
+	<h2>Form registration</h2>
+	<form class="form-registration" action="void();" id="form-modal">
+		<div class="control-group">
+			<label class="control-label" for="name">Name</label>
+			<div class="controls">
+				<input type="text" id="name" placeholder="Your name" class="required">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="text" id="email" placeholder="Your email address" class="required email">
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox"><input id="option_1" type="checkbox"> Yes, we can!</label>
+				<button type="submit" class="btn">Submit</button>
+			</div>
+		</div>
+	</form>
+	<span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
+</div>
+
+<script>
+$(document).ready(function() {
+	//$("#form-registration").validate( bootstrap_form );
+	
+});
+</script>
