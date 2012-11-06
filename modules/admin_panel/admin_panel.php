@@ -1,6 +1,6 @@
 <!-- Admin Panel-->
 <?
-require_once(dirname(__FILE__) . '../../init.php');
+require_once(dirname(__FILE__) . '/../../init.php');
 
 if (is_fb_user_admin()) {
     ?>
