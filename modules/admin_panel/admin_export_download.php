@@ -65,7 +65,7 @@ if (isset($arrData) && count($arrData) != "0") {
     }
 
     //handle column , if not acticate , unset the column
-    if (intval($session->config['questions_activated']['value']) == false) {
+    if (intval($aa['config']['questions_activated']['value']) == false) {
         unset($arrTitle[10]);
         unset($arrTitle[11]);
         unset($arrTitle[12]);
@@ -80,7 +80,7 @@ if (isset($arrData) && count($arrData) != "0") {
     }
 
     // Remove unused questions
-    if ($session->config['questions_activated']['value'] && intval($session->config['questions_amount']['value']) < 2) {
+    if ($aa['config']['questions_activated']['value'] && intval($aa['config']['questions_amount']['value']) < 2) {
         unset($arrTitle[12]);
         unset($arrTitle[13]);
 
@@ -88,7 +88,7 @@ if (isset($arrData) && count($arrData) != "0") {
             unset($arrData[$k]['question2_answer']);
             unset($arrData[$k]['question3_answer']);
         }
-    } else if ($session->config['questions_activated']['value'] && intval($session->config['questions_amount']['value']) < 3) {
+    } else if ($aa['config']['questions_activated']['value'] && intval($aa['config']['questions_amount']['value']) < 3) {
         unset($arrTitle[13]);
 
         foreach ($arrData as $k => $v) {
@@ -97,7 +97,7 @@ if (isset($arrData) && count($arrData) != "0") {
     }
 
     //award selection
-    if (intval($session->config['award_selection_activated']['value']) == false) {
+    if (intval($aa['config']['award_selection_activated']['value']) == false) {
         unset($arrTitle[14]);
 
         foreach ($arrData as $k => $v) {
@@ -106,7 +106,7 @@ if (isset($arrData) && count($arrData) != "0") {
     }
 
     // when newsletter activated,
-    if (intval($session->config['newsletter_registration']['value']) == false) {
+    if (intval($aa['config']['newsletter_registration']['value']) == false) {
         unset($arrTitle[7]);
         unset($arrTitle[8]);
 
@@ -118,7 +118,7 @@ if (isset($arrData) && count($arrData) != "0") {
 
 
     //referral_tracking_activated
-    if (intval($session->config['referral_tracking_activated']['value']) == false) {
+    if (intval($aa['config']['referral_tracking_activated']['value']) == false) {
         unset($arrTitle[9]);
 
         foreach ($arrData as $k => $v) {
@@ -127,7 +127,7 @@ if (isset($arrData) && count($arrData) != "0") {
     }
 
     // Registration without Facebook
-    if (intval($session->config['use_form_registration']['value']) == true) {
+    if (intval($aa['config']['use_form_registration']['value']) == true) {
         unset($arrTitle[2]);
         unset($arrTitle[4]);
         $arrTitle[1] = __t("Name");

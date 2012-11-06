@@ -1,7 +1,7 @@
 <?php
 include_once ('../../init_session.php');
 $db = getDb();
-$aa_inst_id = $session->instance['aa_inst_id'];
+$aa_inst_id = $aa['instance']['aa_inst_id'];
 
 /************************************************************
  * get saved days for app reset from db @ table app_config. *
@@ -120,7 +120,7 @@ if (!$session->fb['is_admin']) {
             </div>
         </fieldset>
     </form>
-    <?php if ($session->config['admin_reset_automatic']['value']) { ?>
+    <?php if ($aa['config']['admin_reset_automatic']['value']) { ?>
     <form class="form-horizontal">
         <fieldset>
             <legend><?php __p("Automatic reset")?></legend>
@@ -239,7 +239,7 @@ if (!$session->fb['is_admin']) {
             async:true,
             url:'ajax/store_weekdays.php',
             data:({
-                aa_inst_id:'<?=$session->instance['aa_inst_id']?>',
+                aa_inst_id:'<?=$aa['instance']['aa_inst_id']?>',
                 monday:$('#check_monday:checked').val(),
                 tuesday:$('#check_tuesday:checked').val(),
                 wednesday:$('#check_wednesday:checked').val(),
@@ -280,7 +280,7 @@ if (!$session->fb['is_admin']) {
             async:true,
             url:'ajax/resetRound.php',
             data:({
-                aa_inst_id:'<?=$session->instance['aa_inst_id']?>'
+                aa_inst_id:'<?=$aa['instance']['aa_inst_id']?>'
             }),
             /*****************************************************************
              * this function gets executed when the ajax call above returns. *

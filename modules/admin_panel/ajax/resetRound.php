@@ -2,8 +2,8 @@
 $aa_inst_id = 0;
 if (isset($_POST['aa_inst_id'])) {
     $aa_inst_id = $_POST['aa_inst_id'];
-} else if (isset($session->instance['aa_inst_id'])) {
-    $aa_inst_id = $session->instance['aa_inst_id'];
+} else if (isset($aa['instance']['aa_inst_id'])) {
+    $aa_inst_id = $aa['instance']['aa_inst_id'];
 } else {
     echo "invalid session! exiting...";
     exit(0);
