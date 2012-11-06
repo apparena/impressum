@@ -9,7 +9,7 @@ if (isset($_POST['aa_inst_id'])) {
     exit(0);
 }
 $_GET['aa_inst_id'] = $aa_inst_id;
-include_once(dirname(__FILE__) . '/../../init.php');
+include_once(dirname(__FILE__) . '../../init.php');
 
 $db = getDb();
 

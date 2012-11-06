@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '/../../init.php');
+require_once(dirname(__FILE__) . '../../init.php');
 //require_once(dirname(__FILE__).'/../../include.php');
 
 //header("content-type:text/html;charset=utf8");
