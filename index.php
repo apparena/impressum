@@ -208,16 +208,13 @@ require_once(dirname(__FILE__) . '/templates/loading_screen.phtml');
 
 
     window.fbAsyncInit = function () {
-        if (typeof(FB) === "object" && FB._apiKey === null) {
-            FB.init({
-                appId:fb_app_id, // App ID
-                channelUrl:fb_canvas_url + 'channel.html', // Channel File
-                status:true, // check login status
-                cookie:true, // enable cookies to allow the server to access the session
-                xfbml:true  // parse XFBML
-            });
-        }
-
+        FB.init({
+            appId:fb_app_id, // App ID
+            channelUrl:fb_canvas_url + 'channel.html', // Channel File
+            status:true, // check login status
+            cookie:true, // enable cookies to allow the server to access the session
+            xfbml:true  // parse XFBML
+        });
         FB.Canvas.setAutoGrow(); // Grow facebook page, when iframe content is growing (>> no scrollbar)
         // Additional initialization code here
     };
