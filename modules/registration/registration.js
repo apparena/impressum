@@ -7,19 +7,38 @@
  */
 
 
+$.aa_user = {
+	fb_user_id: -1,
+	name:       'aa user',
+	email:      'user email'
+};
+
 /**
  * Login the user via FB and request authorization if any.
  * After successful FB-connection, the user's data are checked
  * and prepared to be saved.
+ * @param string id the dom-id of the scope input field.
  */
-function connect() {
+$.FBConnect = function( id ) {
+	
+	var scope = 'email';
+	
+	if ( typeof( id ) != 'undefined' && id != null && id.length > 0 ) {
+		scope = $( '#' + id ).val();
+	}
 	
 	
 	
-	
-}
+};
 
-function auth( scope, callback, params ) {
+$.registerUser = function( id ) {
+	
+	
+	
+	
+};
+
+function authUser( scope, callback, params ) {
 	FB.login( function( response ) {
 		if ( response.authResponse ) {
 			FB.api( '/me', function( response ) {
@@ -37,12 +56,5 @@ function auth( scope, callback, params ) {
 			aa_tmpl_load( 'no_auth.phtml' );
 		}
     }, { scope: scope });
-	
-}
-
-function registerUser() {
-	
-	
-	
 	
 }
