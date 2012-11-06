@@ -9,12 +9,12 @@ if (is_fb_user_admin()) {
     <div class="panel-content">
         <span class="export-participants">
             <span class="btn btn-mini"
-                  onclick="return popup('admin/index.php?p=exportparticipants&aa_inst_id=<?php echo $session->instance['aa_inst_id']; ?>');"><i
+                  onclick="return popup('admin/index.php?p=exportparticipants&aa_inst_id=<?php echo $aa['instance']['aa_inst_id']; ?>');"><i
                     class="icon-download-alt"></i> <?php __p("Export participants")?></span>
         </span>
         <span class="select-winner">
             <span class="btn btn-mini"
-                  onclick="return popup('admin/index.php?p=getwinner&aa_inst_id=<?php echo $session->instance['aa_inst_id']; ?>');"><i
+                  onclick="return popup('admin/index.php?p=getwinner&aa_inst_id=<?php echo $aa['instance']['aa_inst_id']; ?>');"><i
                     class="icon-gift"></i> <?php __p("Select winner")?></span>
         </span>
         <span class="configure-app">
