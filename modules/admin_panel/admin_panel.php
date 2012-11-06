@@ -12,8 +12,9 @@ if (is_fb_user_admin()) {
         $('#arrow').removeClass('icon-chevron-down').addClass('icon-chevron-up');
     }
     function admin_panel_close() {
-        $('.admin_div').css('z-index', '0');
-        $('.adminpanel').slideUp('slow');
+        $('.adminpanel').slideUp('slow', function () {
+            $('.admin_div').css('z-index', '0');
+        });
         $('#admin_panel_button').attr('onclick', 'admin_panel_open()');
         $('#arrow').removeClass('icon-chevron-up').addClass('icon-chevron-down');
     }
