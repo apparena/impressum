@@ -20,6 +20,8 @@
     	exit( 0 );
     }
     
+    $response[ 'user' ] = $user;
+    
 $x = 0; // only for debugging!
     // cache all keys for checking the table
     $keys = array();
