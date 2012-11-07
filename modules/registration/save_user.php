@@ -22,10 +22,7 @@
     }
     
     // check if the user_data table exists
-    $query = "SELECT * 
-			  FROM information_schema.tables 
-			  WHERE table_schema = '" . $db_name . "' 
-			  AND table_name = 'user_data'";
+    $query = "SELECT 1 FROM `user_data`";
     echo $query;
     $result = mysql_query( $query );
     var_dump( $result );
