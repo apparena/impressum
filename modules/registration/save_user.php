@@ -23,7 +23,7 @@
     $query = "SELECT 1 FROM `user_data`";
     echo $query;
     //$result = mysql_query( $query );
-    $result = $aa[ 'db' ]->get_result( $query );
+    $result = mysql_query( $query );
     var_dump( $result );
     exit(0);
     
