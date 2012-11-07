@@ -22,7 +22,11 @@
     }
     
     // check if the user_data table exists
-    $query = "show tables like `user_data`";
+    $query = "SELECT * 
+			  FROM information_schema.tables 
+			  WHERE table_schema = '" . $db_name . "' 
+			  AND table_name = 'user_data'";
+    echo $query;
     $result = mysql_query( $query );
     var_dump( $result );
     exit(0);
