@@ -302,6 +302,11 @@ function FBConnect( scope, callback ) {
 				enableForm();
 				$( '#progress-connect' ).hide();
 				
+				$( '#saveUserData' ).remove();
+				$( '#progress-form' ).after(
+					'<button class="btn btn-success" id="saveUserData" onclick="saveUserData();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
+				);
+				
 				if ( typeof( callback ) == 'function' ) {
 					callback();
 				}
