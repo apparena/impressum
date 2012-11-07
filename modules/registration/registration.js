@@ -19,7 +19,7 @@
  * $.validator.addClassRules({class_name:{required: true}});
  * This must be done before calling validate(...).
  */
-var bootstrap_form = {
+$.bootstrap_form = {
     errorClass: "error",
     validClass: "success",
     errorElement: "span",
@@ -34,36 +34,20 @@ var bootstrap_form = {
         if (element.type === 'radio') {
             this.findByName(element.name ).closest(".control-group").removeClass(errorClass).addClass(validClass);
         } else {
-            // fix the name input fields not to get unhighlighted if only one is filled out
-            if ( $( '#last_name' ).val().length <= 0 ||
-                $( '#last_name' ).val().length <= 0 ) {
-                // do not unhighlight!!
-            } else {
-                $(element).closest(".control-group").removeClass(errorClass).addClass(validClass);
-            }
+            $(element).closest(".control-group").removeClass(errorClass).addClass(validClass);
         }
     },
     errorPlacement: function(error, element) {
-        var id = element.attr( 'id' );
-        // fix the auto-insert position of the last_name error span
-        if ( id.indexOf( 'first_name' ) >= 0 ) {
-            error.attr( 'id', 'first_name_error' );
-        }
-        if ( id.indexOf( 'last_name' ) >= 0 ) {
-            error.insertAfter( '#first_name_error' );
-        } else {
-            error.prependTo(element.closest(".control-group"));
-        }
+        error.prependTo(element.closest(".control-group"));
     },
     rules:{
-        // <input type="text">
         email:{
             required:true,
             email:true
         },
-        // <input type="checkbox">
-        newsletter:{
-            required:false
+        name:{
+            required:true,
+            min: 3
         }
     }
 };
