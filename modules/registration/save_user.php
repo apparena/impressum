@@ -1,4 +1,11 @@
 <?php 
+
+/**
+ * Save the user to db.
+ * The table gets created if it is not yet present.
+ * Each instance gets its own user_data table.
+ * @requirements SQL-permissions CREATE, INSERT, SELECT for the db-user defined in the file "root/config.php".
+ */
     include_once ( '../../init.php' );
     
     $aa_inst_id = 0;
@@ -39,14 +46,26 @@ $x++;
     $result = mysql_query( $query );
     if ( $result === false ) {
     	$query = "CREATE TABLE IF NOT EXISTS `user_data_" . $aa_inst_id . "` (
-		  `id` int(10) NOT NULL AUTO_INCREMENT,
-		  PRIMARY KEY (`id`)
+		  `id` int(10) NOT NULL AUTO_INCREMENT,";
+    	
+    	foreach( $keys as $key ) {
+	    	if ( !is_array( $user[ $key ] ) ) {
+	    		$query .= "  `" . $key . "` VARCHAR(" . ( strlen( $user[ $key ] ) + 64 ) . "),";
+	    	} else {
+	    		//TODO: handle arrays with extra tables or cache them together for a large varchar field!
+	    	}
+	    	mysql_query( $query );
+    	}
+    	
+		$query .= "  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ";
     	mysql_query( $query );
     } else {
     	mysql_free_result( $result );
     }
     
+/*
+ * this would require additional ALTER permission for the database
 $x = 0; // only for debugging!
     // check if there is a column for each field (add if not yet present)
 	foreach( $keys as $key ) {
@@ -60,6 +79,7 @@ $response[] = array( 'alter_' . $x => $query );
 $x++;
 		mysql_query( $query );
 	}
+*/
     
     
     $query = "SELECT * FROM `user_data_" . $aa_inst_id . "` WHERE ";
