@@ -31,9 +31,9 @@ $.FBConnect = function( id ) {
 	
 };
 
-$.registerUser = function( id ) {
+$.registerUser = function( form ) {
 	
-	
+	// find all input elements in the form 
 	
 	
 };

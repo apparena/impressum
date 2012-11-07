@@ -132,10 +132,9 @@ function FBConnect( id, callback ) {
 	
 }
 
-function registerUser( id, callback ) {
+function registerUser( form, callback ) {
 	
-	
-	
+	var test = form;
 	
 }
 
