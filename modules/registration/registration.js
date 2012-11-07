@@ -9,6 +9,65 @@
  * @author Guntram Pollock 11/2012
  */
 
+/**
+ * This is a bootstrap validation var.
+ * It defines the required fields and error handling.
+ * The rules-keys are ids/names of form elements like inputs.
+ * The <select> elements need to use class validation, so they
+ * have to be added additionally (the question selects have dynamically generated ids/names).
+ * Therefore the jquery validation has to be extended by:
+ * $.validator.addClassRules({class_name:{required: true}});
+ * This must be done before calling validate(...).
+ */
+var bootstrap_form = {
+    errorClass: "error",
+    validClass: "success",
+    errorElement: "span",
+    highlight: function(element, errorClass, validClass) {
+        if (element.type === 'radio') {
+            this.findByName(element.name ).closest(".control-group").removeClass(validClass).addClass(errorClass);
+        } else {
+            $(element).closest(".control-group").removeClass(validClass).addClass(errorClass);
+        }
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        if (element.type === 'radio') {
+            this.findByName(element.name ).closest(".control-group").removeClass(errorClass).addClass(validClass);
+        } else {
+            // fix the name input fields not to get unhighlighted if only one is filled out
+            if ( $( '#last_name' ).val().length <= 0 ||
+                $( '#last_name' ).val().length <= 0 ) {
+                // do not unhighlight!!
+            } else {
+                $(element).closest(".control-group").removeClass(errorClass).addClass(validClass);
+            }
+        }
+    },
+    errorPlacement: function(error, element) {
+        var id = element.attr( 'id' );
+        // fix the auto-insert position of the last_name error span
+        if ( id.indexOf( 'first_name' ) >= 0 ) {
+            error.attr( 'id', 'first_name_error' );
+        }
+        if ( id.indexOf( 'last_name' ) >= 0 ) {
+            error.insertAfter( '#first_name_error' );
+        } else {
+            error.prependTo(element.closest(".control-group"));
+        }
+    },
+    rules:{
+        // <input type="text">
+        email:{
+            required:true,
+            email:true
+        },
+        // <input type="checkbox">
+        newsletter:{
+            required:false
+        }
+    }
+};
+
 $.registerUser = function( id, callback ) {
 	
 	$( '#progress-form' ).show();
