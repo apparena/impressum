@@ -114,7 +114,11 @@ $x++;
     		$query = "INSERT INTO `user_data_" . $aa_inst_id . "` SET ";
     		// add all keys/values from the user object
     		foreach( $keys as $key ) {
-    			$query .= "`" . $key . "` = '" . mysql_real_escape_string( $user[ $key ] ) . "',";
+    			if ( !is_array( $user[ $key ] ) ) {
+    				$query .= "`" . $key . "` = '" . mysql_real_escape_string( $user[ $key ] ) . "',";
+    			} else {
+    				//TODO: handle arrays maybe in extra tables or put them together for one field
+    			}
     		}
     		$query .= "`client_ip` = '" . $client_ip . "'";
     		mysql_query( $query );
