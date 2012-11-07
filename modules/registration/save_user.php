@@ -11,6 +11,7 @@
     
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
+    $email_key = false;
     
     if( isset( $_POST[ 'user' ] ) ) {
     	$user = $_POST[ 'user' ];
@@ -19,122 +20,78 @@
     	exit( 0 );
     }
     
-    // check if the user_data table exists
-    $query = "SELECT 1 FROM `user_data`";
-    echo $query;
-    //$result = mysql_query( $query );
-    $result = mysql_query( $query );
-    var_dump( $result );
-    exit(0);
-    
-    $query = "SELECT * FROM `user_data` WHERE ";
-    
-    if ( isset( $user[ 'fb_user_id' ] ) ) {
-    	$query .= "`fb_user_id` = '" . $user[ 'fb_user_id' ];
+    // cache all keys for checking the table
+    $keys = array();
+    foreach( $user as $key => $item ) {
+    	$keys[] = $key;
+    	if ( strpos( $key, 'email' ) !== false ) {
+    		$email_key = $key; // save the email key for authenticating the user later
+    	}
     }
 	
-	// Check if the user is already in the `fb_user_data` table.
-	$result = $db->get_result( $query );	
-	$user_row_count = 0;
-	
-	if ( $result ) {
-		$user_row_count = mysql_num_rows( $result );
-		mysql_free_result( $result );
+    // check if the user_data table exists
+    $query = "SELECT 1 FROM `user_data_" . $aa_inst_id . "`"; // a table for each instance
+    $result = mysql_query( $query );
+    if ( $result === false ) {
+    	$query = "CREATE TABLE IF NOT EXISTS `user_data_" . $aa_inst_id . "` (
+		  `id` int(10) NOT NULL AUTO_INCREMENT,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ";
+    	mysql_query( $query );
+    } else {
+    	mysql_free_result( $result );
+    }
+    
+    // check if there is a column for each field (add if not yet present)
+	foreach( $keys as $key ) {
+		$query = "ALTER TABLE `user_data_" . $aa_inst_id . "` ADD `" . $key . "` VARCHAR(" . strlen( $user[ $key ] ) + 64 . ")";
+		mysql_query( $query );
 	}
+    
+    
+    $query = "SELECT * FROM `user_data_" . $aa_inst_id . "` WHERE ";
+    
+    if ( isset( $user[ 'fb_user_id' ] ) ) {
+    	$query .= "`fb_user_id` = '" . $user[ 'fb_user_id' ] . "'";
+    } else {
+    	// look for an email key
+    	if ( $email_key !== false ) {
+    		$query .= "`" . $email_key . "` = '" . $user[ $email_key ] . "'";
+    	} else {
+    		echo json_encode( array( 'error' => 'you must provide a fb_user_id or an input field with an id or name containing the word \"email\"!' ) );
+    		exit( 0 );
+    	}
+    }
+    $user_id = false;
+    $result = mysql_query( $query );
+    if ( $result ) {
+    	if ( mysql_num_rows( $result ) <= 0 ) {
+    		// insert the new user
+    		$query = "INSERT INTO `user_data_" . $aa_inst_id . "` SET ";
+    		// add all keys/values from the user object
+    		foreach( $keys as $key ) {
+    			$query .= "`" . $key . "` = '" . $user[ $key ] . "'";
+    		}
+    		mysql_query( $query );
+    	}
+    	mysql_free_result( $result );
+    	$user_id = mysql_insert_id();
+    }
 	
-	$user_id = false;
+    $query = "SELECT * FROM `user_data_" . $aa_inst_id . "` WHERE `id` = " . $user_id;
+    $result = mysql_query( $query );
+    if ( $result ) {
+    	$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
+    	$response[ 'success' ] = 'user was successfully saved to db';
+    	mysql_free_result( $result );
+    } else {
+    	$response = array(
+    		'error' => 'user was not saved',
+    		'query' => $query
+    	);
+    }
+    
+    // return the built response to the javascripts success function
+	echo json_encode( $response );
 	
-	// If the row count is less than 1 the user does not exist, so add him.
-	if( $user_row_count < 1 ) {
-		
-		$insertUserSql = "INSERT INTO `user_data` SET 
-						  `fb_user_id` = '" . $fb_user_id . "'";
-		if ( strlen( $firstName ) > 0 ) {
-			$insertUserSql .= ", `first_name` = '" . $firstName . "'";
-		}
-		if ( strlen( $middleName ) > 0 ) {
-			$insertUserSql .= ", `middle_name` = '" . $middleName . "'";
-		}
-		if ( strlen( $lastName ) > 0 ) {
-			$insertUserSql .= ", `last_name` = '" . $lastName . "'";
-		}
-		if ( strlen( $fb_user_email ) > 0 ) {
-			$insertUserSql .= ", `email` = '" . $fb_user_email . "'";
-		}
-		
-		$insertUserResult = $db->get_result( $insertUserSql );
-		
-		$user_id = mysql_insert_id();
-		
-	}
-	
-	$appPartSql = "SELECT * FROM `app_participation`
-				   WHERE `fb_user_id` = '" . $fb_user_id . "' 
-				   AND `aa_inst_id` = '" . $aa_inst_id . "'";
-	
-	$appPartResult = $db->get_result( $appPartSql );	
-	
-	
-	$part_row_count = mysql_num_rows( $appPartResult );
-	
-	if( $part_row_count < 1 ) {		
-		// Insert the user to app_participation for this instance if he is not in there yet.
-		$insertUserParticipationSql = "INSERT INTO `app_participation` 
-									   SET `fb_user_id` = " . $fb_user_id . ",
-									   `aa_inst_id` = " . $aa_inst_id;
-		
-		// Get client ip address
-		if ( isset($_SERVER["REMOTE_ADDR"]))
-			$client_ip = $_SERVER["REMOTE_ADDR"];
-		
-		else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-			$client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		
-		else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
-			$client_ip = $_SERVER["HTTP_CLIENT_IP"];
-		
-		$insertUserParticipationSql = $insertUserParticipationSql . ", `ip`= '" . $client_ip."'";
-		
-// echo "\n".$insertUserParticipationSql."\n";
-		
-		$insertUserParticipationResult = $db->get_result( $insertUserParticipationSql );
-		
-	}
-	
-	
-	/*
-	 * Check if the users email is saved in the db and return an error if not.
-	 */
-	$user = "SELECT * FROM `user_data` WHERE `fb_user_id` = '" . $fb_user_id . "'";
-	$uRes = $db->get_result( $user );
-	if ($uRes) {
-		
-		$uRow = mysql_fetch_array($uRes);
-		if ( !isset( $uRow['email'] ) || strlen( $uRow['email'] ) <= 0 ) {
-			$error[] = array( 'error' => 'email not saved: ' . $fb_user_id );
-		} else {
-			$error[] = array( 'success' => 'email saved: ' . $uRow[ 'email' ] );
-		}
-		
-		if ( !isset( $uRow['fb_user_id'] ) || strlen( $uRow['fb_user_id'] ) <= 0 ) {
-			$error[] = array( 'error' => 'user id error: ' . $fb_user_id );
-		} else {
-			$error[] = array( 'success' => 'user id saved: ' . $fb_user_id );
-		}
-		
-		if ( !isset( $uRow['first_name'] ) || strlen( $uRow['first_name'] ) <= 0 ) {
-			$error[] = array( 'error' => 'firstname error: ' . $fb_user_id );
-		} else {
-			$error[] = array( 'success' => 'firstname: ' . $uRow['first_name'] );
-		}
-		
-	} else {
-		$error[] = array( 'error' => 'user not found: ' . $fb_user_id );
-	}
-
-	if ( isset( $error ) ) {
-		echo json_encode( $error );
-	}
-
-
 ?>
