@@ -103,8 +103,13 @@ $x++;
     		// insert the new user
     		$query = "INSERT INTO `user_data_" . $aa_inst_id . "` SET ";
     		// add all keys/values from the user object
+    		$count = 0;
     		foreach( $keys as $key ) {
     			$query .= "`" . $key . "` = '" . $user[ $key ] . "'";
+    			if ( $count < ( count( $keys ) - 1 ) ) {
+    				$query .= ",";
+    			}
+    			$count++;
     		}
     		mysql_query( $query );
     	}
