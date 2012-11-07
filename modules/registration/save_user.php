@@ -51,7 +51,7 @@ $x = 0; // only for debugging!
     // check if there is a column for each field (add if not yet present)
 	foreach( $keys as $key ) {
 		if ( !is_array( $user[ $key ] ) ) {
-			$query = "ALTER TABLE `user_data_" . $aa_inst_id . "` ADD `" . $key . "` VARCHAR(" . strlen( $user[ $key ] ) + 64 . ")";
+			$query = "ALTER TABLE `user_data_" . $aa_inst_id . "` ADD `" . $key . "` VARCHAR(" . ( strlen( $user[ $key ] ) + 64 ) . ")";
 		} else {
 			//TODO: handle arrays with extra tables or cache them together for a large varchar field!
 		}
