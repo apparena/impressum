@@ -132,9 +132,11 @@ function FBConnect( id, callback ) {
 	
 }
 
-function registerUser( form, callback ) {
+function registerUser( callback ) {
 	
-	var test = this.find( 'input' );
+	$( 'body' ).find( 'form' ).find( 'input' ).each( function( index ) {
+		var test = index;
+	});
 	
 }
 
