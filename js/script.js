@@ -138,7 +138,8 @@ function registerUser( id, callback ) {
 	
 	$( '#progress-form' ).show();
 	
-	var selector = $( 'body' ).find( 'form' );
+	//var selector = $( 'body' ).find( 'form' );
+	var selector = $(this);
 	
 	if ( typeof( id ) == 'function' ) {
 		callback = id;
@@ -186,7 +187,7 @@ function registerUser( id, callback ) {
 				// for input elements with type="text" or type="password" and so on
 			default:
 				
-				if ( this.val().length > 0 ) {
+				if ( $(this).val().length > 0 ) {
 					value = $.trim( $(this).val() );
 				}
 				
@@ -322,12 +323,11 @@ function saveUserData() {
 			user: $.userData
 		}),
 		success : function(data) {
-			
+			$( '#progress-form' ).hide();
+			enableForm();
 		}
 	});
 	
-	$( '#progress-form' ).hide();
-	enableForm();
 }
 
 function disableForm() {
