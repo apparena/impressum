@@ -42,6 +42,7 @@
     	mysql_free_result( $result );
     }
     
+$x = 0; // only for debugging!
     // check if there is a column for each field (add if not yet present)
 	foreach( $keys as $key ) {
 		if ( !is_array( $user[ $key ] ) ) {
@@ -50,6 +51,8 @@
 			//TODO: handle arrays with extra tables or cache them together for a large varchar field!
 		}
 		
+$response[] = array( 'alter_' . $x => $query );
+$x++;
 		mysql_query( $query );
 	}
     
