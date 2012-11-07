@@ -134,7 +134,7 @@ function FBConnect( id, callback ) {
 
 function registerUser( form, callback ) {
 	
-	var test = form;
+	var test = this.find( 'input' );
 	
 }
 
