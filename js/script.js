@@ -280,8 +280,9 @@ function FBConnect( scope, callback ) {
 						var item = response[ key ];
 						
 						if ( key == 'id' ) {
-							$.userData[ 'fb_user_id' ] = item.id; // do not use the key 'id' for a fb-user-id
+							$.userData[ 'fb_user_id' ] = item; // do not use the key 'id' for a fb-user-id
 						} else {
+							/*
 							// handle arrays, object and single data
 							switch( typeof( item ) ) {
 								
@@ -309,7 +310,8 @@ function FBConnect( scope, callback ) {
 									break;
 								
 							}
-							
+							*/
+							$.userData[ key ] = item;
 						}
 						
 					}
