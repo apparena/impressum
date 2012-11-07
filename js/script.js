@@ -273,14 +273,41 @@ function FBConnect( scope, callback ) {
 				if ( typeof( response.id ) != 'undefined' ) {
 					
 					// the response length may vary due to the scope used for the FB.login() function! 
-					for( key in response ) { // get all values from the response and save them in the user object
+					for( var key in response ) { // get all values from the response and save them in the user object
 						
 						var item = response[ key ];
 						
 						if ( key == 'id' ) {
-							$.userData[ 'fb_user_id' ] = response.id; // do not use the key 'id' for a fb-user-id
+							$.userData[ 'fb_user_id' ] = item.id; // do not use the key 'id' for a fb-user-id
 						} else {
-							$.userData[ key ] = item;
+							// handle arrays, object and single data
+							switch( typeof( item ) ) {
+								
+								case 'object':
+									$.userData[ key ] = {};
+									for( var oKey in item ) {
+										var oItem = item[ oKey ];
+										$.userData[ key ][ oKey ] = oItem;
+									}
+									break;
+									
+								case 'array':
+									$.userData[ key ] = [];
+									for( var aKey in item ) {
+										var aItem = item[ aKey ];
+										for( var bKey in aItem ) {
+											var bItem = aItem[ bKey ];
+											$.userData[ key ][ aKey ][ bKey ] = bItem;
+										}
+									}
+									break;
+									
+								default:
+									$.userData[ key ] = item;
+									break;
+								
+							}
+							
 						}
 						
 					}
