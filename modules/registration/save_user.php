@@ -106,6 +106,8 @@ $x++;
     		exit( 0 );
     	}
     }
+echo $query;
+exit(0);
     $user_id = false;
     $result = mysql_query( $query );
     if ( $result ) {
