@@ -257,12 +257,12 @@ function registerUser( id, callback ) {
 	$( '#saveUserData' ).remove();
 	
 	$( '#progress-form' ).after(
-		'<button class="btn btn-success" id="saveUserData" onclick="saveUser();"><i class="icon-download-alt icon-white"></i> </button>'
+		'<button class="btn btn-success" id="saveUserData" onclick="saveUserData();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
 	);
 	
 }
 
-function authUser( scope, callback ) {
+function FBConnect( scope, callback ) {
 	
 	FB.login( function( response ) {
 		
@@ -317,7 +317,7 @@ function saveUserData() {
 	$.ajax({
 		type : 'POST',
 		async : true,
-		url : 'save_user.php?aa_inst_id=' + aa_inst_id,
+		url : 'modules/registration/save_user.php?aa_inst_id=' + aa_inst_id,
 		data : ({
 			user: $.userData
 		}),
