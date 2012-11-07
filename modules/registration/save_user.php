@@ -28,6 +28,15 @@
     	exit( 0 );
     }
     
+    // Get client ip address
+    $client_ip = false;
+    if ( isset($_SERVER["REMOTE_ADDR"]))
+    	$client_ip = $_SERVER["REMOTE_ADDR"];
+    else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+    	$client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+    else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
+    	$client_ip = $_SERVER["HTTP_CLIENT_IP"];
+    
     $response[ 'user' ] = $user;
     
 //$x = 0; // only for debugging!
@@ -58,7 +67,8 @@
 	    	mysql_query( $query );
     	}
     	
-		$query .= "  PRIMARY KEY (`id`)
+		$query .= "  `client_ip` varchar(15), 
+					 PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ";
     	mysql_query( $query );
     } else {
@@ -103,14 +113,10 @@ $x++;
     		// insert the new user
     		$query = "INSERT INTO `user_data_" . $aa_inst_id . "` SET ";
     		// add all keys/values from the user object
-    		$count = 0;
     		foreach( $keys as $key ) {
-    			$query .= "`" . $key . "` = '" . $user[ $key ] . "'";
-    			if ( $count < ( count( $keys ) - 1 ) ) {
-    				$query .= ",";
-    			}
-    			$count++;
+    			$query .= "`" . $key . "` = '" . $user[ $key ] . "',";
     		}
+    		$query .= "`client_ip` = '" . $client_ip . "'";
     		mysql_query( $query );
     	}
     	
