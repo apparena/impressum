@@ -1,5 +1,6 @@
 <?php 
     include_once ( '../../init.php' );
+    global $db;
     
     $aa_inst_id = 0;
     if ( isset( $_GET[ 'aa_inst_id' ] ) ) {
@@ -23,7 +24,7 @@
     $query = "SELECT 1 FROM `user_data`";
     echo $query;
     //$result = mysql_query( $query );
-    $result = $aa[ 'db' ]->get_result( $query );
+    $result = $db->get_result( $query );
     var_dump( $result );
     exit(0);
     
