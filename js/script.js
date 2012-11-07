@@ -138,7 +138,7 @@ function registerUser( id, callback ) {
 	
 	$( '#progress-form' ).show();
 	
-	var selector = $( 'body' ).find( 'form' )[ 0 ];
+	var selector = $( 'body' ).find( '.form-registration' );
 	
 	if ( typeof( id ) == 'function' ) {
 		callback = id;
