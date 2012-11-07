@@ -149,7 +149,7 @@ function registerUser( id, callback ) {
 		}
 	}
 	
-	$userData = {}; // create a global user object to save it later
+	$.userData = {}; // create a global user object to save it later
 	
 	// loop through all input elements of the form and 
 	selector.find( 'input' ).each( function( index ) {
@@ -194,7 +194,7 @@ function registerUser( id, callback ) {
 				
 		} // end switch through this input elements type attribute value
 		
-		$userData[ key ] = value; // add key and value to the user object
+		$.userData[ key ] = value; // add key and value to the user object
 		
 	}); // end loop through all form input elements
 	
@@ -213,7 +213,7 @@ function registerUser( id, callback ) {
 			}
 		}
 		
-		$userData[ key ] = {};
+		$.userData[ key ] = {};
 		
 		$(this).find( 'option' ).each( function( aIndex ) {
 			
@@ -248,7 +248,7 @@ function registerUser( id, callback ) {
 			
 		}); // end loop through options
 		
-		$userData[ key ] = value;
+		$.userData[ key ] = value;
 		
 	}); // end loop through select elements
 	
