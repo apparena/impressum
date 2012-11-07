@@ -272,6 +272,8 @@ function FBConnect( scope, callback ) {
 				
 				if ( typeof( response.id ) != 'undefined' ) {
 					
+					$.userData = {};
+					
 					// the response length may vary due to the scope used for the FB.login() function! 
 					for( var key in response ) { // get all values from the response and save them in the user object
 						
