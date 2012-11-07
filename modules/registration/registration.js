@@ -47,7 +47,7 @@ $.bootstrap_form = {
         },
         name:{
             required:true,
-            min: 3
+            minlength: 3
         }
     }
 };
