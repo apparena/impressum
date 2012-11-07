@@ -29,7 +29,7 @@ include_once ( '../init.php' );
 		<div id="container_form">
 			<h2>Form registration</h2>
 			<hr />
-			<form class="form-registration" action="registerUser();" id="form-modal">
+			<form class="form-registration" action="registerUser(this);" id="form-modal">
 				<div class="control-group">
 					<label class="control-label" for="name">Name</label>
 					<div class="controls">
@@ -45,7 +45,7 @@ include_once ( '../init.php' );
 				<div class="control-group">
 					<div class="controls">
 						<label class="checkbox"><input id="option_1" type="checkbox"> Yes, we can!</label>
-						<button type="submit" class="btn">Submit</button>
+						<button type="submit" class="btn"><i class="icon-envelope"></i> Submit</button>
 					</div>
 				</div>
 			</form>
