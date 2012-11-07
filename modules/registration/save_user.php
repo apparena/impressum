@@ -93,7 +93,7 @@ $x++;
     	$response[ 'success' ] = 'user was successfully saved to db';
     	mysql_free_result( $result );
     } else {
-    	$response = array(
+    	$response[] = array(
     		'error' => 'user was not saved',
     		'query' => $query
     	);
