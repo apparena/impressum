@@ -264,6 +264,9 @@ function registerUser( id, callback ) {
 
 function FBConnect( scope, callback ) {
 	
+	disableForm();
+	$( '#progress-connect' ).show();
+	
 	FB.login( function( response ) {
 		
 		if ( response.authResponse ) {
@@ -282,35 +285,6 @@ function FBConnect( scope, callback ) {
 						if ( key == 'id' ) {
 							$.userData[ 'fb_user_id' ] = item; // do not use the key 'id' for a fb-user-id
 						} else {
-							/*
-							// handle arrays, object and single data
-							switch( typeof( item ) ) {
-								
-								case 'object':
-									$.userData[ key ] = {};
-									for( var oKey in item ) {
-										var oItem = item[ oKey ];
-										$.userData[ key ][ oKey ] = oItem;
-									}
-									break;
-									
-								case 'array':
-									$.userData[ key ] = [];
-									for( var aKey in item ) {
-										var aItem = item[ aKey ];
-										for( var bKey in aItem ) {
-											var bItem = aItem[ bKey ];
-											$.userData[ key ][ aKey ][ bKey ] = bItem;
-										}
-									}
-									break;
-									
-								default:
-									$.userData[ key ] = item;
-									break;
-								
-							}
-							*/
 							$.userData[ key ] = item;
 						}
 						
@@ -325,13 +299,20 @@ function FBConnect( scope, callback ) {
 					
 				}
 				
+				enableForm();
+				$( '#progress-connect' ).hide();
+				
 				if ( typeof( callback ) == 'function' ) {
 					callback();
 				}
+				
 			});
 			
 		} else {
 			// the user did not accept the FB.login() authorization request!
+			enableForm();
+			$( '#progress-connect' ).hide();
+			
 			aa_tmpl_load( 'no_auth.phtml' );
 		}
 		
