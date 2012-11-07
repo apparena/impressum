@@ -120,6 +120,8 @@ $x++;
     		mysql_query( $query );
     	}
     	
+echo $query;
+exit(0);
 $response[ 'insert' ] = $query;
 		
     	mysql_free_result( $result );
