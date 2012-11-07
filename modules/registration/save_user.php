@@ -6,6 +6,7 @@
  * Each instance gets its own user_data table.
  * @requirements SQL-permissions CREATE, INSERT, SELECT for the db-user defined in the file "root/config.php".
  */
+	
     include_once ( '../../init.php' );
     
     $aa_inst_id = 0;
@@ -29,13 +30,13 @@
     
     $response[ 'user' ] = $user;
     
-$x = 0; // only for debugging!
+//$x = 0; // only for debugging!
     // cache all keys for checking the table
     $keys = array();
     foreach( $user as $key => $item ) {
     	$keys[] = $key;
-$response[] = array( 'adding_key_' . $x => $key );
-$x++;
+//$response[] = array( 'adding_key_' . $x => $key );
+//$x++;
     	if ( strpos( $key, 'email' ) !== false ) {
     		$email_key = $key; // save the email key for authenticating the user later
     	}
