@@ -10,7 +10,6 @@
     	exit( 0 );
     }
     
-    
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
     

@@ -94,6 +94,7 @@ if ( isset ( $_REQUEST["signed_request"] ) ) {
  * Setup mysql database connection
  */
 if ($db_activated){
+	global $db;
 	require_once ROOT_PATH.'/libs/Zend/Db/Adapter/Pdo/Mysql.php';
 	$db = new Zend_Db_Adapter_Pdo_Mysql(array(
 	    'host'     => $db_host,
