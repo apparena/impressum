@@ -24,7 +24,8 @@
     // check if the user_data table exists
     $query = "SELECT 1 FROM `user_data`";
     echo $query;
-    $result = mysql_query( $query );
+    //$result = mysql_query( $query );
+    $result = $db->get_result( $query );
     var_dump( $result );
     exit(0);
     
