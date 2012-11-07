@@ -20,10 +20,13 @@
     	exit( 0 );
     }
     
+$x = 0; // only for debugging!
     // cache all keys for checking the table
     $keys = array();
     foreach( $user as $key => $item ) {
     	$keys[] = $key;
+$response[] = array( 'adding_key_' . $x => $key );
+$x++;
     	if ( strpos( $key, 'email' ) !== false ) {
     		$email_key = $key; // save the email key for authenticating the user later
     	}
