@@ -122,10 +122,12 @@ $x++;
     		}
     		$query .= "`client_ip` = '" . $client_ip . "'";
     		mysql_query( $query );
+    	} else {
+    		$response[] = array( 'error' => 'user already exists');
     	}
     	
-echo $query;
-exit(0);
+//echo $query;
+//exit(0);
 $response[ 'insert' ] = $query;
 		
     	mysql_free_result( $result );
