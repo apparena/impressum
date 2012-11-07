@@ -256,7 +256,7 @@ function registerUser( id, callback ) {
 	
 	$( '#saveUserData' ).remove();
 	
-	$( '#progress-form' ).insertAfter(
+	$( '#progress-form' ).after(
 		'<button class="btn btn-success" id="saveUserData" onclick="saveUser();"><i class="icon-download-alt icon-white"></i> </button>'
 	);
 	
