@@ -50,6 +50,8 @@
 		      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
     mysql_query( $query );
     
+echo $query;
+    
     $user_key = '';
     
     if ( strlen( $user[ 'key' ] ) > 0 ) {
