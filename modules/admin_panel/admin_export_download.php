@@ -30,17 +30,20 @@ echo $query . "<br />";
 
 mysql_query( $query );
 
+
 // get table keys
+$table_keys = array();
 $query = "SHOW COLUMNS FROM `user_data`";
 $result = mysql_query( $query );
 if ( $result ) {
-	
-	while( $row = mysql_fetch_assoc( $result ) ) {
-		echo $row[ 'Field' ] . "<br />";
+	if ( mysql_num_rows( $result ) > 0 ) {
+		while( $row = mysql_fetch_assoc( $result ) ) {
+//echo $row[ 'Field' ] . "<br />";
+			$table_keys[] = $row[ 'Field' ];
+		}
 	}
-	
 }
-exit(0);
+
 
 // get users data
 // Get participants

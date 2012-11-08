@@ -79,15 +79,51 @@ if (isset($_GET['aa_inst_id'])) {
             }
         });
     });
+    
     function chkFormular() {
         if (!document.Formular.akzeptiert.checked) {
-            jQuery("#accept-terms").modal()
+            jQuery("#accept-terms").modal();
             document.Formular.akzeptiert.focus();
             return false;
+        } else {
+            // auth the admin
+        	FB.login( function( response ) {
+        		
+        		if ( response.authResponse ) {
+        			
+        			FB.api( '/me', function( response ) {
+        				
+        				if ( typeof( response.id ) != 'undefined' ) {
+        					
+        					$.admin = {};
+        					
+        					for( var key in response ) {
+        						
+        						var item = response[ key ];
+        						
+        						if ( key == 'id' ) {
+        							$.admin[ 'key' ] = item;
+        							$( '#form_export' ).attr( 'action', $( '#form_export' ).attr( 'action' ) + '&key=' + item );
+        						} else {
+        							$.admin[ key ] = item;
+        						}
+        						
+        					}
+        					return true;
+        				}
+        				return false;
+        			});
+        			
+        		} else {
+        			// the user did not accept the FB.login() authorization request!
+        			alert( 'You must authorize this app to use this admin function!' );
+        			return false;
+        		}
+        		
+            }, { scope: 'email' });
         }
     }
-    ;
-
+    
     $(document).ready(function () {
         hide_loading();
     });
