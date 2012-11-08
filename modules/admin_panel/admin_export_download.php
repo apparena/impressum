@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '../../init.php');
+require_once( '../../init.php');
 ini_set('display_errors', 1);
 
 $aa_inst_id = $_GET['aa_inst_id'];
