@@ -46,7 +46,7 @@
     $user_key = '';
     
     if ( isset( $user[ 'key' ] ) && strlen( $user[ 'key' ] ) > 0 ) {
-    	$user_key = $log[ 'key' ];
+    	$user_key = $user[ 'key' ];
     	unset( $user[ 'key' ] );
     	// check if the user already exists
     	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
@@ -68,11 +68,11 @@
     if ( $result ) {
     	if ( mysql_num_rows( $result ) > 0 ) {
     		// insert the new user
-    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $log[ 'key' ] . "', `data` = '" . json_encode( $log[ 'data' ] ) . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
+    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $user_key . "', `data` = '" . json_encode( $log[ 'data' ] ) . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
     		
     		mysql_query( $query );
     	} else {
-    		echo json_encode( array( 'error' => 'the user was not found: ' . $log[ 'key' ] ) );
+    		echo json_encode( array( 'error' => 'the user was not found: ' . $user_key ) );
     		exit( 0 );
     	}
     	
