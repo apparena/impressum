@@ -35,7 +35,6 @@
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `aa_inst_id` int(11) NOT NULL,
 				  `key` varchar(32) DEFAULT NULL,
-				  `value` text,
 				  `data` text,
 				  `action` varchar(32) DEFAULT NULL,
 				  `ip` varchar(15) DEFAULT NULL,
@@ -65,7 +64,10 @@
     if ( $result ) {
     	if ( mysql_num_rows( $result ) > 0 ) {
     		// insert the new user
-    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $user_key . "', `data` = '" . json_encode( $log[ 'data' ] ) . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
+    		if ( is_array( $log[ 'data' ] ) ) {
+    			$log[ 'data' ] = mysql_real_escape_string( json_encode( $log[ 'data' ] ) );
+    		}
+    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $user_key . "', `data` = '" . $log[ 'data' ] . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
     		
     		mysql_query( $query );
     	} else {
