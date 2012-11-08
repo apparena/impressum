@@ -110,3 +110,139 @@ function sendRequest(name, desc, data) {
 function callback(response) {
     console.log(response);
 }
+
+
+function register_user( id, callback ) {
+	
+	$( '#progress-form' ).show();
+	
+	var selector = $( 'body' ).find( '.form-registration' );
+	
+	if ( typeof( id ) == 'function' ) {
+		callback = id;
+		id = null;
+	} else {
+		if ( typeof( id ) == 'string' ) {
+			selector = id;
+		}
+	}
+	
+	$.user_data = {}; // create a global user object to save it later
+	
+	// loop through all input elements of the form and 
+	selector.find( 'input' ).each( function( index ) {
+		
+		var key = 'default_' + index; // a default key in case no id and no name is set to the input element
+		var value = 'empty'; // a default value in case there is an empty field without validation
+		
+		// use the id as a key or the name if there is no id
+		if ( $(this).attr( 'id' ).length > 0 ) {
+			key = $(this).attr( 'id' ); // use the id as the key
+		} else {
+			if ( $(this).attr( 'name' ).length > 0 ) {
+				key = $(this).attr( 'name' ); // if there is no id, use the name attribute
+			}
+		}
+		
+		var type = $(this).attr( 'type' ); // get the type attribute value of the input element
+		switch( type ) {
+			
+			case 'checkbox':
+				
+				if ( $(this).is( ':checked' ) ) {
+					value = true;
+				} else {
+					value = false;
+				}
+				
+				break;
+				
+			case 'radio':
+				//TODO: check for radio groups!
+				break;
+				
+				// for input elements with type="text" or type="password" and so on
+			default:
+				
+				if ( $(this).val().length > 0 ) {
+					if ( $(this).val().indexOf( 'email' ) >= 0 ) {
+						key = 'key'; // save the email as the key, identifiying the user
+					}
+					value = $.trim( $(this).val() );
+				}
+				
+				break;
+				
+		} // end switch through this input elements type attribute value
+		
+		$.user_data[ key ] = value; // add key and value to the user object
+		
+	}); // end loop through all form input elements
+	
+	// loop through all select elements
+	selector.find( 'select' ).each( function( index ) {
+		
+		var key = 'default_' + index;
+		var value = 'empty';
+		var multiSelector = $(this);
+		
+		if ( $(this).attr( 'id' ).length > 0 ) {
+			key = $(this).attr( 'id' ); // use the id as the key
+		} else {
+			if ( $(this).attr( 'name' ).length > 0 ) {
+				key = $(this).attr( 'name' ); // if there is no id, use the name attribute
+			}
+		}
+		
+		$.user_data[ key ] = {};
+		
+		$(this).find( 'option' ).each( function( aIndex ) {
+			
+			// if this option has a certain class, handle it here...
+			if ( $(this).hasClass( 'myclass' ) ) {
+				
+				/* do something */
+				
+			}
+			
+			if ( $(this).attr( 'multiple' ) == 'multiple' ) { // handle multiselects
+				
+				var mValue = [];
+				
+				for ( var mIndex = 0; mIndex < multiSelector.length; mIndex++ ) {
+					
+		            if ( multiSelector[ mIndex ].is( ':selected' ) ) {
+		            	mValue[ mIndex ] = $.trim( multiSelector[ mIndex ].text() );
+		            }
+		            
+		        }
+				
+				if ( multiSelector.length > 0 ) {
+					value = mValue.join( ', ' );
+				}
+				
+			} else { // handle single selects
+				
+				value = $.trim( $(this).text() );
+				
+			}
+			
+		}); // end loop through options
+		
+		$.user_data[ key ] = value;
+		
+	}); // end loop through select elements
+	
+	$( '#progress-form' ).hide();
+	
+	if ( $( '#container_log' ).length > 0 ) {
+		$( '#container_log' ).fadeIn( 300 );
+	}
+	
+	$( '#saveUserData' ).remove();
+	
+	$( '#progress-form' ).after(
+		'<button class="btn btn-success" id="saveUserData" onclick="$.save_user_data();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
+	);
+	
+}
