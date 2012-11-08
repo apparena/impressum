@@ -36,7 +36,7 @@ $result = mysql_query( $query );
 if ( $result ) {
 	
 	while( $row = mysql_fetch_assoc( $result ) ) {
-		echo $row . "<br />";
+		echo $row[ 'Field' ] . "<br />";
 	}
 	
 }
