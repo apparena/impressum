@@ -10,22 +10,13 @@
     include_once ( '../../init.php' );
     
     $aa_inst_id = 0;
-    if ( isset( $_GET[ 'aa_inst_id' ] ) ) {
-    	$aa_inst_id = $_GET[ 'aa_inst_id' ];
-    } else {
-    	echo json_encode( array( 'error' => 'missing aa_inst_id' ) );
-    	exit( 0 );
-    }
+    if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } else { echo json_encode( array( 'error' => 'missing aa_inst_id' ) ); exit( 0 ); }
     
     $log = false;
+    $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
     
-    if( isset( $_POST[ 'log' ] ) ) {
-    	$log = $_POST[ 'log' ];
-    } else {
-    	echo json_encode( array( 'error' => 'missing log data' ) );
-    	exit( 0 );
-    }
+    if( isset( $_POST[ 'log' ] ) ) { $log = $_POST[ 'log' ]; } else { echo json_encode( array( 'error' => 'missing log data' ) ); exit( 0 ); }
     
     // Get client ip address
     $client_ip = false;
@@ -54,13 +45,13 @@
     
     $user_key = '';
     
-    if ( isset( $log[ 'key' ] ) && strlen( $log[ 'key' ] ) > 0 ) {
+    if ( isset( $user[ 'key' ] ) && strlen( $user[ 'key' ] ) > 0 ) {
     	$user_key = $log[ 'key' ];
-    	unset( $log[ 'key' ] );
+    	unset( $user[ 'key' ] );
     	// check if the user already exists
     	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
     } else {
-    	echo json_encode( array( 'error' => 'you must provide a log[ "key" ] containing a FB user_id or the users email address!' ) );
+    	echo json_encode( array( 'error' => 'you must provide a user[ "key" ] containing a FB user_id or the users email address!' ) );
     	exit( 0 );
     }
     
@@ -77,12 +68,7 @@
     if ( $result ) {
     	if ( mysql_num_rows( $result ) > 0 ) {
     		// insert the new user
-    		$query = "INSERT INTO `user_log` SET 
-    				  `aa_inst_id` = " . ( (int) $aa_inst_id ) . ",
-    				  `key` = '" . $log[ 'key' ] . "',
-    				  `data` = '" . json_encode( $log[ 'data' ] ) . "',
-    				  `ip` = '" . $client_ip . "',
-    				  `action` = '" . $log[ 'action' ] . "'";
+    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $log[ 'key' ] . "', `data` = '" . json_encode( $log[ 'data' ] ) . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
     		
     		mysql_query( $query );
     	} else {

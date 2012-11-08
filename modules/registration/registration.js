@@ -326,7 +326,8 @@ $.log_action = function( action, data ) {
 		async : true,
 		url : 'modules/registration/log_user_action.php?aa_inst_id=' + aa_inst_id,
 		data : ({
-			log: $.user_log
+			log: $.user_log,
+			user: $.user_data
 		}),
 		success : function(data) {
 			$( '#progress-log' ).hide();
