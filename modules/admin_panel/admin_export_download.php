@@ -1,41 +1,55 @@
 <?php
-require_once(dirname(__FILE__) . '/../init.php');
+require_once(dirname(__FILE__) . '../../init.php');
 ini_set('display_errors', 1);
 
 $aa_inst_id = $_GET['aa_inst_id'];
 
-//Register Admin
-$lottery = new iCon_Lottery($aa_app_id);
-$action = "CSVExport";
-$lottery->registerAdmin($session->user["id"], $aa_inst_id, $action);
+$from = '';
+$from_date = '';
+$to = '';
+$to_date = '';
 
-//Export of the User Data
-$exporter = new iCon_Export();
-
-//add admin log
-$admin = getModule("app_log")->getTable("admin");
-
-if (isset($session->fb) && isset($session->fb['fb_user_id'])) {
-    $fb_user_id = $session->fb['fb_user_id'];
-} else {
-    $fb_user_id = 0;
+if ( isset( $_POST[ 'from' ] ) && strlen( $_POST[ 'from' ] ) > 0 ) {
+	$from_date = new DateTime( $_POST[ 'from' ], new DateTimeZone( 'Europe/Berlin' ) );
+	$from_date = $from_date->format( "Y-m-d H:i:s" );
+	$from = " AND `timestamp` >= '" . $from_date . "' ";
+}
+if ( isset( $_POST[ 'to' ] ) && strlen( $_POST[ 'to' ] ) > 0 ) {
+	$to_date = new DateTime( $_POST[ 'to' ], new DateTimeZone( 'Europe/Berlin' ) );
+	$to_date = $to_date->format( "Y-m-d H:i:s" );
+	$to = " AND `timestamp` <= '" . $to_date . "' ";
 }
 
+//Register Admin
+//TODO: log admin activity
+$key = get_user_id();
+$ip = getClientIp();
+$query = "INSERT INTO `user_log` set `key` = '" . $key . "', `action` = 'user export', `ip` = '" . $ip . "', `aa_inst_id` = " . $aa_inst_id;
+mysql_query( $query );
 
-$data = array(
-    'fb_user_id' => $fb_user_id,
-    'aa_inst_id' => $aa_inst_id,
-    'action' => 'export',
-    'ip' => getClientIp(),
-    'timestamp' => date("Y-m-d H:i:s"),
+// get table keys
+$query = "SHOW COLUMNS FROM `user_data`";
+$result = mysql_query( $query );
+if ( $result ) {
+	
+	while( $row = mysql_fetch_assoc( $result ) ) {
+		echo $row . "<br />";
+	}
+	
+}
+exit(0);
 
-);
-
-$admin->add($data);
-
-
-//get data
+// get users data
 // Get participants
+$query = "SELECT * FROM `user_data` WHERE `aa_inst_id` = " . ( (int) $aa_inst_id ) . $from . $to;
+$result = mysql_query( $query );
+if ( $result ) {
+	
+	while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
+		
+	}
+}
+
 $arrData = $lottery->getParticipantList($aa_inst_id, ", `timestamp`, `ip`,
 `newsletter_registration`,`newsletter_doubleoptin`,`tickets`, `answers_correct`, `question1_answer`, `question2_answer`, `question3_answer`, `award_selection`", $_POST['from'], $_POST['to']);
 
