@@ -39,7 +39,7 @@
     $response[ 'log' ] = $log; // send back the received data later
     
     // create this table if it does not exist
-    $query = "CREATE TABLE `user_log` (
+    $query = "CREATE TABLE IF NOT EXISTS `user_log` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `aa_inst_id` int(11) NOT NULL,
 				  `key` varchar(32) DEFAULT NULL,
