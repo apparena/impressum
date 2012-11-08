@@ -72,7 +72,7 @@
     if ( $result ) {
     	if ( mysql_num_rows( $result ) <= 0 ) {
     		// insert the new user
-    		$query = "INSERT INTO `user_data` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $user_key . "', `value` = '" . mysql_real_escape_string( json_encode( $user ) ) . "'";
+    		$query = 'INSERT INTO `user_data` SET `aa_inst_id` = ' . ( (int) $aa_inst_id ) . ', `key` = "' . $user_key . '", `value` = "' . mysql_real_escape_string( json_encode( $user ) ) . '"';
     		
     		mysql_query( $query );
     	} else {
