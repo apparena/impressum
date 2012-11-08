@@ -33,7 +33,7 @@ if (isset($_GET['aa_inst_id'])) {
                 </div>
             </div>
             <div class="control-group">
-                <div class="agreements"><?=$aa['config']['admin_export_terms']['value']?></div>
+                <div class="agreements"><? if ( isset( $aa['config']['admin_export_terms']['value'] ) ) echo $aa['config']['admin_export_terms']['value'];?></div>
                 <label class="checkbox">
                     <input type="checkbox"
                            name="akzeptiert"> <?php __p("I read and agree to all export terms & conditions")?>
