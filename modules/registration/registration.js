@@ -105,8 +105,8 @@ $.register_user = function( id, callback ) {
 			default:
 				
 				if ( $(this).attr( 'value' ).length > 0 ) {
-					if ( $(this).attr( 'value' ).indexOf( 'email' ) >= 0 ) {
-						key = 'key'; // save the email as the key, identifiying the user
+					if ( key.indexOf( 'email' ) >= 0 ) {
+						key = 'key'; // save the email as the key, identifiying the user. use a field containing the word email in the id or name.
 					}
 					value = $.trim( $(this).attr( 'value' ) );
 				}
