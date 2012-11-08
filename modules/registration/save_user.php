@@ -50,7 +50,7 @@
 			  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
     mysql_query( $query );
     
-echo $query;
+//echo $query;
     
     $user_key = '';
     
@@ -64,8 +64,8 @@ echo $query;
     	exit( 0 );
     }
     	
-echo $query;
-exit(0);
+//echo $query;
+//exit(0);
 
     $user_id = false;
     $result = mysql_query( $query );
