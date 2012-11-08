@@ -60,7 +60,7 @@
     	// check if the user already exists
     	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
     } else {
-    	echo json_encode( array( 'error' => 'you must provide a user[ "key" ] containing a FB user_id or an input field with an id or name containing the word \"email\" which contains the users email address!' ) );
+    	echo json_encode( array( 'error' => 'you must provide a user[ "key" ] containing a FB user_id or an user email address!' ) );
     	exit( 0 );
     }
     	
