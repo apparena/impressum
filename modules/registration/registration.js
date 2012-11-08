@@ -223,10 +223,15 @@ $.fb_connect = function( scope, callback ) {
 					if ( $( '#user_profile' ).length > 0 ) {
 						$( '#user_profile' ).html(
 							$.user_data[ 'name' ] + '&nbsp;&nbsp;&nbsp;'
-							+ '<a href="https://www.facebook.com/' + $.user_data[ 'key' ] + '" target="_blank"><img class="profile-picture" src="https://graph.facebook.com/'
+							+ '<a href="https://www.facebook.com/' + $.user_data[ 'key' ] + '" target="_blank">'
+							+'<img class="profile-picture" src="https://graph.facebook.com/'
 							+ $.user_data[ 'key' ]
-							+ '/picture?type=square" /></a>'
+							+ '/picture?type=square" title="visit the users facebook profile..." /></a>'
 						);
+					}
+					
+					if ( $( '#container_log' ).length > 0 ) {
+						$( '#container_log' ).fadeIn( 300 );
 					}
 					
 /*
@@ -278,12 +283,10 @@ $.save_user_data = function() {
 			user: $.user_data
 		}),
 		success : function(data) {
-			if ( $( '#container_log' ).length > 0 ) {
-				$( '#container_log' ).fadeIn( 300 );
-			}
 			
 			$( '#progress-form' ).hide();
 			enableForm();
+			
 		}
 	});
 	
