@@ -74,7 +74,7 @@
     		// insert the new user
     		$query = "INSERT INTO `user_data` SET 
     				  `aa_inst_id` = " . ( (int) $aa_inst_id ) . ",
-    				  `key` = '" . $user[ 'key' ] . "',
+    				  `key` = '" . $user_key . "',
     				  `value` = '" . json_encode( $user ) . "'";
     		
     		mysql_query( $query );
