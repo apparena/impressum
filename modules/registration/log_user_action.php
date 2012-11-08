@@ -85,7 +85,7 @@
     		
     		mysql_query( $query );
     	} else {
-    		echo json_encode( array( 'error' => 'the user was not found: ' . $user_key ) );
+    		echo json_encode( array( 'error' => 'the user was not found: ' . $log[ 'key' ] ) );
     		exit( 0 );
     	}
     	
