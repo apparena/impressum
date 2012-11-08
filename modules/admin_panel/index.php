@@ -34,7 +34,7 @@ include_once("../../init.php");
                 <ul class="nav">
                     <li><a class="template-getwinner"><?=__p("Select winner");?></a></li>
                     <li><a class="template-exportparticipants"><?=__p("Export participants");?></a></li>
-                    <?php if ($aa['config']['admin_reset']['value']) { ?>
+                    <?php if ( isset( $aa['config']['admin_reset']['value'] ) && $aa['config']['admin_reset']['value'] == '1' ) { ?>
                     <li><a class="template-reset"><?=__p("Reset");?></a></li>
                     <?php }?>
                 </ul>
