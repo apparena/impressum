@@ -175,6 +175,10 @@ $.register_user = function( id, callback ) {
 	
 	$( '#progress-form' ).hide();
 	
+	if ( $( '#container_log' ).length > 0 ) {
+		$( '#container_log' ).fadeIn( 300 );
+	}
+	
 	$( '#saveUserData' ).remove();
 	
 	$( '#progress-form' ).after(
