@@ -39,13 +39,11 @@
     $response[ 'user' ] = $user; // send back the received data later
     
     // create this table if it does not exist
-    $query = "CREATE TABLE `user_log` (
+    $query = "CREATE TABLE `user_data` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `aa_inst_id` int(11) NOT NULL,
-				  `key` varchar(32) DEFAULT NULL,
+				  `key` varchar(32) NOT NULL,
 				  `value` text,
-				  `data` text,
-				  `action` varchar(32) DEFAULT NULL,
 				  `ip` varchar(15) DEFAULT NULL,
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)

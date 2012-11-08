@@ -39,16 +39,17 @@
     $response[ 'log' ] = $log; // send back the received data later
     
     // create this table if it does not exist
-    $query = "CREATE TABLE IF NOT EXISTS `user_log` (
-			      `id` int(10) NOT NULL AUTO_INCREMENT,
-			      `aa_inst_id` int(10) NOT NULL,
-			      `key` varchar(32),
-			      `data` text,
-			      `action` varchar(32),
-			      `ip` varchar(15), 
-			      `timestamp` NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		      PRIMARY KEY (`id`)
-		      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+    $query = "CREATE TABLE `user_log` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `aa_inst_id` int(11) NOT NULL,
+				  `key` varchar(32) DEFAULT NULL,
+				  `value` text,
+				  `data` text,
+				  `action` varchar(32) DEFAULT NULL,
+				  `ip` varchar(15) DEFAULT NULL,
+				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				  PRIMARY KEY (`id`)
+			  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
     mysql_query( $query );
     
     $user_key = '';
