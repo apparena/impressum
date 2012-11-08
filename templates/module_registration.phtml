@@ -18,7 +18,7 @@ include_once ( '../init.php' );
 		<div id="container_connect">
 			<h2>Facebook connect</h2>
 			<hr />
-			<button class="btn btn-primary" onclick="$.FBConnect('container_connect');"><i class="icon-retweet icon-white"></i> Connect</button>
+			<button class="btn btn-primary" onclick="$.FBConnect();"><i class="icon-retweet icon-white"></i> Connect</button>
 			<span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
 			<label class="control-label" for="scope" title="enter a FB scope list here, such as 'email' or 'email,publish_stream'">Scope
 				<input type="text" value="email" id="scope" name="scope" />
@@ -29,34 +29,34 @@ include_once ( '../init.php' );
 		<div id="container_form">
 			<h2>Form registration</h2>
 			<hr />
-			<form class="form-registration" action="registerUser();" id="form-modal">
+			<form class="form-registration" action="javascript:$.registerUser();" id="form-modal">
 				<div class="control-group">
 					<label class="control-label" for="name">Name</label>
 					<div class="controls">
-						<input type="text" id="name" placeholder="Your name" class="required">
+						<!-- The name attribute is needed by the validation. For the registration you should supply at least an id. -->
+						<input type="text" id="name" name="name" placeholder="Your name" class="required">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="email">Email</label>
 					<div class="controls">
-						<input type="text" id="email" placeholder="Your email address" class="required email">
+						<input type="text" id="email" name="email" placeholder="Your email address" class="required email">
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
 						<label class="checkbox"><input id="option_1" type="checkbox"> Yes, we can!</label>
-						<button type="submit" class="btn">Submit</button>
+						<button type="submit" class="btn"><i class="icon-envelope"></i> Submit</button>
 					</div>
 				</div>
 			</form>
-			<span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
+			<span id="progress-form" class="hide"><img src="img/loading_progress.gif" /></span>
 		</div>
 	</div>
 </div>
 
 <script>
 $(document).ready(function() {
-	//$("#form-registration").validate( bootstrap_form );
-	
+	$(".form-registration").validate( $.bootstrap_form ); // use the bootstrap_form variable from the registration.js
 });
 </script>

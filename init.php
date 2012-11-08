@@ -101,5 +101,11 @@ if ($db_activated){
 	    'password' => $db_pass,
 	    'dbname'   => $db_name
 	));
+	// setup db in case the zend db does not work
+	$connection = mysql_connect( $db_host, $db_user, $db_pass );
+	if ( $connection ) {
+		$db_raw = mysql_select_db( $db_name, $connection );
+		mysql_query( "set names utf8;" );
+	}
 }
 ?>
