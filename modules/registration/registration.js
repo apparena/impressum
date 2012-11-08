@@ -3,9 +3,9 @@
  * Include this module to use it:
  * <script src="modules/registration/registration.js" type="text/javascript" />
  * Use the functions like this:
- * <form method="post" action="javascript:$.registerUser();">...
+ * <form method="post" action="javascript:$.register_user();">...
  * or:
- * <button id="fb_connect" onclick="$.FBConnect('email,publish_stream');">...
+ * <button id="fb_connect" onclick="$.fb_connect('email,publish_stream');">...
  * @author Guntram Pollock 11/2012
  */
 
@@ -52,7 +52,7 @@ $.bootstrap_form = {
     }
 };
 
-$.registerUser = function( id, callback ) {
+$.register_user = function( id, callback ) {
 	
 	$( '#progress-form' ).show();
 	
@@ -67,7 +67,7 @@ $.registerUser = function( id, callback ) {
 		}
 	}
 	
-	$.userData = {}; // create a global user object to save it later
+	$.user_data = {}; // create a global user object to save it later
 	
 	// loop through all input elements of the form and 
 	selector.find( 'input' ).each( function( index ) {
@@ -105,6 +105,9 @@ $.registerUser = function( id, callback ) {
 			default:
 				
 				if ( $(this).val().length > 0 ) {
+					if ( $(this).val().indexOf( 'email' ) >= 0 ) {
+						key = 'key'; // save the email as the key, identifiying the user
+					}
 					value = $.trim( $(this).val() );
 				}
 				
@@ -112,7 +115,7 @@ $.registerUser = function( id, callback ) {
 				
 		} // end switch through this input elements type attribute value
 		
-		$.userData[ key ] = value; // add key and value to the user object
+		$.user_data[ key ] = value; // add key and value to the user object
 		
 	}); // end loop through all form input elements
 	
@@ -131,7 +134,7 @@ $.registerUser = function( id, callback ) {
 			}
 		}
 		
-		$.userData[ key ] = {};
+		$.user_data[ key ] = {};
 		
 		$(this).find( 'option' ).each( function( aIndex ) {
 			
@@ -166,7 +169,7 @@ $.registerUser = function( id, callback ) {
 			
 		}); // end loop through options
 		
-		$.userData[ key ] = value;
+		$.user_data[ key ] = value;
 		
 	}); // end loop through select elements
 	
@@ -175,16 +178,16 @@ $.registerUser = function( id, callback ) {
 	$( '#saveUserData' ).remove();
 	
 	$( '#progress-form' ).after(
-		'<button class="btn btn-success" id="saveUserData" onclick="$.saveUserData();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
+		'<button class="btn btn-success" id="saveUserData" onclick="$.save_user_data();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
 	);
 	
 };
 
-$.FBConnect = function( scope, callback ) {
+$.fb_connect = function( scope, callback ) {
 	
 	if ( typeof( scope ) == 'function' ) {
 		callback = scope;
-		if ( typeof( $( '#scope' ).val() ) == 'string' ) {
+		if ( typeof( $( '#scope' ).val() ) == 'string' && $( '#scope' ).val().length > 0 ) {
 			scope = $( '#scope' ).val();
 		} else {
 			scope = 'email';
@@ -202,7 +205,7 @@ $.FBConnect = function( scope, callback ) {
 				
 				if ( typeof( response.id ) != 'undefined' ) {
 					
-					$.userData = {};
+					$.user_data = {};
 					
 					// the response length may vary due to the scope used for the FB.login() function! 
 					for( var key in response ) { // get all values from the response and save them in the user object
@@ -210,18 +213,27 @@ $.FBConnect = function( scope, callback ) {
 						var item = response[ key ];
 						
 						if ( key == 'id' ) {
-							$.userData[ 'fb_user_id' ] = item; // do not use the key 'id' for a fb-user-id
+							$.user_data[ 'key' ] = item; // use the key 'key' for a fb-user-id as an user-identificator
 						} else {
-							$.userData[ key ] = item;
+							$.user_data[ key ] = item;
 						}
 						
 					}
 					
+					if ( $( '#user_profile' ).length > 0 ) {
+						$( '#user_profile' ).html(
+							$.user_data[ 'name' ]
+							+ '<img class="profile-picture" src="https://graph.facebook.com/'
+							+ $.user_data[ 'key' ]
+							+ '/picture?type=square" />'
+						);
+					}
+					
 /*
 					// if you only use 'email' as a scope for FB.login()
-					$.userData[ 'fb_user_id' ] = response.id;
-					$.userData[ 'name' ]       = response.name;
-					$.userData[ 'email' ]      = response.email;
+					$.user_data[ 'key' ]   = response.id;
+					$.user_data[ 'name' ]  = response.name;
+					$.user_data[ 'email' ] = response.email;
 */
 					
 				}
@@ -231,7 +243,7 @@ $.FBConnect = function( scope, callback ) {
 				
 				$( '#saveUserData' ).remove();
 				$( '#progress-connect' ).after(
-					'<button class="btn btn-success" id="saveUserData" onclick="$.saveUserData();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
+					'<button class="btn btn-success" id="saveUserData" onclick="$.save_user_data();"><i class="icon-download-alt icon-white"></i> Save user data</button>'
 				);
 				
 				if ( typeof( callback ) == 'function' ) {
@@ -253,7 +265,7 @@ $.FBConnect = function( scope, callback ) {
 };
 
 
-$.saveUserData = function() {
+$.save_user_data = function() {
 	
 	disableForm();
 	$( '#progress-form' ).show();
@@ -263,10 +275,54 @@ $.saveUserData = function() {
 		async : true,
 		url : 'modules/registration/save_user.php?aa_inst_id=' + aa_inst_id,
 		data : ({
-			user: $.userData
+			user: $.user_data
 		}),
 		success : function(data) {
 			$( '#progress-form' ).hide();
+			enableForm();
+		}
+	});
+	
+};
+
+/**
+ * Log an action for an existing user.
+ * @param string action the action type to log, e.g. 'register' or 'invite'.
+ * @param string data the additional data to save for this log item, e.g. FB user ids of invited friends.
+ */
+$.log_action = function( action, data ) {
+	
+	disableForm();
+	$( '#progress-log' ).show();
+	
+	$.user_log = {};
+	
+	$.user_log[ 'action' ] = 'register';
+	$.user_log[ 'data' ]   = 'sample data';
+	
+	if ( $( '#action' ).length > 0 ) {
+		if ( $( '#action' ).val().length > 0 ) {
+			$.user_log[ 'action' ] = $( '#action' ).val(); 
+		}
+	}
+	
+	if ( typeof( action ) != 'undefined' && action != null && action.length > 0 ) {
+		$.user_log[ 'action' ] = action;
+	}
+	
+	if ( typeof( data ) != 'undefined' && data != null && data.length > 0 ) {
+		$.user_log[ 'data' ] = data;
+	}
+	
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'modules/registration/log_user_action.php?aa_inst_id=' + aa_inst_id,
+		data : ({
+			log: $.user_log
+		}),
+		success : function(data) {
+			$( '#progress-log' ).hide();
 			enableForm();
 		}
 	});
