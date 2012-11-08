@@ -278,6 +278,10 @@ $.save_user_data = function() {
 			user: $.user_data
 		}),
 		success : function(data) {
+			if ( $( '#container_log' ).length > 0 ) {
+				$( '#container_log' ).fadeIn( 300 );
+			}
+			
 			$( '#progress-form' ).hide();
 			enableForm();
 		}
