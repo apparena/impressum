@@ -321,13 +321,14 @@ $.log_action = function( action, data ) {
 		$.user_log[ 'data' ] = data;
 	}
 	
+	$.user_log[ 'key' ] = $.user_data[ 'key' ];
+	
 	$.ajax({
 		type : 'POST',
 		async : true,
 		url : 'modules/registration/log_user_action.php?aa_inst_id=' + aa_inst_id,
 		data : ({
-			log: $.user_log,
-			user: $.user_data
+			log: $.user_log
 		}),
 		success : function(data) {
 			$( '#progress-log' ).hide();
