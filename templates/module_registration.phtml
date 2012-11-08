@@ -17,11 +17,21 @@ include_once ( '../init.php' );
 	<div class="span5">
 		<div id="container_connect">
 			<h2>Facebook connect</h2>
+			<p><strong id="user_profile"></strong></p>
 			<hr />
-			<button class="btn btn-primary" onclick="$.FBConnect();"><i class="icon-retweet icon-white"></i> Connect</button>
+			<button class="btn btn-primary" onclick="$.fb_connect();"><i class="icon-retweet icon-white"></i> Connect</button>
 			<span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
 			<label class="control-label" for="scope" title="enter a FB scope list here, such as 'email' or 'email,publish_stream'">Scope
 				<input type="text" value="email" id="scope" name="scope" />
+			</label>
+		</div>
+		<div id="container_log">
+			<h2>Log action</h2>
+			<hr />
+			<button class="btn btn-primary" onclick="$.log_action();"><i class="icon-retweet icon-white"></i> Log action for current user</button>
+			<span id="progress-log" class="hide"><img src="img/loading_progress.gif" /></span>
+			<label class="control-label" for="action" title="Enter an action type here, such as 'register' or 'invite'">Action to log
+				<input type="text" value="register" id="action" name="action" />
 			</label>
 		</div>
 	</div>
@@ -29,7 +39,7 @@ include_once ( '../init.php' );
 		<div id="container_form">
 			<h2>Form registration</h2>
 			<hr />
-			<form class="form-registration" action="javascript:$.registerUser();" id="form-modal">
+			<form class="form-registration" action="javascript:$.register_user();" id="form-modal">
 				<div class="control-group">
 					<label class="control-label" for="name">Name</label>
 					<div class="controls">
