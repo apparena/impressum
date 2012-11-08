@@ -222,8 +222,8 @@ $.fb_connect = function( scope, callback ) {
 					
 					if ( $( '#user_profile' ).length > 0 ) {
 						$( '#user_profile' ).html(
-							$.user_data[ 'name' ] + ' - '
-							+ '<a href="https://www.facebook.com/' + $.user_data[ 'key' ] + '"><img class="profile-picture" src="https://graph.facebook.com/'
+							$.user_data[ 'name' ] + '&nbsp;&nbsp;&nbsp;'
+							+ '<a href="https://www.facebook.com/' + $.user_data[ 'key' ] + '" target="_blank"><img class="profile-picture" src="https://graph.facebook.com/'
 							+ $.user_data[ 'key' ]
 							+ '/picture?type=square" /></a>'
 						);
