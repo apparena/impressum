@@ -14,6 +14,7 @@ set_include_path(ROOT_PATH.'/libs/' . PATH_SEPARATOR );
 require_once ROOT_PATH.'/config.php';
 require_once ROOT_PATH.'/libs/fb-php-sdk/3.2/src/facebook.php';
 require_once ROOT_PATH.'/libs/AA/fb_helper.php';
+require_once ROOT_PATH.'/libs/functions.php';
 require_once ROOT_PATH.'/libs/AA/1.0/src/aa_helper.php';
 require_once ROOT_PATH.'/libs/AA/1.0/src/AppManager.php';
 require_once ROOT_PATH.'/libs/Zend/Translate.php';

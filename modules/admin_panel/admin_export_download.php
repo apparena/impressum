@@ -1,6 +1,5 @@
 <?php
 require_once( '../../init.php');
-require_once( 'lib/functions.php');
 ini_set('display_errors', 1);
 
 $aa_inst_id = $_GET['aa_inst_id'];
@@ -23,9 +22,12 @@ if ( isset( $_POST[ 'to' ] ) && strlen( $_POST[ 'to' ] ) > 0 ) {
 
 //Register Admin
 //TODO: log admin activity
-$key = get_user_id();
-$ip = getClientIp();
+$key = get_fb_user_id();
+$ip = get_client_ip();
 $query = "INSERT INTO `user_log` set `key` = '" . $key . "', `action` = 'user export', `ip` = '" . $ip . "', `aa_inst_id` = " . $aa_inst_id;
+
+echo $query . "<br />";
+
 mysql_query( $query );
 
 // get table keys
