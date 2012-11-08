@@ -72,8 +72,11 @@
     if ( $result ) {
     	if ( mysql_num_rows( $result ) <= 0 ) {
     		// insert the new user
-    		$query = 'INSERT INTO `user_data` SET `aa_inst_id` = ' . ( (int) $aa_inst_id ) . ', `key` = "' . $user_key . '", `value` = "' . mysql_real_escape_string( json_encode( $user ) ) . '", `ip` = "' . $client_ip . '"';
-    		
+    		if ( is_array( $user ) ) {
+    			$user = mysql_real_escape_string( json_encode( $user ) );
+    		}
+    		$query = 'INSERT INTO `user_data` SET `aa_inst_id` = ' . ( (int) $aa_inst_id ) . ', `key` = "' . $user_key . '", `value` = "' . $user . '", `ip` = "' . $client_ip . '"';
+    		$response[ 'insert' ] = $query;
     		mysql_query( $query );
     	} else {
     		$response[] = array( 'error' => 'user already exists');
@@ -81,7 +84,6 @@
     	
 //echo $query;
 //exit(0);
-$response[ 'insert' ] = $query;
 
 		$user_id = mysql_insert_id();
     	mysql_free_result( $result );
@@ -94,6 +96,12 @@ $response[ 'insert' ] = $query;
     	$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
     	if ( $response[ 'saved_user_data' ] != false ) {
     		$response[ 'success' ] = 'user was successfully saved to db';
+    	}
+    	if ( mysql_num_rows( $result ) <= 0 ) {
+    		$response[] = array(
+    			'error' => 'user was not saved',
+    			'query' => $query
+    		);
     	}
     	$response[ 'query' ] = $query;
     	mysql_free_result( $result );
