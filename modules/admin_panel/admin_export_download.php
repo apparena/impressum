@@ -1,5 +1,6 @@
 <?php
 require_once( '../../init.php');
+require_once( 'lib/functions.php');
 ini_set('display_errors', 1);
 
 $aa_inst_id = $_GET['aa_inst_id'];
