@@ -104,11 +104,11 @@ $.register_user = function( id, callback ) {
 				// for input elements with type="text" or type="password" and so on
 			default:
 				
-				if ( $(this).val().length > 0 ) {
-					if ( $(this).val().indexOf( 'email' ) >= 0 ) {
+				if ( $(this).attr( 'value' ).length > 0 ) {
+					if ( $(this).attr( 'value' ).indexOf( 'email' ) >= 0 ) {
 						key = 'key'; // save the email as the key, identifiying the user
 					}
-					value = $.trim( $(this).val() );
+					value = $.trim( $(this).attr( 'value' ) );
 				}
 				
 				break;
