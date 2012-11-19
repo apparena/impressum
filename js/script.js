@@ -116,3 +116,48 @@ function log_login(arguments) {
     console.log(arguments);
 
 }
+
+
+function fb_register_debug( fields, url, put_to_id ) {
+
+    if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
+        if ( $( '#fields' ).length > 0 ) {
+            fields = $( '#fields').val();
+        } else {
+            fields = 'name'; // at least one default field
+        }
+    }
+
+    if ( typeof( url ) == 'undefined' || url.length <= 0 ) {
+        if ( $( '#url' ).length > 0 ) {
+            url = $( '#url' ).val();
+        } else {
+            // default url
+            url = 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id;
+        }
+    }
+
+    if ( typeof( put_to_id ) == "undefined" || $( '#' + put_to_id ).length <= 0 ) {
+        put_to_id = 'fb_registration';
+    }
+
+    if ( $( '#' + put_to_id ).length <= 0 ) {
+        $( 'body').append( '<div id="fb_registration"></div>' );
+    }
+
+    var fb_registration = '<div class="row span8">by registration form:<br />><fb:registration '
+        + 'fields="' + fields + '" '
+        + 'redirect-uri="' + url + '" '
+        + 'width="530" ' +
+        /*+ 'on-login="log_login(arguments);">'*/
+        + '</fb:registration></div>'
+        + '<div class="row span8">or by login button:<br />>'
+        + '<fb:login-button '
+        + 'registration-url="' + url + '" '
+        + 'on-login="log_login(arguments);" '
+        + ' /></div>';
+    $( '#' + put_to_id ).html( fb_registration );
+
+    FB.XFBML.parse();
+
+}
