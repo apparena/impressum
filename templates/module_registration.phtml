@@ -52,7 +52,9 @@ include_once ( '../init.php' );
 </div>
 <div class="row">
     <div class="span5">
-        <button class="btn btn-primary" onclick="$.fb_register();"><i class="icon-random icon-white"></i> refresh Registration</button>
+        <!--<button class="btn btn-primary" onclick="$.fb_register();"><i class="icon-random icon-white"></i> refresh Registration</button>-->
+        <button class="btn btn-primary" onclick="fb_register_debug();"><i class="icon-random icon-white"></i> refresh Registration</button>
+
         <span id="progress-register" class="hide"><img src="img/loading_progress.gif" /></span>
         <label class="control-label" for="fields" title="enter a FB field list here, such as 'name' or 'name,birthday,gender,location,email'">Fields
             <input type="text" value="name" id="fields" name="fields" />
