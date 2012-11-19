@@ -37,7 +37,7 @@ include_once("init.php");
     <!-- <script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script> -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
-    <script src="js/script.js?v5"></script>
+    <script src="js/script.js?v6"></script>
     <!-- end scripts-->
 
     <!-- Include css config values here -->
