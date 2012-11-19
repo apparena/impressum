@@ -36,6 +36,7 @@ print_r( $_POST );
                     $user[ 'key' ] = $data[ 'user_id' ]; // get the fb-user id from the response
                 } else {
                     $response[ 'signed_request_id' ] = 'no user_id from fb registration';
+                }
             }
         } else {
 //echo 'no signed request';
