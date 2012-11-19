@@ -145,13 +145,13 @@ function fb_register_debug( fields, url, put_to_id ) {
         $( 'body').append( '<div id="fb_registration"></div>' );
     }
 
-    var fb_registration = '<div class="row span8">by registration form:<br />><fb:registration '
+    var fb_registration = '<div class="row span8">by registration form:<br /><fb:registration '
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
         + 'width="530" ' +
         /*+ 'on-login="log_login(arguments);">'*/
         + '</fb:registration></div>'
-        + '<div class="row span8">or by login button:<br />>'
+        + '<div class="row span8">or by login button:<br />'
         + '<fb:login-button '
         + 'registration-url="' + url + '" '
         + 'on-login="log_login(arguments);" '
