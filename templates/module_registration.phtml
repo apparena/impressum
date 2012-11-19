@@ -58,7 +58,7 @@ include_once ( '../init.php' );
             <input type="text" value="name" id="fields" name="fields" />
         </label>
         <label class="control-label" for="url" title="enter an url which will be opened by the registration plugin">URL
-            <input type="text" value="https://developers.facebook.com/tools/echo/" id="url" name="url" />
+            <input type="text" value="<?php echo $aa['instance']['fb_canvas_url']; ?>/modules/registration/save_user.php?aa_inst_id=<?php echo $aa_inst_id; ?>" id="url" name="url" />
         </label>
     </div>
     <div class="span4">
