@@ -110,3 +110,22 @@ function sendRequest(name, desc, data) {
 function callback(response) {
     console.log(response);
 }
+
+
+function register( fields, url ) {
+
+    if ( $( '#fields' ).length > 0 ) {
+        fields = $( '#fields').val();
+    }
+    if ( $( '#url' ).length > 0 ) {
+        url = $( '#url' ).val();
+    }
+
+    var fb_registration = '<fb:registration ' +
+            + 'fields="' + fields + '" '
+            + 'redirect-uri="' + url + '" '
+            + 'width="530">'
+        + '</fb:registration>';
+    $( '#fb_registration' ).html( fb_registration );
+
+}
