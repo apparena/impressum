@@ -371,7 +371,7 @@ $.fb_register = function ( fields, url, put_to_id ) {
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
         + 'width="530" ' +
-        + 'on-login="console.log(arguments)">'
+        + 'on-login="log_login(arguments);">'
         + '</fb:registration>';
     $( '#' + put_to_id ).html( fb_registration );
 

@@ -110,3 +110,9 @@ function sendRequest(name, desc, data) {
 function callback(response) {
     console.log(response);
 }
+
+function log_login(arguments) {
+    console.log('on-login called');
+    console.log(arguments);
+
+}
