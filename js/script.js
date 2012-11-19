@@ -148,7 +148,7 @@ function fb_register_debug( fields, url, put_to_id ) {
     var fb_registration = '<div class="row span8">by registration form:</div><fb:registration '
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
-        + 'width="530" ' +
+        + 'width="530" '
         /*+ 'on-login="log_login(arguments);"'*/
         + ' ></fb:registration>';
 
