@@ -21,7 +21,7 @@
     $response = array(); // this response goes back to the success function of the calling javascript at the end
 
     /* check if the user came from a fb-registration */
-    if ( $_REQUEST ) {
+    if ( isset( $_REQUEST ) ) {
         $data = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
         if ( $data ) {
             if ( isset( $data[ 'registration' ] ) ) {
@@ -32,11 +32,10 @@
             if ( isset( $data[ 'user_id' ] ) ) {
                 $user[ 'key' ] = $data[ 'user_id' ]; // get the fb-user id from the response
             } else {
-                $response[ 'signed_request_registration' ] = 'no user_id from fb registration';
+                $response[ 'signed_request_id' ] = 'no user_id from fb registration';
             }
         }
 //print_r($response);
-
     } else {
         /* no signed request available. the user might come from fb_connect or form registration */
     }
@@ -99,7 +98,7 @@
     			$user = mysql_real_escape_string( json_encode( $user ) );
     		}
     		$query = 'INSERT INTO `user_data` SET `aa_inst_id` = ' . ( (int) $aa_inst_id ) . ', `key` = "' . $user_key . '", `value` = "' . $user . '", `ip` = "' . $client_ip . '"';
-    		$response[ 'insert' ] = $query;
+    		//$response[ 'insert' ] = $query;
     		mysql_query( $query );
     	} else {
     		$response[] = array( 'error' => 'user already exists');
@@ -116,7 +115,7 @@
     $query = "SELECT * FROM `user_data` WHERE `id` = " . $user_id;
     $result = mysql_query( $query );
     if ( $result ) {
-    	$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
+    	//$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
     	if ( $response[ 'saved_user_data' ] != false ) {
     		$response[ 'success' ] = 'user was successfully saved to db';
     	}
