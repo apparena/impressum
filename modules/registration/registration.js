@@ -14,7 +14,7 @@
  * It defines the required fields and error handling.
  * The rules-keys are ids/names of form elements like inputs.
  * The <select> elements need to use class validation, so they
- * have to be added additionally (the question selects have dynamically generated ids/names).
+ * have to be added additionally (the selects have dynamically generated ids/names).
  * Therefore the jquery validation has to be extended by:
  * $.validator.addClassRules({class_name:{required: true}});
  * This must be done before calling validate(...).
