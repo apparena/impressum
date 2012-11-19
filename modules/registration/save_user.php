@@ -20,7 +20,7 @@
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
 
-function parse_signed_request($signed_request, $secret) {
+function parse_signed_request_from_registration($signed_request, $secret) {
     list($encoded_sig, $payload) = explode('.', $signed_request, 2);
 
     // decode the data
@@ -48,7 +48,7 @@ function base64_url_decode($input) {
 
 if ($_REQUEST) {
     echo '<p>signed_request contents:</p>';
-    $response = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
+    $response = parse_signed_request_from_registration( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
     echo '<pre>';
     print_r($response);
     echo '</pre>';
