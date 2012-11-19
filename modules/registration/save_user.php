@@ -17,7 +17,7 @@
     	exit( 0 );
     }
 
-print_r( $_POST );
+//print_r( $_POST );
 
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end

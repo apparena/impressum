@@ -52,8 +52,8 @@ include_once ( '../init.php' );
 </div>
 <div class="row">
     <div class="span5">
-        <!--<button class="btn btn-primary" onclick="$.fb_register();"><i class="icon-random icon-white"></i> refresh Registration</button>-->
-        <button class="btn btn-primary" onclick="fb_register_debug();"><i class="icon-random icon-white"></i> refresh Registration</button>
+        <button class="btn btn-primary" onclick="$.fb_register();"><i class="icon-random icon-white"></i> refresh Registration</button>
+        <!--<button class="btn btn-primary" onclick="fb_register_debug();"><i class="icon-random icon-white"></i> refresh Registration</button>-->
 
         <span id="progress-register" class="hide"><img src="img/loading_progress.gif" /></span>
         <label class="control-label" for="fields" title="enter a FB field list here, such as 'name' or 'name,birthday,gender,location,email'">Fields
@@ -138,7 +138,7 @@ include_once ( '../init.php' );
 <script>
 $(document).ready(function() {
 	$(".form-registration").validate( $.bootstrap_form ); // use the bootstrap_form variable from the registration.js
-    //$.fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration
-    fb_register_debug( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id );
+    $.fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration
+    //fb_register_debug( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id );
 });
 </script>

@@ -353,7 +353,7 @@ $.fb_register = function ( fields, url, put_to_id ) {
 
     if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
         if ( $( '#fields' ).length > 0 ) {
-            fields = $( '#fields').val();
+            fields = $( '#fields' ).val();
         } else {
             fields = 'name'; // at least one default field
         }
@@ -376,18 +376,24 @@ $.fb_register = function ( fields, url, put_to_id ) {
         $( 'body').append( '<div id="fb_registration"></div>' );
     }
 
-    var fb_registration = '<div class="row span8">by registration form:<br />><fb:registration '
+    var fb_registration = '<div class="row span8">by registration form:</div><fb:registration '
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
-        + 'width="530" ' +
-        /*+ 'on-login="log_login(arguments);">'*/
-        + '</fb:registration></div>'
-        + '<div class="row span8">or by login button:<br />>'
-        + '<fb:login-button '
-        + 'registration-url="' + url + '" '
-        + 'on-login="log_login(arguments);" '
-        + ' /></div>';
+        + 'width="530" '
+        /*+ 'on-login="log_login(arguments);"'*/
+        + ' ></fb:registration>';
+
     $( '#' + put_to_id ).html( fb_registration );
+
+    /*
+     fb_registration = '<div class="row span8">or by login button:</div>'
+     + '<div class="row span8"><fb:login-button '
+     + 'registration-url="' + url + '" '
+     + 'on-login="log_login(arguments);" '
+     + ' /></div>';
+
+     $( '#' + put_to_id ).append( fb_registration );
+     */
 
     FB.XFBML.parse();
 
