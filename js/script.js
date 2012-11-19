@@ -121,7 +121,7 @@ function fb_register( fields, url ) {
         url = $( '#url' ).val();
     }
 
-    var fb_registration = '<fb:registration ' +
+    var fb_registration = '<fb:registration '
             + 'fields="' + fields + '" '
             + 'redirect-uri="' + url + '" '
             + 'width="530">'
