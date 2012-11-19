@@ -128,4 +128,6 @@ function fb_register( fields, url ) {
         + '</fb:registration>';
     $( '#fb_registration' ).html( fb_registration );
 
+    FB.XFBML.parse();
+
 }
