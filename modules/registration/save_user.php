@@ -48,7 +48,7 @@ function base64_url_decode($input) {
 
 if ($_REQUEST) {
     echo '<p>signed_request contents:</p>';
-    $response = parse_signed_request_from_registration( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
+    $response = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
     echo '<pre>';
     print_r($response);
     echo '</pre>';
