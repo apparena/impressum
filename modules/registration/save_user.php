@@ -37,8 +37,7 @@
                 }
             }
         } else {
-            echo 'no signed request:';
-            print_r( $_REQUEST );
+//echo 'no signed request';
         }
 //print_r($response);
     } else {
