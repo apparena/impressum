@@ -155,10 +155,10 @@ function fb_register_debug( fields, url, put_to_id ) {
     $( '#' + put_to_id ).html( fb_registration );
 
     fb_registration = '<div class="row span8">or by login button:</div>'
-        + '<fb:login-button '
+        + '<div class="row span8"><fb:login-button '
         + 'registration-url="' + url + '" '
         + 'on-login="log_login(arguments);" '
-        + ' />';
+        + ' /></div>';
 
     $( '#' + put_to_id ).append( fb_registration );
 
