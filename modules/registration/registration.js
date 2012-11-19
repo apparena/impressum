@@ -342,14 +342,29 @@ $.log_action = function ( action, data ) {
 	
 };
 
-
-$.fb_register = function ( fields, url ) {
+/**
+ * Shows the fb-register form in the desired id.
+ * If the params are empty, it will try to display the form appended to the body.
+ * @param fields The fields to query from the user. These fields will be available later to save them in the db.
+ * @param url The url will be called by Facebook including a signed request when the user confirms the form.
+ * @param put_to_id Specify a HTML-id to put the registration form into after creating it.
+ */
+$.fb_register = function ( fields, url, put_to_id ) {
 
     if ( $( '#fields' ).length > 0 ) {
         fields = $( '#fields').val();
     }
+
     if ( $( '#url' ).length > 0 ) {
         url = $( '#url' ).val();
+    }
+
+    if ( typeof( put_to_id ) == "undefined" || $( '#' + put_to_id ).length <= 0 ) {
+        put_to_id = 'fb_registration';
+    }
+
+    if ( $( '#' + put_to_id ).length <= 0 ) {
+        $( 'body').append( '<div id="fb_registration"></div>' );
     }
 
     var fb_registration = '<fb:registration '
@@ -357,7 +372,7 @@ $.fb_register = function ( fields, url ) {
         + 'redirect-uri="' + url + '" '
         + 'width="530">'
         + '</fb:registration>';
-    $( '#fb_registration' ).html( fb_registration );
+    $( '#' + put_to_id ).html( fb_registration );
 
     FB.XFBML.parse();
 
