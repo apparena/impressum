@@ -351,12 +351,21 @@ $.log_action = function ( action, data ) {
  */
 $.fb_register = function ( fields, url, put_to_id ) {
 
-    if ( $( '#fields' ).length > 0 ) {
-        fields = $( '#fields').val();
+    if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
+        if ( $( '#fields' ).length > 0 ) {
+            fields = $( '#fields').val();
+        } else {
+            fields = 'name'; // at least one default field
+        }
     }
 
-    if ( $( '#url' ).length > 0 ) {
-        url = $( '#url' ).val();
+    if ( typeof( url ) == 'undefined' || url.length <= 0 ) {
+        if ( $( '#url' ).length > 0 ) {
+            url = $( '#url' ).val();
+        } else {
+            // default url
+            url = 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id;
+        }
     }
 
     if ( typeof( put_to_id ) == "undefined" || $( '#' + put_to_id ).length <= 0 ) {
