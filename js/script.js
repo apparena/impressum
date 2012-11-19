@@ -149,8 +149,8 @@ function fb_register_debug( fields, url, put_to_id ) {
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
         + 'width="530" ' +
-        /*+ 'on-login="log_login(arguments);">'*/
-        + '</fb:registration>';
+        /*+ 'on-login="log_login(arguments);"'*/
+        + ' ></fb:registration>';
 
     $( '#' + put_to_id ).html( fb_registration );
 
