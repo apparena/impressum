@@ -16,7 +16,9 @@
     	echo json_encode( array( 'error' => 'missing aa_inst_id' ) );
     	exit( 0 );
     }
-    
+
+print_r( $_POST );
+
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
 
@@ -34,7 +36,6 @@
                     $user[ 'key' ] = $data[ 'user_id' ]; // get the fb-user id from the response
                 } else {
                     $response[ 'signed_request_id' ] = 'no user_id from fb registration';
-                }
             }
         } else {
 //echo 'no signed request';
