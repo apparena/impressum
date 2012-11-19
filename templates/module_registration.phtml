@@ -136,6 +136,6 @@ include_once ( '../init.php' );
 <script>
 $(document).ready(function() {
 	$(".form-registration").validate( $.bootstrap_form ); // use the bootstrap_form variable from the registration.js
-    fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration
+    $.fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration
 });
 </script>
