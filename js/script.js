@@ -150,13 +150,17 @@ function fb_register_debug( fields, url, put_to_id ) {
         + 'redirect-uri="' + url + '" '
         + 'width="530" ' +
         /*+ 'on-login="log_login(arguments);">'*/
-        + '</fb:registration></div>'
+        + '</fb:registration></div>';
+
+    $( '#' + put_to_id ).html( fb_registration );
+
+    $( '#' + put_to_id).append(
         + '<div class="row span8">or by login button:<br />'
         + '<fb:login-button '
         + 'registration-url="' + url + '" '
         + 'on-login="log_login(arguments);" '
-        + ' /></div>';
-    $( '#' + put_to_id ).html( fb_registration );
+        + ' /></div>'
+    );
 
     FB.XFBML.parse();
 
