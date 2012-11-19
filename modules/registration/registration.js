@@ -52,7 +52,7 @@ $.bootstrap_form = {
     }
 };
 
-$.register_user = function( id, callback ) {
+$.register_user = function ( id, callback ) {
 	
 	$( '#progress-form' ).show();
 	
@@ -187,7 +187,7 @@ $.register_user = function( id, callback ) {
 	
 };
 
-$.fb_connect = function( scope, callback ) {
+$.fb_connect = function ( scope, callback ) {
 	
 	if ( typeof( scope ) == 'function' ) {
 		callback = scope;
@@ -301,7 +301,7 @@ $.save_user_data = function() {
  * @param string action the action type to log, e.g. 'register' or 'invite'.
  * @param string data the additional data to save for this log item, e.g. FB user ids of invited friends.
  */
-$.log_action = function( action, data ) {
+$.log_action = function ( action, data ) {
 	
 	disableForm();
 	$( '#progress-log' ).show();
@@ -342,6 +342,26 @@ $.log_action = function( action, data ) {
 	
 };
 
+
+$.fb_register = function ( fields, url ) {
+
+    if ( $( '#fields' ).length > 0 ) {
+        fields = $( '#fields').val();
+    }
+    if ( $( '#url' ).length > 0 ) {
+        url = $( '#url' ).val();
+    }
+
+    var fb_registration = '<fb:registration '
+        + 'fields="' + fields + '" '
+        + 'redirect-uri="' + url + '" '
+        + 'width="530">'
+        + '</fb:registration>';
+    $( '#fb_registration' ).html( fb_registration );
+
+    FB.XFBML.parse();
+
+};
 
 
 function disableForm() {
