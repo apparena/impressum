@@ -115,17 +115,17 @@
     $query = "SELECT * FROM `user_data` WHERE `id` = " . $user_id;
     $result = mysql_query( $query );
     if ( $result ) {
-    	//$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
+    	$response[ 'saved_user_data' ] = mysql_fetch_array( $result, MYSQL_ASSOC );
     	if ( $response[ 'saved_user_data' ] != false ) {
     		$response[ 'success' ] = 'user was successfully saved to db';
     	}
     	if ( mysql_num_rows( $result ) <= 0 ) {
     		$response[] = array(
     			'error' => 'user was not saved',
-    			'query' => $query
+                'query' => $query
     		);
     	}
-    	$response[ 'query' ] = $query;
+    	//$response[ 'query' ] = $query;
     	mysql_free_result( $result );
     } else {
     	$response[] = array(
