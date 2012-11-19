@@ -54,8 +54,8 @@ include_once ( '../init.php' );
     <div class="span5">
         <button class="btn btn-primary" onclick="fb_register();"><i class="icon-random icon-white"></i> refresh Registration</button>
         <span id="progress-register" class="hide"><img src="img/loading_progress.gif" /></span>
-        <label class="control-label" for="fields" title="enter a FB field list here, such as 'email' or 'email,name,birthday,gender,location'">Fields
-            <input type="text" value="email" id="fields" name="fields" />
+        <label class="control-label" for="fields" title="enter a FB field list here, such as 'name' or 'name,birthday,gender,location,email'">Fields
+            <input type="text" value="name" id="fields" name="fields" />
         </label>
         <label class="control-label" for="url" title="enter an url which will be opened by the registration plugin">URL
             <input type="text" value="https://developers.facebook.com/tools/echo/" id="url" name="url" />
@@ -70,6 +70,11 @@ include_once ( '../init.php' );
         </span>
         <span><a href="https://developers.facebook.com/docs/plugins/registration/">https://developers.facebook.com/docs/plugins/registration/</a></span>
     </div>
+</div>
+<hr />
+<div class="row">
+    <span id="fb_registration">
+    </span>
 </div>
 <hr />
 <div class="row">
@@ -114,11 +119,7 @@ include_once ( '../init.php' );
         </span>
     </div>
 </div>
-<hr />
-<div class="row">
-    <span id="fb_registration">
-    </span>
-</div>
+
 <hr />
 <div id="container_log" class="row hide">
 	<div class="span10">
