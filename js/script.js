@@ -112,7 +112,7 @@ function callback(response) {
 }
 
 
-function register( fields, url ) {
+function fb_register( fields, url ) {
 
     if ( $( '#fields' ).length > 0 ) {
         fields = $( '#fields').val();
