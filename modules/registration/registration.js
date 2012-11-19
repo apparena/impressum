@@ -342,6 +342,8 @@ $.log_action = function( action, data ) {
 	
 };
 
+
+
 function disableForm() {
 	$( 'body' ).find( 'input' ).each( function(){
 		$(this).attr( 'disabled', 'disabled' );
