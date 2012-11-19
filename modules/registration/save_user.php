@@ -22,18 +22,23 @@
 
     /* check if the user came from a fb-registration */
     if ( isset( $_REQUEST ) ) {
-        $data = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
-        if ( $data ) {
-            if ( isset( $data[ 'registration' ] ) ) {
-                $user = $data[ 'registration' ]; // copy registration data to the
-            } else {
-                $response[ 'signed_request_registration' ] = 'no registration data from fb registration';
+        if ( isset( $_REQUEST['signed_request'] ) ) {
+            $data = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
+            if ( $data ) {
+                if ( isset( $data[ 'registration' ] ) ) {
+                    $user = $data[ 'registration' ]; // copy registration data to the
+                } else {
+                    $response[ 'signed_request_registration' ] = 'no registration data from fb registration';
+                }
+                if ( isset( $data[ 'user_id' ] ) ) {
+                    $user[ 'key' ] = $data[ 'user_id' ]; // get the fb-user id from the response
+                } else {
+                    $response[ 'signed_request_id' ] = 'no user_id from fb registration';
+                }
             }
-            if ( isset( $data[ 'user_id' ] ) ) {
-                $user[ 'key' ] = $data[ 'user_id' ]; // get the fb-user id from the response
-            } else {
-                $response[ 'signed_request_id' ] = 'no user_id from fb registration';
-            }
+        } else {
+            echo 'no signed request:';
+            print_r( $_REQUEST );
         }
 //print_r($response);
     } else {
