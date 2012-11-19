@@ -376,12 +376,17 @@ $.fb_register = function ( fields, url, put_to_id ) {
         $( 'body').append( '<div id="fb_registration"></div>' );
     }
 
-    var fb_registration = '<fb:registration '
+    var fb_registration = '<div>by registration form:</div><fb:registration '
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
         + 'width="530" ' +
         /*+ 'on-login="log_login(arguments);">'*/
-        + '</fb:registration>';
+        + '</fb:registration>'
+        + '<div>or by login button:</div>'
+        + '<fb:login-button '
+        + 'registration-url="' + url + '" '
+        + 'on-login="log_login(arguments);" '
+        + ' />';
     $( '#' + put_to_id ).html( fb_registration );
 
     FB.XFBML.parse();
