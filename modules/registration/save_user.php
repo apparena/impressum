@@ -101,7 +101,7 @@
     		//$response[ 'insert' ] = $query;
     		mysql_query( $query );
     	} else {
-    		$response[] = array( 'error' => 'user already exists');
+    		$response[ 'error' ] = 'user already exists';
     	}
     	
 //echo $query;
