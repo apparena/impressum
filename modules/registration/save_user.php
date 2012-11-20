@@ -1,10 +1,14 @@
-<?php 
+<?php
 
 /**
- * Save an user action to the log
- * The table gets created if it is not yet present.
- * Each instance gets its own user_data table.
+ * Save the user to db.
+ * The db-table gets created if it is not yet present.
+ * If this is called by a Facebook-based form, the fb_user_id will be used as a key to save the user.
+ * If this is called by a stadard form, the user will be identified by his email address.
+ * The rest of the submitted user data is saved in a json object for each user.
  * @requirements SQL-permissions CREATE, INSERT, SELECT for the db-user defined in the file "root/config.php".
+ * @requirements A signed request containing a key 'registration' which contains the fields sent by the fb-registration widget
+ *           OR: a POST parameter with the key 'user' which contains all fields to save.
  */
 	
     include_once ( '../../init.php' );
@@ -22,7 +26,10 @@
     $user = false;
     $response = array(); // this response goes back to the success function of the calling javascript at the end
 
-    /* check if the user came from a fb-registration */
+    /*
+     * Check if the user came from a fb-registration.
+     * The fb-registration widget will send a $_REQUEST['signed_request'] parameter.
+     */
     if ( isset( $_REQUEST ) ) {
         if ( isset( $_REQUEST['signed_request'] ) ) {
             $data = parse_signed_request( $_REQUEST['signed_request'], $aa['instance']['fb_app_secret'] );
