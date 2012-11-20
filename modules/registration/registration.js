@@ -228,12 +228,12 @@ $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
 						
 					}
 					
-/*
-					// if you only use 'email' as a scope for FB.login()
-					$.register_user_data[ 'key' ]   = response.id;
-					$.register_user_data[ 'name' ]  = response.name;
-					$.register_user_data[ 'email' ] = response.email;
-*/
+                    /*
+                        // if you only use 'email' as a scope for FB.login()
+                        $.register_user_data[ 'key' ]   = response.id;
+                        $.register_user_data[ 'name' ]  = response.name;
+                        $.register_user_data[ 'email' ] = response.email;
+                    */
 					
 				}
 				
