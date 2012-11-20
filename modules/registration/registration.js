@@ -376,7 +376,7 @@ $.fb_register = function ( fields, url, put_to_id ) {
         $( 'body').append( '<div id="fb_registration"></div>' );
     }
 
-    var fb_registration = '<div class="row span8">by registration form:</div><fb:registration '
+    var fb_registration = '<div class="row span8"></div><fb:registration '
         + 'fields="' + fields + '" '
         + 'redirect-uri="' + url + '" '
         + 'width="530" '
@@ -386,6 +386,8 @@ $.fb_register = function ( fields, url, put_to_id ) {
     $( '#' + put_to_id ).html( fb_registration );
 
     /*
+     * the login button will not send post or request data to the url!
+     *
      fb_registration = '<div class="row span8">or by login button:</div>'
      + '<div class="row span8"><fb:login-button '
      + 'registration-url="' + url + '" '
