@@ -116,3 +116,27 @@ function log_login(arguments) {
     console.log(arguments);
 
 }
+
+function disableForm() {
+    $( 'body' ).find( 'input' ).each( function(){
+        $(this).attr( 'disabled', 'disabled' );
+    });
+    $( 'body' ).find( 'button' ).each( function(){
+        $(this).attr( 'disabled', 'disabled' );
+    });
+    $( 'body' ).find( 'select' ).each( function(){
+        $(this).attr( 'disabled', 'disabled' );
+    });
+}
+
+function enableForm() {
+    $( 'body' ).find( 'input' ).each( function(){
+        $(this).removeAttr( 'disabled' );
+    });
+    $( 'body' ).find( 'button' ).each( function(){
+        $(this).removeAttr( 'disabled' );
+    });
+    $( 'body' ).find( 'select' ).each( function(){
+        $(this).removeAttr( 'disabled' );
+    });
+}

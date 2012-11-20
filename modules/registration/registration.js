@@ -5,7 +5,7 @@
  * Use the functions like this:
  * <form method="post" action="javascript:$.register_user();">...
  * or:
- * <button id="fb_connect" onclick="$.fb_connect('email,publish_stream');">...
+ * <button id="fb_connect" onclick="$.register_fb_connect('email,publish_stream');">...
  * @author Guntram Pollock 11/2012
  */
 
@@ -19,7 +19,7 @@
  * $.validator.addClassRules({class_name:{required: true}});
  * This must be done before calling validate(...).
  */
-$.bootstrap_form = {
+$.register_bootstrap_form = {
     errorClass: "error",
     validClass: "success",
     errorElement: "span",
@@ -52,7 +52,7 @@ $.bootstrap_form = {
     }
 };
 
-$.register_user = function ( id, callback ) {
+$.register_form = function ( id, callback ) {
 	
 	$( '#progress-form' ).show();
 	
@@ -62,7 +62,7 @@ $.register_user = function ( id, callback ) {
 		callback = id;
 		id = null;
 	} else {
-		if ( typeof( id ) == 'string' ) {
+		if ( typeof( id ) == '{String}' ) {
 			selector = id;
 		}
 	}
@@ -187,11 +187,11 @@ $.register_user = function ( id, callback ) {
 	
 };
 
-$.fb_connect = function ( scope, callback ) {
+$.register_fb_connect = function ( scope, callback ) {
 	
 	if ( typeof( scope ) == 'function' ) {
 		callback = scope;
-		if ( typeof( $( '#scope' ).val() ) == 'string' && $( '#scope' ).val().length > 0 ) {
+		if ( typeof( $( '#scope' ).val() ) == '{String}' && $( '#scope' ).val().length > 0 ) {
 			scope = $( '#scope' ).val();
 		} else {
 			scope = 'email';
@@ -274,74 +274,6 @@ $.fb_connect = function ( scope, callback ) {
 };
 
 
-$.save_user_data = function() {
-	
-	disableForm();
-	$( '#progress-form' ).show();
-	
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'modules/registration/save_user.php?aa_inst_id=' + aa_inst_id,
-		data : ({
-			user: $.user_data
-		}),
-		success : function(data) {
-			
-			$( '#progress-form' ).hide();
-			enableForm();
-			
-		}
-	});
-	
-};
-
-/**
- * Log an action for an existing user.
- * @param string action the action type to log, e.g. 'register' or 'invite'.
- * @param string data the additional data to save for this log item, e.g. FB user ids of invited friends.
- */
-$.log_action = function ( action, data ) {
-	
-	disableForm();
-	$( '#progress-log' ).show();
-	
-	$.user_log = {};
-	
-	$.user_log[ 'action' ] = 'register';
-	$.user_log[ 'data' ]   = 'sample data';
-	
-	if ( $( '#action' ).length > 0 ) {
-		if ( $( '#action' ).val().length > 0 ) {
-			$.user_log[ 'action' ] = $( '#action' ).val(); 
-		}
-	}
-	
-	if ( typeof( action ) != 'undefined' && action != null && action.length > 0 ) {
-		$.user_log[ 'action' ] = action;
-	}
-	
-	if ( typeof( data ) != 'undefined' && data != null && data.length > 0 ) {
-		$.user_log[ 'data' ] = data;
-	}
-	
-	$.user_log[ 'key' ] = $.user_data[ 'key' ];
-	
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'modules/registration/log_user_action.php?aa_inst_id=' + aa_inst_id,
-		data : ({
-			log: $.user_log
-		}),
-		success : function(data) {
-			$( '#progress-log' ).hide();
-			enableForm();
-		}
-	});
-	
-};
-
 /**
  * Shows the fb-register form in the desired id.
  * If the params are empty, it will try to display the form appended to the body.
@@ -349,7 +281,7 @@ $.log_action = function ( action, data ) {
  * @param url The url will be called by Facebook including a signed request when the user confirms the form.
  * @param put_to_id Specify a HTML-id to put the registration form into after creating it.
  */
-$.fb_register = function ( fields, url, put_to_id ) {
+$.register_fb_widget = function ( fields, url, put_to_id ) {
 
     if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
         if ( $( '#fields' ).length > 0 ) {
@@ -402,26 +334,70 @@ $.fb_register = function ( fields, url, put_to_id ) {
 };
 
 
-function disableForm() {
-	$( 'body' ).find( 'input' ).each( function(){
-		$(this).attr( 'disabled', 'disabled' );
+$.register_save_user_data = function() {
+	
+	disableForm();
+	$( '#progress-form' ).show();
+	
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'modules/registration/save_user.php?aa_inst_id=' + aa_inst_id,
+		data : ({
+			user: $.user_data
+		}),
+		success : function(data) {
+			
+			$( '#progress-form' ).hide();
+			enableForm();
+			
+		}
 	});
-	$( 'body' ).find( 'button' ).each( function(){
-		$(this).attr( 'disabled', 'disabled' );
-	});
-	$( 'body' ).find( 'select' ).each( function(){
-		$(this).attr( 'disabled', 'disabled' );
-	});
-}
+	
+};
 
-function enableForm() {
-	$( 'body' ).find( 'input' ).each( function(){
-		$(this).removeAttr( 'disabled' );
+/**
+ * Log an action for an existing user.
+ * @param {String} action the action type to log, e.g. 'register' or 'invite'.
+ * @param {String} data the additional data to save for this log item, e.g. FB user ids of invited friends.
+ */
+$.register_log_action = function ( action, data ) {
+	
+	disableForm();
+	$( '#progress-log' ).show();
+	
+	$.user_log = {};
+	
+	$.user_log[ 'action' ] = 'register';
+	$.user_log[ 'data' ]   = 'sample data';
+	
+	if ( $( '#action' ).length > 0 ) {
+		if ( $( '#action' ).val().length > 0 ) {
+			$.user_log[ 'action' ] = $( '#action' ).val(); 
+		}
+	}
+	
+	if ( typeof( action ) != 'undefined' && action != null && action.length > 0 ) {
+		$.user_log[ 'action' ] = action;
+	}
+	
+	if ( typeof( data ) != 'undefined' && data != null && data.length > 0 ) {
+		$.user_log[ 'data' ] = data;
+	}
+	
+	$.user_log[ 'key' ] = $.user_data[ 'key' ];
+	
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'modules/registration/log_user_action.php?aa_inst_id=' + aa_inst_id,
+		data : ({
+			log: $.user_log
+		}),
+		success : function(data) {
+			$( '#progress-log' ).hide();
+			enableForm();
+		}
 	});
-	$( 'body' ).find( 'button' ).each( function(){
-		$(this).removeAttr( 'disabled' );
-	});
-	$( 'body' ).find( 'select' ).each( function(){
-		$(this).removeAttr( 'disabled' );
-	});
-}
+	
+};
