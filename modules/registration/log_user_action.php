@@ -1,10 +1,12 @@
 <?php 
 
 /**
- * Save the user to db.
- * The table gets created if it is not yet present.
- * Each instance gets its own user_data table.
+ * Save a user action to a log table.
+ * The db-table gets created if it is not yet present.
+ * A user action can be logged specifying some data to be saved additionally to the user action.
  * @requirements SQL-permissions CREATE, INSERT, SELECT for the db-user defined in the file "root/config.php".
+ * @requirements A POST parameter 'log' containing a user 'key' and a user 'action' ($_POST['log']['key'], $_POST['log']['action']). The related 'data' is not mandatory.
+ * @requirements App-Arena instance id in GET parameter: $_GET['aa_inst_id']
  */
 	
     include_once ( '../../init.php' );
@@ -12,21 +14,20 @@
     $aa_inst_id = 0;
     if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } else { echo json_encode( array( 'error' => 'missing aa_inst_id' ) ); exit( 0 ); }
     
-    $log = false;
+    $log = false; // this will fetch the $_POST['log'] data
     $response = array(); // this response goes back to the success function of the calling javascript at the end
-    $user_key = '';
-    
+    $user_key = ''; // the user key will be the fb_user_id or the user's email address
+
+    // @required: the parameter post['log'] = array(...)
     if( isset( $_POST[ 'log' ] ) ) { $log = $_POST[ 'log' ]; } else { echo json_encode( array( 'error' => 'missing log data' ) ); exit( 0 ); }
+    // @required: $_POST['log']['key'] = fb_user_id OR user_email
     if( isset( $log[ 'key' ] ) && strlen( $log[ 'key' ] ) > 0 ) { $user_key = $log[ 'key' ]; } else { echo json_encode( array( 'error' => 'missing user-key' ) ); exit( 0 ); }
     
     // Get client ip address
     $client_ip = false;
-    if ( isset($_SERVER["REMOTE_ADDR"]))
-    	$client_ip = $_SERVER["REMOTE_ADDR"];
-    else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-    	$client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-    else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
-    	$client_ip = $_SERVER["HTTP_CLIENT_IP"];
+    if ( isset($_SERVER["REMOTE_ADDR"])) $client_ip = $_SERVER["REMOTE_ADDR"];
+    else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"])) $client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+    else if ( isset($_SERVER["HTTP_CLIENT_IP"])) $client_ip = $_SERVER["HTTP_CLIENT_IP"];
     
     $response[ 'log' ] = $log; // send back the received data later
     
@@ -54,6 +55,7 @@
 //echo $query;
 //exit(0);
 
+    // @required: $_POST['log']['action']
     if ( !isset( $log[ 'action' ] ) || strlen( $log[ 'action' ] ) <= 0 ) {
     	echo json_encode( array( 'error' => 'you must provide a log[ "action" ] containing some action word like "register"' ) );
     	exit( 0 );
@@ -63,7 +65,7 @@
     $result = mysql_query( $query );
     if ( $result ) {
     	if ( mysql_num_rows( $result ) > 0 ) {
-    		// insert the new user
+    		// insert the new log
     		if ( is_array( $log[ 'data' ] ) ) {
     			$log[ 'data' ] = mysql_real_escape_string( json_encode( $log[ 'data' ] ) );
     		}
@@ -95,12 +97,12 @@ $response[ 'insert' ] = $query;
     	mysql_free_result( $result );
     } else {
     	$response[] = array(
-    		'error' => 'user was not saved',
+    		'error' => 'log was not saved',
     		'query' => $query
     	);
     }
     
-    // return the built response to the javascripts success function
+    // return the built response to the success function of the calling javascript
 	echo json_encode( $response );
 	
 ?>
