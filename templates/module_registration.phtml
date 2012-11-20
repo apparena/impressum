@@ -6,9 +6,9 @@ include_once ( '../init.php' );
 <h1>Registration demo</h1>
 
 <div class="alert alert-info">
-	Include 'modules/registration/registration.js' to use the registration function:
-<br />
-	&lt;script src="modules/registration/registration.js" type="text/javascript" /&gt;
+	<div>Include 'modules/registration/registration.js' to use the registration functions:</div>
+    <div>&lt;script src="modules/registration/registration.js" type="text/javascript" /&gt;</div>
+    <div>Note that there has to be valid data for the database connection in root/config.php.</div>
 </div>
 
 <hr />
@@ -24,8 +24,8 @@ include_once ( '../init.php' );
 <div class="row">
     <div class="span5">
         <p><strong id="user_profile"></strong></p>
-        <button class="btn btn-primary" onclick="$.register_fb_connect($( '#scope' ).val());"><i class="icon-retweet icon-white"></i> Connect</button>
-        <span id="progress-connect" class="hide"><img src="img/loading_progress.gif" /></span>
+        <button class="btn btn-primary" onclick="register_via_connect();"><i class="icon-retweet icon-white"></i> Connect</button>
+        <span id="progress-connect" class="hide progress"><img src="img/loading_progress.gif" /></span>
         <label class="control-label" for="scope" title="enter a FB scope list here, such as 'email' or 'email,publish_stream'">Scope
             <input type="text" value="email" id="scope" name="scope" />
         </label>
@@ -52,10 +52,10 @@ include_once ( '../init.php' );
 </div>
 <div class="row">
     <div class="span5">
-        <button class="btn btn-primary" onclick="$.register_fb_widget();"><i class="icon-random icon-white"></i> refresh Registration</button>
+        <button class="btn btn-primary" onclick="register_via_widget();"><i class="icon-random icon-white"></i> refresh Registration</button>
         <!--<button class="btn btn-primary" onclick="fb_register_debug();"><i class="icon-random icon-white"></i> refresh Registration</button>-->
 
-        <span id="progress-register" class="hide"><img src="img/loading_progress.gif" /></span>
+        <span id="progress-register" class="hide progress"><img src="img/loading_progress.gif" /></span>
         <label class="control-label" for="fields" title="enter a FB field list here, such as 'name' or 'name,birthday,gender,location,email'">Fields
             <input type="text" value="name" id="fields" name="fields" />
         </label>
@@ -75,7 +75,7 @@ include_once ( '../init.php' );
 </div>
 <hr />
 <div class="row">
-    <span id="fb_registration">
+    <span id="fb_registration_widget">
     </span>
 </div>
 <hr />
@@ -89,7 +89,7 @@ include_once ( '../init.php' );
 </div>
 <div class="row">
     <div class="span5">
-        <form class="form-registration" action="javascript:$.register_form();" id="form-modal">
+        <form class="form-registration" action="javascript:" id="myForm">
             <div class="control-group">
                 <label class="control-label" for="name">Name</label>
                 <div class="controls">
@@ -110,7 +110,7 @@ include_once ( '../init.php' );
                 </div>
             </div>
         </form>
-        <span id="progress-form" class="hide"><img src="img/loading_progress.gif" /></span>
+        <span id="progress-form" class="hide progress"><img src="img/loading_progress.gif" /></span>
     </div>
     <div class="span4">
         <span>
@@ -127,18 +127,79 @@ include_once ( '../init.php' );
 	<div class="span10">
 		<h2>Log action</h2>
 		<hr />
-		<button class="btn btn-primary" onclick="$.log_action();"><i class="icon-download-alt icon-white"></i> Log action for current user</button>
-		<span id="progress-log" class="hide"><img src="img/loading_progress.gif" /></span>
+		<button class="btn btn-primary" onclick="log_action();"><i class="icon-download-alt icon-white"></i> Log action for current user</button>
+		<span id="progress-log" class="hide progress"><img src="img/loading_progress.gif" /></span>
 		<label class="control-label" for="action" title="Enter an action type here, such as 'register' or 'invite'">Action to log
 			<input type="text" value="register" id="action" name="action" />
 		</label>
+        <label class="control-label" for="data" title="Enter some data here, like \"What was the user registring for actually?\"">Data to log
+            <input type="text" value="sample data" id="data" name="data" />
+        </label>
 	</div>
 </div>
 
 <script>
 $(document).ready(function() {
 	$(".form-registration").validate( $.register_bootstrap_form ); // use the register_bootstrap_form variable from the registration.js
-    $.fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration
+    $.fb_register( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration widget
     //fb_register_debug( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id );
 });
+
+function register_via_connect() {
+    disableForm();
+    $( '#progress-connect' ).show();
+    var scope = $( '#scope' ).val();
+    $.register_fb_connect( scope, callbackSuccessConnect );
+}
+function callbackSuccessConnect( data ) {
+
+    $( '#progress-connect' ).after(
+        '<button class="btn btn-success" id="saveUserData" onclick="$.register_save_user_data();">' +
+        '<i class="icon-download-alt icon-white"></i> Save user data</button>'
+    );
+    $( '#progress-connect' ).hide();
+    $( '#container_log' ).fadeIn( 300 );
+    enableForm();
+}
+
+function register_via_widget() {
+    disableForm();
+    $( '#progress-register' ).show();
+    var url = $( '#url').val();
+    var fields = $( '#fields' ).val();
+    var put_to = '#fb_registration_widget';
+    $.register_fb_widget( fields, url, put_to );
+}
+
+function register_via_form() {
+    disableForm();
+    $( '#progress-form' ).show();
+    $.register_form( '#myForm', callbackSuccessForm );
+}
+function callbackSuccessForm( data ) {
+
+    $( '#progress-form' ).after(
+        '<button class="btn btn-success" id="saveUserData" onclick="$.register_save_user_data();">' +
+        '<i class="icon-download-alt icon-white"></i> Save user data</button>'
+    );
+    $( '#progress-form' ).hide();
+    $( '#container_log' ).fadeIn( 300 );
+    enableForm();
+}
+
+function log_action() {
+
+    disableForm();
+    $( '#progress-register' ).show();
+    var action = $( '#action' ).val();
+    var data = $( '#data' ).val();
+    $.register_log_action( action, data, callbackSuccessLog );
+
+}
+function callbackSuccessLog( data ) {
+
+    $( '#progress-log' ).hide();
+    enableForm();
+
+}
 </script>

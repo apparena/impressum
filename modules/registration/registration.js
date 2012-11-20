@@ -67,7 +67,7 @@ $.register_form = function ( id, callback ) {
 		id = null;
 	} else {
 		if ( typeof( id ) == 'string' ) {
-			selector = id;
+			selector = $( 'body' ).find( id );
 		}
 	}
 	
