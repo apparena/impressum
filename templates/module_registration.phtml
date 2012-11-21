@@ -158,6 +158,13 @@ function callbackSuccessConnect( data ) {
         '<i class="icon-download-alt icon-white"></i> Save user data</button>'
     );
     $( '#progress-connect' ).hide();
+    $( '#user_profile' ).html(
+        $.register_user_data[ 'name' ] + '&nbsp;&nbsp;&nbsp;'
+        + '<a href="https://www.facebook.com/' + $.register_user_data[ 'key' ] + '" target="_blank">'
+        +'<img class="profile-picture" src="https://graph.facebook.com/'
+        + $.register_user_data[ 'key' ]
+        + '/picture?type=square" title="visit the users facebook profile..." /></a>'
+    );
     $( '#container_log' ).fadeIn( 300 );
     enableForm();
 }
