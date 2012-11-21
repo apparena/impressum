@@ -199,7 +199,7 @@ function callbackSuccessForm( data ) {
 function log_action() {
 
     disableForm();
-    $( '#progress-register' ).show();
+    $( '#progress-log' ).show();
     var action = $( '#action' ).val();
     var data = $( '#data' ).val();
     $.register_log_action( aa_inst_id, action, data, callbackSuccessLog );
