@@ -29,7 +29,7 @@
     else if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"])) $client_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
     else if ( isset($_SERVER["HTTP_CLIENT_IP"])) $client_ip = $_SERVER["HTTP_CLIENT_IP"];
     
-    $response[ 'log' ] = $log; // send back the received data later
+    $response[ 'received_log' ] = $log; // send back the received data later
     
     // create this table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS `user_log` (

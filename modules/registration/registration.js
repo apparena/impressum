@@ -320,11 +320,17 @@ $.register_fb_widget = function ( fields, url, id ) {
 /**
  * Save the user data objects content to the db.
  * Calls the save_user.php file which will do the save process.
+ * @param {Number} aa_inst_id The App-Arena instance id.
  * @param {Function} callbackSuccess <p>This function will be called when the save_user.php has finished saving the user / determining if the user existed.
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the save_user.php file is not found or the server is down.
+ * @return Will return an error object if the aa_inst_id is missing.
  */
-$.register_save_user_data = function( callbackSuccess, callbackError ) {
+$.register_save_user_data = function( aa_inst_id, callbackSuccess, callbackError ) {
+
+    if ( typeof aa_inst_id == 'undefined' || aa_inst_id.length <= 0 ) {
+        return {"error":"you must provide the app arena instance id"};
+    }
 	
 	$.ajax({
 		type : 'POST',
@@ -353,14 +359,21 @@ $.register_save_user_data = function( callbackSuccess, callbackError ) {
 
 /**
  * Log an action for an existing user.
+ * The php script will save the log to the db.
+ * @param {Number} aa_inst_id The App-Arena instance id.
  * @param {String} action the action type to log, e.g. 'register' or 'invite'. Default: 'register'.
  * @param {String} data the additional data to save for this log item, e.g. FB user ids of invited friends. Default: '' (empty).
  * @param {Function} callbackSuccess <p>This function will be called when the log_user_action.php has finished saving the log.
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the log_user_action.php file is not found or the server is down.
+ * @return Will return an error object if the aa_inst_id is missing.
  */
-$.register_log_action = function ( action, data, callbackSuccess, callbackError ) {
-	
+$.register_log_action = function ( aa_inst_id, action, data, callbackSuccess, callbackError ) {
+
+    if ( typeof aa_inst_id == 'undefined' || aa_inst_id.length <= 0 ) {
+        return {"error":"you must provide the app arena instance id"};
+    }
+
 	$.user_log = {};
 	
 	$.user_log[ 'action' ] = 'register';

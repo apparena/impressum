@@ -71,7 +71,7 @@
     else if ( isset($_SERVER["HTTP_CLIENT_IP"]))
     	$client_ip = $_SERVER["HTTP_CLIENT_IP"];
     
-    $response[ 'user' ] = $user; // send back the received data later
+    $response[ 'received_user' ] = $user; // send back the received data later
     
     // create this table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS `user_data` (
