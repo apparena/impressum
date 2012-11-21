@@ -185,7 +185,7 @@ function enableForm() {
  * $.validator.addClassRules({class_name:{required: true}});
  * This must be done before calling validate(...).
  */
-$.register_bootstrap_form = {
+register_bootstrap_form = {
     errorClass: "error",
     validClass: "success",
     errorElement: "span",
@@ -225,7 +225,7 @@ $.register_bootstrap_form = {
  * @param {String} id The selector which will be looped to find fields, which it must contain, e.g. '#myForm' or '.my-form'.
  * @param {Function} callback A callback function to call when the user data has been stored in the $.register_user_data object.
  */
-$.register_form = function ( id, callback ) {
+register_form = function ( id, callback ) {
 
     var selector = $( 'body' ).find( '.form-registration' ); // default selector if no id-parameter is set
 
@@ -370,7 +370,7 @@ $.register_form = function ( id, callback ) {
  * @param {Function} callbackSuccess This function gets executed when the user accepts the FB dialog (the FB-response will be passed as a parameter).
  * @param {Function} callbackError This function gets executed when the user cancels the FB dialog (the FB-response will be passed as a parameter).
  */
-$.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
+register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
 
     if ( typeof( scope ) == 'function' ) {
         if ( typeof callbackSuccess == 'function' ) {
@@ -445,7 +445,7 @@ $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
  * @param {String} id Specify an HTML-element by a selector to put the registration form into after creating it, e.g. '#myId', '.myClass'.
  * @return {Object} This function will return an error object if the id element selector causes problems, or a success object if there was no error.
  */
-$.register_fb_widget = function ( fields, url, id ) {
+register_fb_widget = function ( fields, url, id ) {
 
     if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
         fields = 'name'; // at least one default field
@@ -489,7 +489,7 @@ $.register_fb_widget = function ( fields, url, id ) {
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the save_user.php file is not found or the server is down.
  */
-$.register_save_user_data = function( callbackSuccess, callbackError ) {
+register_save_user_data = function( callbackSuccess, callbackError ) {
 
     $.ajax({
         type : 'POST',
@@ -524,7 +524,7 @@ $.register_save_user_data = function( callbackSuccess, callbackError ) {
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the log_user_action.php file is not found or the server is down.
  */
-$.register_log_action = function ( action, data, callbackSuccess, callbackError ) {
+register_log_action = function ( action, data, callbackSuccess, callbackError ) {
 
     $.user_log = {};
 
