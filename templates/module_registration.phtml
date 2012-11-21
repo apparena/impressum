@@ -142,7 +142,7 @@ include_once ( '../init.php' );
 $(document).ready(function() {
 	$(".form-registration").validate( $.register_bootstrap_form ); // use the register_bootstrap_form variable from the registration.js
     //$.register_fb_widget( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration widget
-    register_fb_widget( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id ); // show demo registration widget
+    register_fb_widget( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id, '#fb_registration_widget' ); // show demo registration widget
 });
 
 function register_via_connect() {
@@ -168,7 +168,7 @@ function register_via_widget() {
     var url = $( '#url').val();
     var fields = $( '#fields' ).val();
     var put_to = '#fb_registration_widget';
-    register_fb_widge( fields, url, put_to );
+    register_fb_widget( fields, url, put_to );
 }
 
 function register_via_form() {
