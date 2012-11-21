@@ -161,7 +161,7 @@ function callbackSuccessConnect( data ) {
     $( '#user_profile' ).html(
         $.register_user_data[ 'name' ] + '&nbsp;&nbsp;&nbsp;'
         + '<a href="https://www.facebook.com/' + $.register_user_data[ 'key' ] + '" target="_blank">'
-        +'<img class="profile-picture" src="https://graph.facebook.com/'
+        + '<img class="profile-picture" src="https://graph.facebook.com/'
         + $.register_user_data[ 'key' ]
         + '/picture?type=square" title="visit the users facebook profile..." /></a>'
     );
@@ -177,6 +177,7 @@ function register_via_widget() {
     var put_to = '#fb_registration_widget';
     var response = $.register_fb_widget( fields, url, put_to );
     enableForm();
+    $( '#progress-register' ).hide();
 }
 
 function register_via_form() {
@@ -201,7 +202,7 @@ function log_action() {
     $( '#progress-register' ).show();
     var action = $( '#action' ).val();
     var data = $( '#data' ).val();
-    $.register_log_action( action, data, callbackSuccessLog );
+    $.register_log_action( aa_inst_id, action, data, callbackSuccessLog );
 
 }
 function callbackSuccessLog( data ) {
