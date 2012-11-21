@@ -3,7 +3,7 @@
  * Include this module to use it:
  * <script src="modules/registration/registration.js" type="text/javascript" />
  * Use the functions like this:
- * <form method="post" action="javascript:$.register_form();">...
+ * <form method="post" action="javascript:$.register_form('#myForm');">...
  * or:
  * <button id="fb_connect" onclick="$.register_fb_connect('email,publish_stream');">...
  * The user data will be stored in a global object $.register_user_data.
@@ -55,7 +55,9 @@ $.register_bootstrap_form = {
 
 /**
  * Read the inputs from the user and save them in a global user variable ($.register_user_data).
- * @param {String} id The selector which will be looped to find fields, which it must contain.
+ * Fields should supply at least an id attribute, which will be used as the key for the containing value.
+ * You should provide a field-id containing the word email requesting the users email address (for identifying the user).
+ * @param {String} id The selector which will be looped to find fields, which it must contain, e.g. '#myForm' or '.my-form'.
  * @param {Function} callback A callback function to call when the user data has been stored in the $.register_user_data object.
  */
 $.register_form = function ( id, callback ) {
@@ -75,7 +77,8 @@ $.register_form = function ( id, callback ) {
 	
 	// loop through all input elements of the form
 	selector.find( 'input' ).each( function( index ) {
-		
+
+        var do_save = true; // for radio buttons later, unselected radios wont be saved
 		var key = 'default_' + index; // a default key in case no id and no name is set to the input element
 		var value = 'empty'; // a default value in case there is an empty field without validation
 		
@@ -89,7 +92,8 @@ $.register_form = function ( id, callback ) {
 		}
 		
 		var type = $(this).attr( 'type' ); // get the type attribute value of the input element
-		switch( type ) {
+		// handle some different types of input elements
+        switch( type ) {
 			
 			case 'checkbox':
 				
@@ -102,7 +106,13 @@ $.register_form = function ( id, callback ) {
 				break;
 				
 			case 'radio':
-				//TODO: check for radio groups!
+
+                if ( $(this).is( ':checked' ) ) {
+                    value = true;
+                } else {
+                    do_save = false;
+                }
+
 				break;
 				
 				// for input elements with type="text" or type="password" and so on
@@ -118,8 +128,10 @@ $.register_form = function ( id, callback ) {
 				break;
 				
 		} // end switch through this input elements type attribute value
-		
-		$.register_user_data[ key ] = value; // add key and value to the user object
+
+        if ( do_save == true ) {
+		    $.register_user_data[ key ] = value; // add key and value to the user object
+        }
 		
 	}); // end loop through all form input elements
 	
@@ -188,9 +200,10 @@ $.register_form = function ( id, callback ) {
 /**
  * Connects the user via Facebook.
  * Will use 'email' as a scope if no scope is set.
+ * The user will have to accept the permissions.
  * @param {String} scope The FB.api-scope (permission(s)) can be comma separated like "email, publish_stream".
- * @param {Function} callbackSuccess This callback gets executed when the user accepts the FB dialog.
- * @param {Function} callbackError This callback gets executed when the user cancels the FB dialog.
+ * @param {Function} callbackSuccess This function gets executed when the user accepts the FB dialog (the FB-response will be passed as a parameter).
+ * @param {Function} callbackError This function gets executed when the user cancels the FB dialog (the FB-response will be passed as a parameter).
  */
 $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
 	
@@ -238,7 +251,7 @@ $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
 				}
 				
 				if ( typeof( callbackSuccess ) == 'function' ) {
-                    callbackSuccess();
+                    callbackSuccess( response );
 				}
 				
 			}); // end FB.api call
@@ -246,7 +259,7 @@ $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
 		} else {
 			// the user did not accept the FB.login() authorization request!
             if ( typeof( callbackError ) == 'function' ) {
-                callbackError();
+                callbackError( response );
             }
 		}
 		
@@ -261,13 +274,13 @@ $.register_fb_connect = function ( scope, callbackSuccess, callbackError ) {
  * Note that the fb widget might show up an error message, e.g. if 'name' is not the first field or the fields are not set up correctly.
  * You can specify own input elements by passing a JSON object rather than a comma-separated string.
  * Note that if you do not pass a valid string or json with the fields, the default field 'name' will be used.
- * Note that the put_to parameter will be defaulted to 'body' if it is missing, so that the widget will be appended to the body by default.
- * @param {String|Object} fields The fields to query from the user. These fields will be available later to save them in the db.
- * @param {String} url The url will be called by Facebook including a signed request when the user confirms the form.
- * @param {String} put_to Specify an HTML-element by a selector to put the registration form into after creating it, e.g. '#myId', '.myClass'.
- * @return {Object} This function will return an error object if the put_to element selector is missing, or a success object if there was no error.
+ * Note that the id parameter will be defaulted to 'body' if it is missing, so that the widget will be appended to the body by default.
+ * @param {String|Object} fields The fields to query from the user. These fields will be available later to save them in the db. Default: 'name'.
+ * @param {String} url The url will be called by Facebook including a signed request when the user confirms the form. Default: 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id'.
+ * @param {String} id Specify an HTML-element by a selector to put the registration form into after creating it, e.g. '#myId', '.myClass'.
+ * @return {Object} This function will return an error object if the id element selector causes problems, or a success object if there was no error.
  */
-$.register_fb_widget = function ( fields, url, put_to ) {
+$.register_fb_widget = function ( fields, url, id ) {
 
     if ( typeof( fields ) == 'undefined' || fields.length <= 0 ) {
         fields = 'name'; // at least one default field
@@ -278,11 +291,11 @@ $.register_fb_widget = function ( fields, url, put_to ) {
         url = 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id;
     }
 
-    if ( typeof( put_to ) == "undefined" || $( '' + put_to ).length <= 0 ) {
-        put_to = 'body';
+    if ( typeof( id ) == "undefined" || $( '' + id ).length <= 0 ) {
+        id = 'body';
     }
 
-    if ( $( '' + put_to ).length <= 0 ) {
+    if ( $( '' + id ).length <= 0 ) {
         return {"error":"you must provide an element where the generated fb-widget will be placed"};
     }
 
@@ -296,7 +309,7 @@ $.register_fb_widget = function ( fields, url, put_to ) {
         + 'width="530" '
         + ' ></fb:registration></div>';
 
-    $( '' + put_to ).append( fb_registration );
+    $( '' + id ).append( fb_registration );
 
     FB.XFBML.parse(); // render the xfbml tag <fb:registration>
 
@@ -340,8 +353,8 @@ $.register_save_user_data = function( callbackSuccess, callbackError ) {
 
 /**
  * Log an action for an existing user.
- * @param {String} action the action type to log, e.g. 'register' or 'invite'.
- * @param {String} data the additional data to save for this log item, e.g. FB user ids of invited friends.
+ * @param {String} action the action type to log, e.g. 'register' or 'invite'. Default: 'register'.
+ * @param {String} data the additional data to save for this log item, e.g. FB user ids of invited friends. Default: '' (empty).
  * @param {Function} callbackSuccess <p>This function will be called when the log_user_action.php has finished saving the log.
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the log_user_action.php file is not found or the server is down.
