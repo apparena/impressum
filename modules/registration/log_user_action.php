@@ -17,6 +17,7 @@
     $log = false; // this will fetch the $_POST['log'] data
     $response = array(); // this response goes back to the success function of the calling javascript at the end
     $user_key = ''; // the user key will be the fb_user_id or the user's email address
+    $user_id = 0;
 
     // @required: the parameter post['log'] = array(...)
     if( isset( $_POST[ 'log' ] ) ) { $log = $_POST[ 'log' ]; } else { echo json_encode( array( 'error' => 'missing log data' ) ); exit( 0 ); }
@@ -35,7 +36,7 @@
     $query = "CREATE TABLE IF NOT EXISTS `user_log` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `aa_inst_id` int(11) NOT NULL,
-				  `key` varchar(32) DEFAULT NULL,
+				  `user_data_id` int(11) DEFAULT NULL,
 				  `data` text,
 				  `action` varchar(32) DEFAULT NULL,
 				  `ip` varchar(15) DEFAULT NULL,
@@ -46,7 +47,7 @@
     
     if ( isset( $user_key ) && strlen( $user_key ) > 0 ) {
     	// check if the user already exists
-    	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
+    	$query = "SELECT * FROM `user_data` WHERE `user_data_id` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
     } else {
     	echo json_encode( array( 'error' => 'you must provide a log[ "key" ] containing a FB user_id or the users email address!' ) );
     	exit( 0 );
@@ -65,11 +66,14 @@
     $result = mysql_query( $query );
     if ( $result ) {
     	if ( mysql_num_rows( $result ) > 0 ) {
+            $row = mysql_fetch_assoc( $result );
     		// insert the new log
     		if ( is_array( $log[ 'data' ] ) ) {
     			$log[ 'data' ] = mysql_real_escape_string( json_encode( $log[ 'data' ] ) );
     		}
-    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `key` = '" . $user_key . "', `data` = '" . $log[ 'data' ] . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
+            /* TMPL-17: use the user_data.id instead of user_data.key to identify the user */
+            $user_id = $row[ 'id' ];
+    		$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . ( (int) $aa_inst_id ) . ", `user_data_id` = " . $user_id . ", `data` = '" . $log[ 'data' ] . "', `ip` = '" . $client_ip . "', `action` = '" . $log[ 'action' ] . "'";
     		
     		mysql_query( $query );
     	} else {
