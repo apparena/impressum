@@ -89,7 +89,7 @@ include_once ( '../init.php' );
 </div>
 <div class="row">
     <div class="span5">
-        <form class="form-registration" action="javascript:" id="myForm">
+        <form class="form-registration" action="javascript:register_via_form();" id="myForm">
             <div class="control-group">
                 <label class="control-label" for="name">Name</label>
                 <div class="controls">
@@ -149,7 +149,7 @@ function register_via_connect() {
     disableForm();
     $( '#progress-connect' ).show();
     var scope = $( '#scope' ).val();
-    $.register_fb_connect( scope, callbackSuccessConnect );
+    register_fb_connect( scope, callbackSuccessConnect );
 }
 function callbackSuccessConnect( data ) {
 
@@ -168,13 +168,13 @@ function register_via_widget() {
     var url = $( '#url').val();
     var fields = $( '#fields' ).val();
     var put_to = '#fb_registration_widget';
-    $.register_fb_widge( fields, url, put_to );
+    register_fb_widge( fields, url, put_to );
 }
 
 function register_via_form() {
     disableForm();
     $( '#progress-form' ).show();
-    $.register_form( '#myForm', callbackSuccessForm );
+    register_form( '#myForm', callbackSuccessForm );
 }
 function callbackSuccessForm( data ) {
 
