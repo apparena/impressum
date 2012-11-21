@@ -361,8 +361,8 @@ $.register_save_user_data = function( aa_inst_id, callbackSuccess, callbackError
  * Log an action for an existing user.
  * The php script will save the log to the db.
  * @param {Number} aa_inst_id The App-Arena instance id.
- * @param {String} action the action type to log, e.g. 'register' or 'invite'. Default: 'register'.
- * @param {String} data the additional data to save for this log item, e.g. FB user ids of invited friends. Default: '' (empty).
+ * @param {String} action The action type to log, e.g. 'register' or 'invite'. Default: 'register'.
+ * @param {String} data The additional data to save for this log item, e.g. FB user ids of invited friends. Default: '' (empty).
  * @param {Function} callbackSuccess <p>This function will be called when the log_user_action.php has finished saving the log.
  *                                   The received response will be passed to the callback function as a parameter.</p>
  * @param {Function} callbackError This function will be called when the log_user_action.php file is not found or the server is down.
