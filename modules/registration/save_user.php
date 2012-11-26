@@ -76,7 +76,6 @@
     // create this table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS `user_data` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `aa_inst_id` int(11) NOT NULL,
 				  `key` varchar(32) NOT NULL,
 				  `value` text,
 				  `ip` varchar(15) DEFAULT NULL,
