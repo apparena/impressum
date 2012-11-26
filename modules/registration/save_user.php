@@ -77,7 +77,7 @@
     $query = "CREATE TABLE IF NOT EXISTS `user_data` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `key` varchar(32) NOT NULL,
-				  `value` text,
+				  `data` text,
 				  `ip` varchar(15) DEFAULT NULL,
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
@@ -92,7 +92,7 @@
     	$user_key = $user[ 'key' ];
     	unset( $user[ 'key' ] );
     	// check if the user already exists
-    	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "' AND `aa_inst_id` = " . ( (int) $aa_inst_id );
+    	$query = "SELECT * FROM `user_data` WHERE `key` = '" . $user_key . "'";
     } else {
     	echo json_encode( array( 'error' => 'you must provide a user[ "key" ] containing a FB user_id or an user email address!' ) );
     	exit( 0 );
@@ -109,7 +109,7 @@
     		if ( is_array( $user ) ) {
     			$user = mysql_real_escape_string( json_encode( $user ) );
     		}
-    		$query = 'INSERT INTO `user_data` SET `aa_inst_id` = ' . ( (int) $aa_inst_id ) . ', `key` = "' . $user_key . '", `value` = "' . $user . '", `ip` = "' . $client_ip . '"';
+    		$query = 'INSERT INTO `user_data` SET `key` = "' . $user_key . '", `data` = "' . $user . '", `ip` = "' . $client_ip . '"';
     		//$response[ 'insert' ] = $query;
     		mysql_query( $query );
     	} else {
