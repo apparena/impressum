@@ -77,7 +77,7 @@
     $query = "CREATE TABLE IF NOT EXISTS `user_data` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `key` varchar(32) NOT NULL,
-				  `data` text,
+				  `value` text,
 				  `ip` varchar(15) DEFAULT NULL,
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
@@ -109,7 +109,7 @@
     		if ( is_array( $user ) ) {
     			$user = mysql_real_escape_string( json_encode( $user ) );
     		}
-    		$query = 'INSERT INTO `user_data` SET `key` = "' . $user_key . '", `data` = "' . $user . '", `ip` = "' . $client_ip . '"';
+    		$query = 'INSERT INTO `user_data` SET `key` = "' . $user_key . '", `value` = "' . $user . '", `ip` = "' . $client_ip . '"';
     		//$response[ 'insert' ] = $query;
     		mysql_query( $query );
     	} else {
