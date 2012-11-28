@@ -28,7 +28,7 @@ if (is_fb_user_admin()) {
 
 <script type="text/javascript">
     function popup(url) {
-        fenster = window.open(url, "Admin panel", "width=900,height=650,resizable=no");
+        fenster = window.open(url, "", "width=900,height=650,resizable=no");
         fenster.focus();
         return false;
     }
