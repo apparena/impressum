@@ -7,6 +7,7 @@ if (is_fb_user_admin()) {
 
 <div id="admin_panel">
     <div class="panel-content">
+        <!--
         <span class="export-participants">
             <span class="btn btn-mini"
                   onclick="return popup('modules/admin_panel/index.php?p=exportparticipants&aa_inst_id=<?php echo $aa['instance']['aa_inst_id']; ?>');"><i
@@ -17,6 +18,7 @@ if (is_fb_user_admin()) {
                   onclick="return popup('modules/admin_panel/index.php?p=getwinner&aa_inst_id=<?php echo $aa['instance']['aa_inst_id']; ?>');"><i
                     class="icon-gift"></i> <?php __p("Select winner")?></span>
         </span>
+        -->
         <span class="configure-app">
             <a class="app_config" href="/manager/index.php/wizard/instance_id/<?=$aa['instance']['aa_inst_id'];?>/"
                target="_blank">
