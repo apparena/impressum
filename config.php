@@ -15,8 +15,8 @@ $db_name = "apps_aa_template";
 $db_user = "aa_template";
 $db_pass = "template";
 
-
+/*
 $fb_app_id = "161596157315481";
 $fb_app_secret = "cb11ea19d870420d6df37795cec44606";
-
+*/
 ?>
