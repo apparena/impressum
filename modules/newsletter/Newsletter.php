@@ -23,6 +23,8 @@ class Newsletter {
 	function __construct($db, $smtp=array(), $aa_inst_id=0, $sender=array()) {
 		$this->db = $db;
 		
+		$this->init_db(); // Initialize database
+		
 		if (array_key_exists('host', $smtp))
 			$this->smtp_host = $smtp['host'];
 		
@@ -77,7 +79,7 @@ class Newsletter {
 		
 		$str_receiver = base64_encode(json_encode($receiver));
 		$path = "http://" . $_SERVER["SERVER_NAME"] . dirname($_SERVER["REQUEST_URI"]);
-		$confirmationURL = $path . "/confirm_newsletter_registration.php" . '?aa_inst_id=' . $this->aa_inst_id . '&data=' . $str_receiver;
+		$confirmationURL = $path . "/../modules/newsletter/confirm_newsletter_registration.php" . '?aa_inst_id=' . $this->aa_inst_id . '&data=' . $str_receiver;
 
 		$confirmationLink = "<a href='" . $confirmationURL . "'>" . __t("confirm_newsletter_registration") . "</a>";
 		
@@ -145,6 +147,9 @@ class Newsletter {
 	 * @param array $receiver base64 (name, email) of the newsletter receiver
 	 */
 	function register_new_subscription($receiver=array(), $aa_inst_id){
+		if ( !is_array( $receiver ) ) {
+			return false;
+		}
 		if (array_key_exists('name', $receiver))
 			$receiver_name = $receiver['name'];
 		if (array_key_exists('email', $receiver))

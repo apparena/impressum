@@ -1,6 +1,6 @@
 <?php
 // DB Setup
-global $db;
+global $db2;
 
 //SMTP Setup
 $smtp_config = array("host" => "smtp.mandrillapp.com",
