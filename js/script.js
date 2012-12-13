@@ -130,7 +130,7 @@ function shareViaUrl() {
 function sendViaUrl() {
 	var message      = $( '#message' ).val();
 	var redirect_url = $( '#url' ).val();
-	var url = 'https://www.facebook.com/dialog/apprequests' +
+	var url = 'https://www.facebook.com/dialog/send' +
 			  '?app_id=' + fb_app_id +
 			  '&message=' + message +
 			  '&redirect_uri=' + redirect_url;
@@ -208,7 +208,7 @@ function enableForm() {
 
 function openPopup( url, name ) {
 	
-	popup = window.open( url, name, 'target=_blank' );
+	popup = window.open( url, name, 'target=_blank,width=820,height=400' );
 	if ( window.focus ) {
 		popup.focus();
 	}
