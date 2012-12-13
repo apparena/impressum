@@ -108,6 +108,9 @@ function sendRequest(name, desc, data) {
 }
 
 function callback(response) {
+	$( '#api_response' ).html(
+		response
+	);
     console.log(response);
 }
 
