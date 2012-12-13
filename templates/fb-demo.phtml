@@ -27,6 +27,53 @@ include_once ( '../init.php' );
            </div>
 	</div>
 	<div class="row">
+		<div class="span10">
+			<h4>customizable fields:</h4>
+	        <div>
+	            <h6>required for all methods:</h6>
+	            
+	            <label>your message:</label>
+	            <input type="text" name="message" id="message" placeholder="I need YOU in this app..." title="a message of your choice" />
+	            <span class="help-block">You can choose a message of your choice.</span>
+	            
+	            <label>redirect url:</label>
+	            <input type="text" name="url" id="url" placeholder="https://www.app-arena.com/app/aa_template/dev/response_demo.php" title="this url has to be &quot;owned&quot; by the fb-app" />
+	            <span class="help-block">This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings.</span>
+	        </div>
+	        <div>
+	           	<h6>required for send and share methods:</h6>
+	           	
+	           	<label>direct link:</label>
+	           	<input type="text" name="link" id="link" placeholder="http://www.google.de" title="a direct link which will show up in the invitation" />
+	           	<span class="help-block">This link will be called when a user clicks on the title or on the image in an invitation.</span>
+	        </div>
+	        <div>
+	           	<h6>required for share method:</h6>
+	           	
+	           	<label>picture link:</label>
+	           	<input type="text" name="picture" id="picture" placeholder="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" title="a valid url referring to a picture" />
+	           	<span class="help-block">This link-url must refer to a valid image. The image will then be shown in the invitation.</span>
+	           	
+	           	<label>caption:</label>
+	           	<input type="text" name="caption" id="caption" placeholder="This app rocks the vote!!" title="a sub-message of your choice" />
+	           	<span class="help-block">Enter a subtitle-message of your choice.</span>
+	           	
+	           	<label>name:</label>
+	           	<input type="text" name="name" id="name" placeholder="Storm The Front!" title="a title of your choice" />
+	           	<span class="help-block">Enter a title here.</span>
+	        </div>
+	        <hr />
+	        <div class="alert alert-info">
+	          	assuming your redirect url is &quot;http://example.com/response&quot;:
+	           	After the user follows the flow and sends the request the browser will redirect to:
+				http://example.com/response?request=REQUEST_ID&to=ARRAY_OF_USER_IDS
+				<br />
+				If there are errors, the browser will redirect to:
+				http://example.com/response?error_code=ERROR_CODE&error_msg=ERROR_MSG
+	        </div>
+	    </div>
+	</div>
+	<div class="row">
         <div class="span5">
             <h2>Sharing via js API calls</h2>
             <a class="btn" onclick="postToFeed('www.app-arena.com')"><i class="icon-share"></i> Share</a>
@@ -43,31 +90,6 @@ include_once ( '../init.php' );
                 <a class="btn" onclick="sendViaUrl();"><i class="icon-share"></i> Send</a>
                 <a class="btn" onclick="friendRequestViaUrl();"><i class="icon-user"></i> Friendselector</a>
             </p>
-            <h4>customizable fields:</h4>
-            <div>
-            	<h6>for all methods:</h6>
-            	<input type="text" name="message" id="message" placeholder="your message" title="a message of your choice" />
-            	<input type="text" name="url" id="url" placeholder="redirect to this url after the request" title="this url has to be &quot;owned&quot; by the fb-app" />
-            </div>
-            <div>
-            	<h6>for send and share methods:</h6>
-            	<input type="text" name="link" id="link" placeholder="a link for the invitation" title="a direct link which will show up in the invitation" />
-            </div>
-            <div>
-            	<h6>for share method:</h6>
-            	<input type="text" name="picture" id="picture" placeholder="a link to the picture which shall show up" title="a valid url referring to a picture" />
-            	<input type="text" name="caption" id="caption" placeholder="some sub-text" title="a sub-message of your choice" />
-            	<input type="text" name="name" id="name" placeholder="a name for the invitation" title="a title of your choice" />
-            </div>
-            <hr />
-            <div class="alert alert-info">
-            	assuming your redirect url is &quot;http://example.com/response&quot;:
-            	After the user follows the flow and sends the request the browser will redirect to:
-				http://example.com/response?request=REQUEST_ID&to=ARRAY_OF_USER_IDS
-				<br />
-				If there are errors, the browser will redirect to:
-				http://example.com/response?error_code=ERROR_CODE&error_msg=ERROR_MSG
-            </div>
         </div>
 	</div>
 	<div class="row">
