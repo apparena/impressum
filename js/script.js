@@ -210,7 +210,7 @@ function enableForm() {
 
 function openPopup( url, name ) {
 	
-	popup = window.open( url, name, 'target=_blank,width=820,height=400' );
+	popup = window.open( url, name, 'target=_blank,width=820,height=800' );
 	if ( window.focus ) {
 		popup.focus();
 	}
