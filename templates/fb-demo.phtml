@@ -60,13 +60,14 @@ include_once ( '../init.php' );
             	<input type="text" name="name" id="name" placeholder="a name for the invitation" title="a title of your choice" />
             </div>
             <hr />
-            <h6>
-            	After the user follows the flow and sends the request the browser will redirect to
+            <div>
+            	assuming your redirect url is &quot;http://example.com/response&quot;:
+            	After the user follows the flow and sends the request the browser will redirect to:
 				http://example.com/response?request=REQUEST_ID&to=ARRAY_OF_USER_IDS
 				<br />
-				If there are errors, the browser will redirect to
+				If there are errors, the browser will redirect to:
 				http://example.com/response?error_code=ERROR_CODE&error_msg=ERROR_MSG
-            </h6>
+            </div>
         </div>
 	</div>
 	<div class="row">
