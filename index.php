@@ -85,6 +85,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated
             <nav>
                 <ul class="nav">
                     <li><a onclick="aa_tmpl_load('index.phtml');"><?php __p("Homepage");?></a></li>
+                    <li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("Social features");?></a></li>
                     <li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
                 </ul>
             </nav>
