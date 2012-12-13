@@ -134,6 +134,24 @@ function shareViaUrl() {
 	openPopup( url, 'share via url' );
 }
 
+function sharerViaUrl() {
+	var message      = $( '#message' ).val();
+	var redirect_url = $( '#url' ).val();
+	var link         = $( '#link' ).val();
+	var picture      = $( '#picture' ).val();
+	var caption      = $( '#caption' ).val();
+	var name         = $( '#name' ).val();
+	var url = 'https://www.facebook.com/sharer/sharer.php' +
+			  '?app_id=' + fb_app_id +
+			  '&link=' + link +
+			  '&picture=' + picture +
+			  '&name=' + name +
+			  '&caption=' + caption +
+			  '&description=' + message +
+			  '&redirect_uri=' + redirect_url;
+	openPopup( url, 'share via url' );
+}
+
 function sendViaUrl() {
 	var message      = $( '#message' ).val();
 	var redirect_url = $( '#url' ).val();
