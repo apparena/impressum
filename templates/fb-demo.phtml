@@ -31,58 +31,71 @@ include_once ( '../init.php' );
 			<h4>customizable fields:</h4>
 		</div>
 	</div>
+	
 	<div class="row">
-		<div class="span10">
-			<h6>required for all methods:</h6>
-		</div>
+		<form class="form-vertical">
+			<fieldset>
+				
+				<legend>required for all methods:</legend>
+				
+				<div class="control-group">
+					<label>your message:</label>
+					<div class="controls">
+			        	<input type="text" name="message" id="message" placeholder="I need YOU in this app..." title="a message of your choice" />
+			       	</div>
+			        <span class="help-block">You can choose a message of your choice.</span>
+			    </div>
+			    
+			    <div class="control-group">
+					<label>redirect url:</label>
+					<div class="controls">
+			        	<input class="url-link" type="text" name="url" id="url" placeholder="https://www.app-arena.com/app/aa_template/dev/response_demo.php" title="this url has to be &quot;owned&quot; by the fb-app" />
+			       	</div>
+			        <span class="help-block">This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings.</span>
+			    </div>
+			    
+			    <legend>required for send and share methods:</legend>
+			    
+			    <div class="control-group">
+					<label>direct link:</label>
+					<div class="controls">
+			        	<input class="url-link" type="text" name="link" id="link" placeholder="http://www.google.de" title="a direct link which will show up in the invitation" />
+			       	</div>
+			        <span class="help-block">This link will be called when a user clicks on the title or on the image in an invitation.</span>
+			    </div>
+			    
+			    <legend>required for share method:</legend>
+			    
+			    <div class="control-group">
+					<label>picture link:</label>
+					<div class="controls">
+			        	<input type="text" name="picture" id="picture" placeholder="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" title="a valid url referring to a picture" />
+			       	</div>
+			        <span class="help-block">This link-url must refer to a valid image. The image will then be shown in the invitation.</span>
+			    </div>
+			    
+			    <div class="control-group">
+					<label>caption:</label>
+					<div class="controls">
+			        	<input type="text" name="caption" id="caption" placeholder="This app rocks the vote!!" title="a sub-message of your choice" />
+			       	</div>
+			        <span class="help-block">Enter a subtitle-message of your choice.</span>
+			    </div>
+			    
+			    <div class="control-group">
+					<label>name:</label>
+					<div class="controls">
+			        	<input type="text" name="name" id="name" placeholder="Storm The Front!" title="a title of your choice" />
+			       	</div>
+			        <span class="help-block">Enter a title here.</span>
+			    </div>
+			    
+			</fieldset>
+		</form>
 	</div>
-	<div class="row">
-		<div class="span4 well">
-            <label>your message:</label>
-            <input type="text" name="message" id="message" placeholder="I need YOU in this app..." title="a message of your choice" />
-            <span class="help-block">You can choose a message of your choice.</span>
-        </div>
-        <div class="span4 well">
-            <label>redirect url:</label>
-            <input class="url-link" type="text" name="url" id="url" placeholder="https://www.app-arena.com/app/aa_template/dev/response_demo.php" title="this url has to be &quot;owned&quot; by the fb-app" />
-            <span class="help-block">This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings.</span>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span10">
-			<h6>required for send and share methods:</h6>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span8 well">
-           	<label>direct link:</label>
-           	<input class="url-link" type="text" name="link" id="link" placeholder="http://www.google.de" title="a direct link which will show up in the invitation" />
-           	<span class="help-block">This link will be called when a user clicks on the title or on the image in an invitation.</span>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span10">
-			<h6>required for share method:</h6>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span4 well">
-           	<label>picture link:</label>
-           	<input type="text" name="picture" id="picture" placeholder="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" title="a valid url referring to a picture" />
-           	<span class="help-block">This link-url must refer to a valid image. The image will then be shown in the invitation.</span>
-           	
-           	<label>caption:</label>
-           	<input type="text" name="caption" id="caption" placeholder="This app rocks the vote!!" title="a sub-message of your choice" />
-           	<span class="help-block">Enter a subtitle-message of your choice.</span>
-        </div>
-        <div class="span4 well">
-        	<label>name:</label>
-           	<input type="text" name="name" id="name" placeholder="Storm The Front!" title="a title of your choice" />
-           	<span class="help-block">Enter a title here.</span>
-        </div>
-    </div>
+	
     <div class="row">
-		<div class="alert alert-info span8">
+		<div class="alert alert-info span10">
 	          	assuming your redirect url is &quot;http://example.com/response&quot;:
 	           	After the user follows the flow and sends the request the browser will redirect to:
 				http://example.com/response?request=REQUEST_ID&amp;to=ARRAY_OF_USER_IDS
