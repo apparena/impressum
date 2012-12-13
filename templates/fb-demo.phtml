@@ -44,25 +44,26 @@ include_once ( '../init.php' );
                 <a class="btn"><i class="icon-user" onlcick="friendRequestViaUrl();"></i> Friendselector</a>
             </p>
             <h4>customizable fields:</h4>
-            <pre>
-            	<small>for all methods:</small>
+            <div>
+            	<h6>for all methods:</h6>
             	<input type="text" name="message" id="message" placeholder="your message" />
             	<input type="text" name="url" id="url" placeholder="redirect to this url after the request" />
-            	<hr />
-            	<small>for share method:</small>
+            </div>
+            <div>
+            	<h6>for share method:</h6>
             	<input type="text" name="link" id="link" placeholder="a link for the invitation" />
             	<input type="text" name="picture" id="picture" placeholder="a link to the picture which shall show up" />
             	<input type="text" name="caption" id="caption" placeholder="some sub-text" />
             	<input type="text" name="name" id="name" placeholder="a name for the invitation" />
-            </pre>
+            </div>
             <hr />
-            <small>
+            <h6>
             	After the user follows the flow and sends the request the browser will redirect to
 				http://example.com/response?request=REQUEST_ID&to=ARRAY_OF_USER_IDS
 				<br />
 				If there are errors, the browser will redirect to
 				http://example.com/response?error_code=ERROR_CODE&error_msg=ERROR_MSG
-            </small>
+            </h6>
         </div>
 	</div>
 	<div class="row">
