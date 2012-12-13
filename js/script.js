@@ -85,9 +85,11 @@ function postToFeed(link, picture_url, name, caption, desc) {
         description:desc
     };
 
+/*
     function callback(response) {
         document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
     }
+*/
 
     FB.ui(obj, callback);
 }
@@ -105,6 +107,44 @@ function sendRequest(name, desc, data) {
         message:desc,
         data:data
     }, callback);
+}
+
+function shareViaUrl() {
+	var message      = $( '#message' ).val();
+	var redirect_url = $( '#url' ).val();
+	var link         = $( '#link' ).val();
+	var picture      = $( '#picture' ).val();
+	var caption      = $( '#caption' ).val();
+	var name         = $( '#name' ).val();
+	var url = 'https://www.facebook.com/dialog/feed' +
+			  '?app_id=' + fb_app_id +
+			  '&link=' + link +
+			  '&picture=' + picture +
+			  '&name=' + name +
+			  '&caption=' + caption +
+			  '&description=' + message +
+			  '&redirect_uri=' + redirect_url;
+	openPopup( url, 'share via url' );
+}
+
+function sendViaUrl() {
+	var message      = $( '#message' ).val();
+	var redirect_url = $( '#url' ).val();
+	var url = 'https://www.facebook.com/dialog/apprequests' +
+			  '?app_id=' + fb_app_id +
+			  '&message=' + message +
+			  '&redirect_uri=' + redirect_url;
+	openPopup( url, 'send via url' );
+}
+
+function friendRequestViaUrl() {
+	var message = $( '#message' ).val();
+	var redirect_url = $( '#url' ).val();
+	var url = 'https://www.facebook.com/dialog/apprequests' +
+			  '?app_id=' + fb_app_id +
+			  '&message=' + message + 
+			  '&redirect_uri=' + redirect_url;
+	openPopup( url, 'apprequest via url' );
 }
 
 function callback(response) {
@@ -164,4 +204,14 @@ function enableForm() {
     $( 'body' ).find( 'select' ).each( function(){
         $(this).removeAttr( 'disabled' );
     });
+}
+
+function openPopup( url, name ) {
+	
+	popup = window.open( url, name, 'target=_blank' );
+	if ( window.focus ) {
+		popup.focus();
+	}
+	return false;
+	
 }
