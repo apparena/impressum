@@ -130,9 +130,11 @@ function shareViaUrl() {
 function sendViaUrl() {
 	var message      = $( '#message' ).val();
 	var redirect_url = $( '#url' ).val();
+	var link         = $( '#link' ).val();
 	var url = 'https://www.facebook.com/dialog/send' +
 			  '?app_id=' + fb_app_id +
 			  '&message=' + message +
+			  '&link=' + link +
 			  '&redirect_uri=' + redirect_url;
 	openPopup( url, 'send via url' );
 }
