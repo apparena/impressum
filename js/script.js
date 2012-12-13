@@ -96,7 +96,7 @@ function sendToFriend(link, name) {
         method:'send',
         name:name,
         link:link
-    });
+    }, callback);
 }
 function sendRequest(name, desc, data) {
     // Use FB.ui to send the Request(s)
