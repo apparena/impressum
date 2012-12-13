@@ -141,6 +141,21 @@ function sharerViaUrl() {
 	var picture      = $( '#picture' ).val();
 	var caption      = $( '#caption' ).val();
 	var name         = $( '#name' ).val();
+	
+/*
+	var html='<button name="fb_share" class="btn btn-inverse btn-share" onclick="window.open(\''+url+'\',\'sharer\',\'toolbar=0,status=0,width='+params.width+',height='+params.height+'\');" href="javascript: void(0)">';
+	    html+='<i class="icon-bullhorn icon-white"></i> ';
+	    html+=__e('share');
+	    html+='</button>';
+*/
+	
+	var url='http://www.facebook.com/sharer.php?s=100&amp;p[title]=' + urlencode( name );
+	    url += '&amp;p[summary]=' + urlencode( message );
+	    url += '&amp;p[url]=' + urlencode( redirect_url );
+	    url += '&amp;&amp;p[images][0]=' + urlencode( picture );
+	
+	
+/*
 	var url = 'https://www.facebook.com/sharer/sharer.php' +
 			  '?app_id=' + fb_app_id +
 			  '&link=' + link +
@@ -149,6 +164,8 @@ function sharerViaUrl() {
 			  '&caption=' + caption +
 			  '&description=' + message +
 			  '&redirect_uri=' + redirect_url;
+*/
+	
 	openPopup( url, 'share via url' );
 }
 
@@ -242,3 +259,5 @@ function openPopup( url, name ) {
 	return false;
 	
 }
+
+function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
