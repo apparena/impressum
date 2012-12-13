@@ -75,6 +75,17 @@ function show_msg(msg, type, delay) {
 
 function postToFeed(link, picture_url, name, caption, desc) {
 
+	// USE values from INPUT fields here too!
+	var obj = {
+        method:'feed',
+        link: $( '#link' ).val(),
+        picture: $( '#picture' ).val(),
+        name: $( '#name' ).val(),
+        caption: $( '#caption' ).val(),
+        description: $( '#message' ).val()
+    };
+	
+/*
     // calling the API ...
     var obj = {
         method:'feed',
@@ -84,27 +95,23 @@ function postToFeed(link, picture_url, name, caption, desc) {
         caption:caption,
         description:desc
     };
-
-/*
-    function callback(response) {
-        document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-    }
 */
+    
 
     FB.ui(obj, callback);
 }
 function sendToFriend(link, name) {
     FB.ui({
         method:'send',
-        name:name,
-        link:link
+        name: $( '#name' ).val(),
+        link: $( '#link' ).val()
     }, callback);
 }
 function sendRequest(name, desc, data) {
     // Use FB.ui to send the Request(s)
     FB.ui({method:'apprequests',
-        title:name,
-        message:desc,
+        title: $( '#name' ).val(),
+        message: $( '#message' ).val(),
         data:data
     }, callback);
 }
