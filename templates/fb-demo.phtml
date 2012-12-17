@@ -3,255 +3,223 @@ include_once ('../init.php');
 ?>
 
 <!-- Include Facebook sharing lib -->
-<script src="modules/fb_share/fb_share.js?v1"></script>
+<script src="../modules/fb_share/fb_share.js"></script>
 
 <div class="container">
-<div class="row">
-    <div class="span10">
-        <p>
-            All Facebook sharing functions will share certain information within the network. You can freely
-            define these information by passing information via <strong>function parameter</strong> (for API calls),
-            by passing <strong>GET-Params</strong> (for Links using href) or to submit an URL which contains
-            certain <strong>Facebook Meta-Tags</strong>.
-        </p>
+    <div class="row">
+        <div class="span10">
+            <p>
+                All Facebook sharing functions will share certain information within the network. You can freely
+                define these information by passing information via <strong>function parameter</strong> (for API calls),
+                by passing <strong>GET-Params</strong> (for Links using href) or to submit an URL which contains
+                certain <strong>Facebook Meta-Tags</strong>.
+            </p>
 
-        <h3>Dependencies</h3>
-        <ul>
-            <li>libs/AA/fb_share.js<br>
-                This library contains examples of all Facebook javascript sharing functions, which can be
-                called immediately...
-            </li>
-        </ul>
+            <h3>Dependencies</h3>
+            <ul>
+                <li>libs/AA/fb_share.js<br>
+                    This library contains examples of all Facebook javascript sharing functions, which can be
+                    called immediately...
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="span10">
-        <h1>Demos:</h1>
+    <div class="row">
+        <div class="span10">
+            <h1>Demos:</h1>
 
-        <p>
-            <button class="fb-btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
-        </p>
+            <p>
+                <button class="btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
+            </p>
 
-    </div>
-    <form class="form-vertical">
-        <div class="span5">
-            <fieldset>
-                <div class="control-group">
-                    <label>Your message:</label>
+        </div>
+        <form class="form-vertical">
+            <div class="span5">
+                <fieldset>
+                    <div class="control-group">
+                        <label>Your message:</label>
 
-                    <div class="controls">
-                        <input type="text" name="message" id="message" value="I need YOU in this app..."/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="You can choose a message of your choice."></i>
+                        <div class="controls">
+                            <input type="text" name="message" id="message" value="I need YOU in this app..."/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="You can choose a message of your choice."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>all</strong> demos</span>
                     </div>
-                    <span class="help-block">Required for <strong>all</strong> demos</span>
-                </div>
 
-                <div class="control-group">
-                    <label>Redirect url:</label>
+                    <div class="control-group">
+                        <label>Redirect url:</label>
 
-                    <div class="controls">
-                        <input type="text" name="url" id="url"
-                               value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings."></i>
+                        <div class="controls">
+                            <input type="text" name="url" id="url"
+                                   value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>all</strong> demos</span>
                     </div>
-                    <span class="help-block">Required for <strong>all</strong> demos</span>
-                </div>
 
-                <div class="control-group">
-                    <label>Direct link:</label>
+                    <div class="control-group">
+                        <label>Direct link:</label>
 
-                    <div class="controls">
-                        <input type="text" name="link" id="link" value="http://www.google.de"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
+                        <div class="controls">
+                            <input type="text" name="link" id="link" value="http://www.google.de"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>send</strong> and <strong>share</strong></span>
                     </div>
-                    <span class="help-block">Required for <strong>send</strong> and <strong>share</strong></span>
-                </div>
 
-                <div class="control-group">
-                    <label>Data:</label>
+                    <div class="control-group">
+                        <label>Data:</label>
 
-                    <div class="controls">
-                        <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="You can pass a json array here. All parameters can be accessed on
+                        <div class="controls">
+                            <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="You can pass a json array here. All parameters can be accessed on
                                                     the landing page, after a user accepts the request."></i>
+                        </div>
+                        <span class="help-block">Optional values which can be submitted with a <strong>friend
+                            request</strong></span>
                     </div>
-                    <span class="help-block">Optional values which can be submitted with a <strong>friend
-                        request</strong></span>
-                </div>
-            </fieldset>
-        </div>
-        <div class="span5">
-            <fieldset>
-                <div class="control-group">
-                    <label>Picture url:</label>
+                </fieldset>
+            </div>
+            <div class="span5">
+                <fieldset>
+                    <div class="control-group">
+                        <label>Picture url:</label>
 
-                    <div class="controls">
-                        <input type="text" name="picture" id="picture"
-                               value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation."></i>
+                        <div class="controls">
+                            <input type="text" name="picture" id="picture"
+                                   value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>share</strong></span>
                     </div>
-                    <span class="help-block">Required for <strong>share</strong></span>
-                </div>
 
-                <div class="control-group">
-                    <label>Caption:</label>
+                    <div class="control-group">
+                        <label>Caption:</label>
 
-                    <div class="controls">
-                        <input type="text" name="caption" id="caption" value="This app rocks the vote!!"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="Enter a subtitle-message of your choice."></i>
+                        <div class="controls">
+                            <input type="text" name="caption" id="caption" value="This app rocks the vote!!"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="Enter a subtitle-message of your choice."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>share</strong></span>
                     </div>
-                    <span class="help-block">Required for <strong>share</strong></span>
-                </div>
 
-                <div class="control-group">
-                    <label>Name:</label>
+                    <div class="control-group">
+                        <label>Name:</label>
 
-                    <div class="controls">
-                        <input type="text" name="name" id="name" value="Storm The Front!"/>
-                        <i class="icon-info-sign rel-tooltip"
-                           data-original-title="Enter a title here."></i>
+                        <div class="controls">
+                            <input type="text" name="name" id="name" value="Storm The Front!"/>
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="Enter a title here."></i>
+                        </div>
+                        <span class="help-block">Required for <strong>share</strong></span>
                     </div>
-                    <span class="help-block">Required for <strong>share</strong></span>
-                </div>
-            </fieldset>
-        </div>
-    </form>
-</div>
-
-<!--<div class="row">
-    <div class="alert alert-info span10">
-              assuming your redirect url is &quot;http://example.com/response&quot;:
-               After the user follows the flow and sends the request the browser will redirect to:
-            http://example.com/response?request=REQUEST_ID&amp;to=ARRAY_OF_USER_IDS
-            <br />
-            If there are errors, the browser will redirect to:
-            http://example.com/response?error_code=ERROR_CODE&amp;error_msg=ERROR_MSG
+                </fieldset>
+            </div>
+        </form>
     </div>
-</div>-->
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Method</th>
-        <th>Signature</th>
-        <th>Documentation</th>
-        <th>Demo</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th colspan="4">Sharing with JS</th>
-    </tr>
-    <tr>
-        <td>Share</td>
-        <td>https://developers.facebook.com/docs/reference/dialogs/feed/</td>
-        <td><a class="fb-btn"
-               onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
-            <i class="icon-share"></i> Share
-        </a></td>
-    </tr>
-    <tr>
-        <td>Send</td>
-        <td>https://developers.facebook.com/docs/reference/dialogs/send/</td>
-        <td>
-            <a class="fb-btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
+
+    <!--<div class="row">
+		<div class="alert alert-info span10">
+	          	assuming your redirect url is &quot;http://example.com/response&quot;:
+	           	After the user follows the flow and sends the request the browser will redirect to:
+				http://example.com/response?request=REQUEST_ID&amp;to=ARRAY_OF_USER_IDS
+				<br />
+				If there are errors, the browser will redirect to:
+				http://example.com/response?error_code=ERROR_CODE&amp;error_msg=ERROR_MSG
+		</div>
+	</div>-->
+    <div class="row">
+        <div class="span5">
+            <h2>Sharing with JS</h2>
+            <a class="btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
+                                               $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
+                <i class="icon-share"></i> Share
+            </a>
+            <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
                 <i class="icon-envelope"></i> Send
             </a>
-        </td>
-    </tr>
-    <tr>
-        <td>Multi-Friend-Selector</td>
-        <td>https://developers.facebook.com/docs/reference/dialogs/requests/</td>
-        <td>
-            <a class="fb-btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
+            <a class="btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
                 <i class="icon-user"></i> Friendselector
             </a>
-        </td>
-    </tr>
-    <tr>
-        <th colspan="4">Direct Link Sharing</th>
-    </tr>
-    <tr>
-        <td>Share</td>
-        <td>https://developers.facebook.com/docs/reference/dialogs/feed/</td>
-        <td>
-            <a class="fb-btn"
-               onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption,
-                popup_title )
+            <h4>Api response:</h4>
+            <pre id="api_response"></pre>
+        </div>
+
+        <div class="span5">
+            <h2>Direct Link Sharing</h2>
+
+            <p>
+            <ul>
+                <li>
+                    fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br>
+                    <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                        <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption,
+                        popup_title )
+                    </a>
+                </li>
+                <li>
+                    fb_send_url();<br>
+                    <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                        <i class="icon-share"></i> Send
+                    </a>
+                </li>
+            </ul>
+
+            <!--<a class="btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
+            <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                <i class="icon-share"></i> Send
             </a>
-        </td>
-    </tr>
-    <tr>
-        <td>Send</td>
-        <td>https://developers.facebook.com/docs/reference/dialogs/send/</td>
-        <td>
-            <a class="fb-btn" target="_blank"
-               href="javascript:fb_get_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                <i class="icon-share"></i> Open Url
+            <a class="btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
+                <i class="icon-user"></i> Friendselector
             </a>
-        </td>
-    </tr>
-    </tbody>
-
-</table>
-
-<div class="row">
-    <div class="span10">
-        <h4>Api response:</h4>
-        <pre id="api_response"></pre>
+            </p>
+        </div>
     </div>
+    <div class="row">
+        <div class="span10">
+            <h1>Facebook Style Buttons</h1>
+            <pre>
+                CSS Class: .fb-btn
+            </pre>
 
-
-    <div class="span5">
-        <h2>Direct Link Sharing</h2>
-
-        <p>
-        <ul>
-            <li>
-                fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br/>
-
-            </li>
-            <li>
-                fb_send_url( message, redirect_url, link, popup_title );<br/>
-                <a class="fb-btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
-                    <i class="icon-share"></i> Send
-                </a>
-            </li>
-            <li>
-                fb_mfs_url( message, redirect_url, link, popup_title );<br/>
-                <a class="fb-btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
-                    <i class="icon-user"></i> Friendselector
-                </a>
-            </li>
-        </ul>
-        </p>
+            <span class="fb-btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
+                                               $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
+                <i class="icon-share"></i> Share
+            </span>
+            <span class="fb-btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
+                <i class="icon-envelope"></i> Send
+            </span>
+            <span class="fb-btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
+                <i class="icon-user"></i> Friendselector
+            </span>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="span10">
-        <h1>Native Facebook social plugins</h1>
+    <div class="row">
+        <div class="span10">
+            <h1>Native Facebook social plugins</h1>
 
-        <h3>Like-Button</h3>
+            <h3>Like-Button</h3>
 
-        <div class="fb-like" data-href="http://www.app-arena.com" data-send="false" data-width="450"
-             data-show-faces="true"></div>
+            <div class="fb-like" data-href="http://www.app-arena.com" data-send="false" data-width="450"
+                 data-show-faces="true"></div>
 
-        <h3>Send-Button</h3>
+            <h3>Send-Button</h3>
 
-        <div class="fb-send" data-href="http://www.app-arena.com"></div>
+            <div class="fb-send" data-href="http://www.app-arena.com"></div>
 
-        <h3>Comment-Box</h3>
+            <h3>Comment-Box</h3>
 
-        <div class="fb-comments" data-href="http://www.app-arena.com" data-width="470" data-num-posts="5"></div>
+            <div class="fb-comments" data-href="http://www.app-arena.com" data-width="470" data-num-posts="5"></div>
+        </div>
     </div>
-</div>
 </div>
 <script>
     $(document).ready(function () {
