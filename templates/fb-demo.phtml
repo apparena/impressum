@@ -62,6 +62,17 @@ include_once ( '../init.php' );
                         </div>
                         <span class="help-block">Required for <strong>send</strong> and <strong>share</strong></span>
                     </div>
+
+                    <div class="control-group">
+                        <label>Data:</label>
+                        <div class="controls">
+                            <input type="text" name="data" id="data" value="{ test-data:'abc',
+                                                                              a_number:22 }" />
+                            <i class="icon-info-sign rel-tooltip"
+                               data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
+                        </div>
+                        <span class="help-block">Optional values which can be submitted with a <strong>friend request</strong></span>
+                    </div>
                 </fieldset>
             </div>
             <div class="span5">
@@ -113,9 +124,15 @@ include_once ( '../init.php' );
 	<div class="row">
         <div class="span5">
             <h2>Sharing with JS</h2>
-            <a class="btn" onclick="postToFeed('www.app-arena.com')"><i class="icon-share"></i> Share</a>
-            <a class="btn" onclick="sendToFriend('www.app-arena.com')"><i class="icon-envelope"></i> Send</a>
-            <a class="btn" onclick="sendRequest('www.app-arena.com','test')"><i class="icon-user"></i> Friendselector</a>
+            <a class="btn" onclick="postToFeed('www.app-arena.com')">
+                <i class="icon-share"></i> Share
+            </a>
+            <a class="btn" onclick="sendToFriend('www.app-arena.com')">
+                <i class="icon-envelope"></i> Send
+            </a>
+            <a class="btn" onclick="sendRequest( $( '#name' ).val(), $( '#message' ).val(), 'test')">
+                <i class="icon-user"></i> Friendselector
+            </a>
             <h4>Api response:</h4>
             <pre id="api_response"></pre>
         </div>
@@ -123,7 +140,8 @@ include_once ( '../init.php' );
         <div class="span5">
             <h2>Direct Link Sharing</h2>
             <p> 
-                <a class="btn" onclick="shareViaUrl();">
+                <a class="btn" onclick="shareViaUrl($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
                     <i class="icon-share"></i> Share
                 </a>
                 <!--<a class="btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
