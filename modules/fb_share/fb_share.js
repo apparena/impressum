@@ -47,14 +47,24 @@ function fb_send( name, message, link, picture, redirect_uri, to, callback ) {
  * @param link
  */
 function fb_get_send_url( name, message, link, picture, redirect_url, to ) {
+    if ( typeof( redirect_url ) == 'undefined' ) {
+        redirect_url = "";
+    } else {
+        redirect_url = '&redirect_uri=' + redirect_url;
+    }
+    if ( typeof( to ) == 'undefined' ) {
+        to = "";
+    } else {
+        to = '&to=' + to;
+    }
     var url = 'https://www.facebook.com/dialog/send' +
         '?app_id=' + fb_app_id +
         '&name=' + name +
         '&message=' + message +
         '&link=' + link +
         '&picture=' + picture +
-        '&redirect_uri=' + redirect_url +
-        '&to=' + to;
+        redirect_url +
+        to;
     return url;
 }
 
