@@ -58,7 +58,7 @@ function show_msg(msg, type, delay) {
             break;
 
         case 'info':
-            classes = 'alert alert-success fade in';
+            classes = 'alert alert-info fade in';
             break;
 
         default:
@@ -73,42 +73,28 @@ function show_msg(msg, type, delay) {
 
 }
 
-function postToFeed(link, picture_url, name, caption, desc) {
-
-    // calling the API ...
-    var obj = {
-        method:'feed',
-        link:link,
-        picture:picture_url,
-        name:name,
-        caption:caption,
-        description:desc
-    };
-
-    function callback(response) {
-        document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+/**
+ * Creates a var dump out of a javascript object.
+ * @param {Object} obj The object to dump
+ * @param {String} selector the selector to show the dumping in.
+ * @param {boolean} overwrite set to true if the object shall overwrite the selectors content, or false to append stuff.
+ */
+function var_dump(obj, selector, overwrite) {
+	if ( typeof( overwrite ) == 'undefined' || overwrite != true ) {
+		overwrite = false;
+	}
+    var out = '';
+    for (var i in obj) {
+        out += i + ": " + obj[i] + "\n";
     }
 
-    FB.ui(obj, callback);
-}
-function sendToFriend(link, name) {
-    FB.ui({
-        method:'send',
-        name:name,
-        link:link
-    });
-}
-function sendRequest(name, desc, data) {
-    // Use FB.ui to send the Request(s)
-    FB.ui({method:'apprequests',
-        title:name,
-        message:desc,
-        data:data
-    }, callback);
-}
-
-function callback(response) {
-    console.log(response);
+    //console.log(out);
+    
+    if ( overwrite ) {
+    	$( selector ).html( out );
+    } else {
+    	$( selector ).append( out );
+    }
 }
 
 function log_login(arguments) {
@@ -140,3 +126,5 @@ function enableForm() {
         $(this).removeAttr( 'disabled' );
     });
 }
+
+function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
