@@ -100,14 +100,18 @@ function postToFeed(link, picture_url, name, caption, desc) {
 
     FB.ui(obj, callback);
 }
-function sendToFriend(link, name) {
+
+
+function sendToFriend( link, name ) {
     FB.ui({
         method:'send',
         name: $( '#name' ).val(),
         link: $( '#link' ).val()
     }, callback);
 }
-function sendRequest(name, desc, data) {
+
+
+function sendRequest( name, message, data ) {
     // Use FB.ui to send the Request(s)
     FB.ui({method:'apprequests',
         title: $( '#name' ).val(),
@@ -116,13 +120,20 @@ function sendRequest(name, desc, data) {
     }, callback);
 }
 
-function shareViaUrl() {
-	var message      = $( '#message' ).val();
-	var redirect_url = $( '#url' ).val();
-	var link         = $( '#link' ).val();
-	var picture      = $( '#picture' ).val();
-	var caption      = $( '#caption' ).val();
-	var name         = $( '#name' ).val();
+/**
+ * Opens a facebook sharing dialog popup
+ * @param message Main message fof the sharing dialog
+ * @param redirect_url
+ * @param link
+ * @param picture Url of pictures shared with the message
+ * @param caption Subtitle for the sharing message
+ * @param name Title of the sharing message
+ * @param popup_title Sharing dialog popup title
+ */
+function shareViaUrl( message, redirect_url, link, picture, caption, name, popup_title) {
+    if ( typeof( popup_title ) == 'undefined' ) {
+        popup_title = "Share";
+    }
 	var url = 'https://www.facebook.com/dialog/feed' +
 			  '?app_id=' + fb_app_id +
 			  '&link=' + link +
@@ -131,7 +142,7 @@ function shareViaUrl() {
 			  '&caption=' + caption +
 			  '&description=' + message +
 			  '&redirect_uri=' + redirect_url;
-	openPopup( url, 'share via url' );
+	openPopup( url, popup_title );
 }
 
 function sharerViaUrl( message ) {
