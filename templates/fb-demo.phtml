@@ -209,10 +209,9 @@ include_once ('../init.php');
 <script>
     $(document).ready(function () {
         $('.rel-tooltip').tooltip();
-        function callback(response) {
-            var_dump(response, '#api_response', true);
-            console.log(response);
-        }
     });
-
+    function callback(response) {
+        var_dump(response, '#api_response', true);
+        console.log(response);
+    }
 </script>
