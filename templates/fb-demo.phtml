@@ -31,87 +31,64 @@ include_once ( '../init.php' );
             <p>
                 <button class="btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
             </p>
+            <h2>Sharing information</h2>
+            <p>This information will be shared, when using the demo buttons and links.</p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Value</th>
+                        <th>Used for</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>This is the title of the post. This title contains a link the user can clikc on.</td>
+                        <td><input type="text" name="name" id="name" value="The title of my post..."/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Caption</td>
+                        <td>The subtitle of a post.</td>
+                        <td><input type="text" name="caption" id="caption" value="This caption rocks!!!" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Message</td>
+                        <td>The main message of each post</td>
+                        <td><input type="text" name="message" id="message" value="This is my message..." /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Picture</td>
+                        <td>The picture shared with the post</td>
+                        <td><input type="text" name="picture" id="picture" value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Link</td>
+                        <td>This link will be shared with the receiver. The name and the picture of the post will contain this link.</td>
+                        <td><input type="text" name="link" id="link" value="http://www.app-arena.com" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Redirect url</td>
+                        <td>The sender will be redirected to this url, after submitting the post.</td>
+                        <td><input type="text" name="redirect_url" id="redirect_url" value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td>You can pass a json array here. All parameters can be accessed on the landing page, after a user accepts the request.</td>
+                        <td><input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }" /></td>
+                        <td>Friend-Request, Multi-Friend-Selector</td>
+                    </tr>
 
+                </tbody>
+            </table>
 		</div>
-        <form class="form-vertical">
-            <div class="span5">
-                <fieldset>
-                    <div class="control-group">
-                        <label>Your message:</label>
-                        <div class="controls">
-                            <input type="text" name="message" id="message" value="I need YOU in this app..." />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="You can choose a message of your choice."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>all</strong> demos</span>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Redirect url:</label>
-                        <div class="controls">
-                            <input type="text" name="url" id="url" value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php" />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>all</strong> demos</span>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Direct link:</label>
-                        <div class="controls">
-                            <input type="text" name="link" id="link" value="http://www.google.de" />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>send</strong> and <strong>share</strong></span>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Data:</label>
-                        <div class="controls">
-                            <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }" />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="You can pass a json array here. All parameters can be accessed on
-                                                    the landing page, after a user accepts the request."></i>
-                        </div>
-                        <span class="help-block">Optional values which can be submitted with a <strong>friend request</strong></span>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="span5">
-                <fieldset>
-                    <div class="control-group">
-                        <label>Picture url:</label>
-                        <div class="controls">
-                            <input type="text" name="picture" id="picture" value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>share</strong></span>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Caption:</label>
-                        <div class="controls">
-                            <input type="text" name="caption" id="caption" value="This app rocks the vote!!" />
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="Enter a subtitle-message of your choice."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>share</strong></span>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Name:</label>
-                        <div class="controls">
-                            <input type="text" name="name" id="name" value="Storm The Front!"/>
-                            <i class="icon-info-sign rel-tooltip"
-                               data-original-title="Enter a title here."></i>
-                        </div>
-                        <span class="help-block">Required for <strong>share</strong></span>
-                    </div>
-                </fieldset>
-            </div>
-        </form>
 	</div>
 	
     <!--<div class="row">
@@ -169,8 +146,9 @@ include_once ( '../init.php' );
                 <td>Share</td>
                 <td>https://developers.facebook.com/docs/reference/dialogs/feed/</td>
                 <td>
-                    <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                        <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
+                    <a class="btn" target="_blank"
+                       href="javascript:fb_get_share_url( $( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                        <i class="icon-share"></i> Open Url
                     </a>
                 </td>
             </tr>
@@ -179,7 +157,7 @@ include_once ( '../init.php' );
                 <td>https://developers.facebook.com/docs/reference/dialogs/send/</td>
                 <td>
                     <a class="btn" target="_blank"
-                       href="javascript:fb_get_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                       href="javascript:fb_get_send_url( $( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(), $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
                         <i class="icon-share"></i> Open Url
                     </a>
                 </td>

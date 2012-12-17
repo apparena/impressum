@@ -50,9 +50,8 @@ function fb_send( name, message, link, picture, redirect_uri, to, display, callb
  * @param message Main message of the send dialog
  * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
  * @param link
- * @param title Title of the send dialog popup
  */
-function fb_get_send_url( message, redirect_url, link, popup_title ) {
+function fb_get_send_url( message, redirect_url, link ) {
     if ( typeof( popup_title ) == 'undefined' ) {
         popup_title = "Share";
     }
