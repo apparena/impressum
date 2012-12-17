@@ -128,9 +128,8 @@ function fb_share( name, message, link, picture, caption, callback) {
  * @param link Link the receiver will be redirected to, when he clicks on the title or picture of the shared message
  * @param picture Url of pictures shared with the message
  * @param caption Subtitle for the sharing message
- * @param popup_title Sharing dialog popup title
  */
-function fb_get_share_url( name, message, redirect_url, link, picture, caption ) {
+function fb_get_share_url( name, message, link, picture, caption, redirect_url ) {
     var url = 'https://www.facebook.com/dialog/feed' +
         '?app_id=' + fb_app_id +
         '&link=' + link +
