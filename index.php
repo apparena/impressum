@@ -61,6 +61,10 @@
 						<ul class="nav">
 							<li><a onclick="aa_tmpl_load('index.phtml');"><?php __p("Homepage");?></a></li>
 							<li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
+                            <li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("FB");?></a></li>
+                            <li><a onclick="aa_tmpl_load('module_registration.phtml');"><?php __p("Register");?></a></li>
+                            <li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Validation");?></a></li>
+                            <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
 						</ul>
 					</nav>
 				</div>
