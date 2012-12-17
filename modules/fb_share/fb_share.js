@@ -120,10 +120,7 @@ function fb_share( name, message, link, picture, caption, callback) {
  * @param caption Subtitle for the sharing message
  * @param popup_title Sharing dialog popup title
  */
-function fb_get_share_url( name, message, redirect_url, link, picture, caption, popup_title) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
+function fb_get_share_url( name, message, redirect_url, link, picture, caption ) {
     var url = 'https://www.facebook.com/dialog/feed' +
         '?app_id=' + fb_app_id +
         '&link=' + link +
@@ -132,7 +129,7 @@ function fb_get_share_url( name, message, redirect_url, link, picture, caption, 
         '&caption=' + caption +
         '&description=' + message +
         '&redirect_uri=' + redirect_url;
-    openPopup( url, popup_title );
+    return url;
 }
 
 /**
@@ -143,15 +140,12 @@ function fb_get_share_url( name, message, redirect_url, link, picture, caption, 
  * @param picture Url of a picture shared with this message
  * @param popup_title Title of the popup window
  */
-function fb_get_sharer_url( name, message, link, picture, popup_title ) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
+function fb_get_sharer_url( name, message, link, picture ) {
     var url='http://www.facebook.com/sharer.php?s=100&amp;p[title]='+urlencode(name);
     url+='&amp;p[summary]='+urlencode(message);
     url+='&amp;p[url]='+urlencode(link);
     url+='&amp;&amp;p[images][0]='+urlencode(picture);
-    openPopup( url, popup_title );
+    return url;
 }
 
 function urlencode(str) {
