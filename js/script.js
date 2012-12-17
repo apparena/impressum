@@ -134,7 +134,7 @@ function shareViaUrl() {
 	openPopup( url, 'share via url' );
 }
 
-function sharerViaUrl() {
+function sharerViaUrl( message ) {
 	var message      = $( '#message' ).val();
 	var redirect_url = $( '#url' ).val();
 	var link         = $( '#link' ).val();
@@ -168,17 +168,23 @@ function sharerViaUrl() {
 	
 	openPopup( url, 'share via url' );
 }
-
-function sendViaUrl() {
-	var message      = $( '#message' ).val();
-	var redirect_url = $( '#url' ).val();
-	var link         = $( '#link' ).val();
+/**
+ *
+ * @param message Main message of the send dialog
+ * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
+ * @param link
+ * @param title Title of the send dialog popup
+ */
+function sendViaUrl( message, redirect_url, link, title ) {
+    if ( typeof( title ) == 'undefined' ) {
+        title = "Share";
+    }
 	var url = 'https://www.facebook.com/dialog/send' +
 			  '?app_id=' + fb_app_id +
 			  '&message=' + message +
 			  '&link=' + link +
 			  '&redirect_uri=' + redirect_url;
-	openPopup( url, 'send via url' );
+	openPopup( url, title );
 }
 
 function friendRequestViaUrl() {
