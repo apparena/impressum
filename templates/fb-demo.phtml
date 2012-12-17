@@ -7,85 +7,92 @@ include_once ( '../init.php' );
 
 <div class="container">
     <div class="row">
-           <div class="span10">
-               <h1>Basics</h1>
-               <p>
-                   All Facebook sharing functions will share certain information within the network. You can freely
-                   define these information by passing information via <strong>function parameter</strong> (for API calls),
-                   by passing <strong>GET-Params</strong> (for Links using href) or to submit an URL which contains
-                   certain <strong>Facebook Meta-Tags</strong>.
-               </p>
-               <h2>Dependencies</h2>
-               <p>
-                   <ul>
-                        <li>libs/AA/fb_share.js<br>
-                            This library contains examples of all Facebook javascript sharing functions, which can be
-                            called immediately...
-                        </li>
-                   </ul>
-               </p>
-           </div>
-	</div>
+        <div class="span10">
+            <h1>Basics</h1>
+
+            <p>
+                All Facebook sharing functions will share certain information within the network. You can freely
+                define these information by passing information via <strong>function parameter</strong> (for API calls),
+                by passing <strong>GET-Params</strong> (for Links using href) or to submit an URL which contains
+                certain <strong>Facebook Meta-Tags</strong>.
+            </p>
+
+            <h2>Dependencies</h2>
+            <ul>
+                <li>libs/AA/fb_share.js<br>
+                    This library contains examples of all Facebook javascript sharing functions, which can be
+                    called immediately...
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
 	<div class="row">
 		<div class="span10">
-			<h4>customizable fields:</h4>
+            <h1>Demos:</h1>
 		</div>
+        <form class="form-vertical">
+            <div class="span5">
+                <fieldset>
+                    <legend>Required for <strong>all</strong> demos</legend>
+
+                    <div class="control-group">
+                        <label>Your message:</label>
+                        <div class="controls">
+                            <input type="text" name="message" id="message" value="I need YOU in this app..." />
+                            <i class="icon-info-sign rel-tooltip" data-original-title="You can choose a message of your choice."></i>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Redirect url:</label>
+                        <div class="controls rel-tooltip" data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings.">
+                            <input class="url-link" type="text" name="url" id="url" value="https://www.app-arena.com/app/aa_template/dev/response_demo.php" />
+                        </div>
+                    </div>
+
+                    <legend>Required for <strong>send</strong> and <strong>share</strong></legend>
+
+                    <div class="control-group">
+                        <label>direct link:</label>
+                        <div class="controls rel-tooltip" data-original-title="This link will be called when a user clicks on the title or on the image in an invitation.">
+                            <input class="url-link" type="text" name="link" id="link" value="http://www.google.de" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="span5">
+                <fieldset>
+                    <legend>Required for <strong>share</strong></legend>
+
+                    <div class="control-group">
+                        <label>picture link:</label>
+                        <div class="controls rel-tooltip" data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation.">
+                            <input class="url-link" type="text" name="picture" id="picture" value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>caption:</label>
+                        <div class="controls rel-tooltip" data-original-title="Enter a subtitle-message of your choice.">
+                            <input type="text" name="caption" id="caption" value="This app rocks the vote!!" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>name:</label>
+                        <div class="controls rel-tooltip" data-original-title="Enter a title here.">
+                            <input type="text" name="name" id="name" value="Storm The Front!"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
 	</div>
 	
 	
-		<form class="form-vertical">
-			<fieldset>
-				
-				<legend>required for all methods:</legend>
-				
-				<div class="control-group">
-					<label>your message:</label>
-					<div class="controls rel-tooltip" data-original-title="You can choose a message of your choice.">
-			        	<input type="text" name="message" id="message" value="I need YOU in this app..." />
-			       	</div>
-			    </div>
-			    
-			    <div class="control-group">
-					<label>redirect url:</label>
-					<div class="controls rel-tooltip" data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings.">
-			        	<input class="url-link" type="text" name="url" id="url" value="https://www.app-arena.com/app/aa_template/dev/response_demo.php" />
-			       	</div>
-			    </div>
-			    
-			    <legend>required for send and share methods:</legend>
-			    
-			    <div class="control-group">
-					<label>direct link:</label>
-					<div class="controls rel-tooltip" data-original-title="This link will be called when a user clicks on the title or on the image in an invitation.">
-			        	<input class="url-link" type="text" name="link" id="link" value="http://www.google.de" />
-			       	</div>
-			    </div>
-			    
-			    <legend>required for share method:</legend>
-			    
-			    <div class="control-group">
-					<label>picture link:</label>
-					<div class="controls rel-tooltip" data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation.">
-			        	<input class="url-link" type="text" name="picture" id="picture" value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" />
-			       	</div>
-			    </div>
-			    
-			    <div class="control-group">
-					<label>caption:</label>
-					<div class="controls rel-tooltip" data-original-title="Enter a subtitle-message of your choice.">
-			        	<input type="text" name="caption" id="caption" value="This app rocks the vote!!" />
-			       	</div>
-			    </div>
-			    
-			    <div class="control-group">
-					<label>name:</label>
-					<div class="controls rel-tooltip" data-original-title="Enter a title here.">
-			        	<input type="text" name="name" id="name" value="Storm The Front!"/>
-			       	</div>
-			    </div>
-			    
-			</fieldset>
-		</form>
+
 	
 	
     <div class="row">
