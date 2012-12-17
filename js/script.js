@@ -58,7 +58,7 @@ function show_msg(msg, type, delay) {
             break;
 
         case 'info':
-            classes = 'alert alert-success fade in';
+            classes = 'alert alert-info fade in';
             break;
 
         default:
@@ -71,160 +71,6 @@ function show_msg(msg, type, delay) {
         $('#msg-container').removeClass().addClass(classes).html(msg).slideDown(500).delay(delay).fadeOut('slow');
     });
 
-}
-
-function postToFeed(link, picture_url, name, caption, desc) {
-	var obj = {
-        method:'feed',
-        link: $( '#link' ).val(),
-        picture: $( '#picture' ).val(),
-        name: $( '#name' ).val(),
-        caption: $( '#caption' ).val(),
-        description: $( '#message' ).val()
-    };
-    FB.ui(obj, callback);
-}
-
-/**
- *
- * @param name
- * @param link
- * @param display Can be: page, popup, iframe, or touch @see https://developers.facebook.com/docs/reference/dialogs/#display
- * @param callback
- */
-function fb_send( name, message, link, picture, redirect_uri, to, display, callback ) {
-    if ( typeof( display ) == 'undefined' ) {
-        display = "page";
-    }
-
-    FB.ui({
-        method:'send',
-        name: name,
-        description: message,
-        link: link,
-        picture: picture,
-        redirect_uri: redirect_uri,
-        to: to,
-        display: display
-    }, callback);
-}
-
-/**
- * Opens a popup with a send dialog. Easy to use...
- * @param message Main message of the send dialog
- * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
- * @param link
- * @param title Title of the send dialog popup
- */
-function fb_send_url( message, redirect_url, link, popup_title ) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
-    var url = 'https://www.facebook.com/dialog/send' +
-        '?app_id=' + fb_app_id +
-        '&message=' + message +
-        '&link=' + link +
-        '&redirect_uri=' + redirect_url;
-    openPopup( url, popup_title );
-}
-
-/**
- * Opens the facebook multi friend selector dialog.
- * @param name Title of the request
- * @param message Message send to the user. The user will only see the message, if he authorized your facebook app before.
- * @param data Additional parameter, which can be passed with the request.
- * @param callback Callback function
- */
-function sendRequest( name, message, data, callback ) {
-    // Use FB.ui to send the Request(s)
-    FB.ui({method:'apprequests',
-        title: name,
-        message: message,
-        data:data
-    }, callback);
-}
-
-/**
- * Opens a facebook sharing dialog popup
- * @param message Main message fof the sharing dialog
- * @param redirect_url
- * @param link
- * @param picture Url of pictures shared with the message
- * @param caption Subtitle for the sharing message
- * @param name Title of the sharing message
- * @param popup_title Sharing dialog popup title
- */
-function shareViaUrl( message, redirect_url, link, picture, caption, name, popup_title) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
-	var url = 'https://www.facebook.com/dialog/feed' +
-			  '?app_id=' + fb_app_id +
-			  '&link=' + link +
-			  '&picture=' + picture +
-			  '&name=' + name +
-			  '&caption=' + caption +
-			  '&description=' + message +
-			  '&redirect_uri=' + redirect_url;
-	openPopup( url, popup_title );
-}
-
-function sharerViaUrl( message ) {
-	var message      = $( '#message' ).val();
-	var redirect_url = $( '#url' ).val();
-	var link         = $( '#link' ).val();
-	var picture      = $( '#picture' ).val();
-	var caption      = $( '#caption' ).val();
-	var name         = $( '#name' ).val();
-	
-/*
-	var html='<button name="fb_share" class="btn btn-inverse btn-share" onclick="window.open(\''+url+'\',\'sharer\',\'toolbar=0,status=0,width='+params.width+',height='+params.height+'\');" href="javascript: void(0)">';
-	    html+='<i class="icon-bullhorn icon-white"></i> ';
-	    html+=__e('share');
-	    html+='</button>';
-*/
-	
-	var url='http://www.facebook.com/sharer.php?s=100&amp;p[title]=' + urlencode( name );
-	    url += '&amp;p[summary]=' + urlencode( message );
-	    url += '&amp;p[url]=' + urlencode( redirect_url );
-	    url += '&amp;&amp;p[images][0]=' + urlencode( picture );
-	
-	
-/*
-	var url = 'https://www.facebook.com/sharer/sharer.php' +
-			  '?app_id=' + fb_app_id +
-			  '&link=' + link +
-			  '&picture=' + picture +
-			  '&name=' + name +
-			  '&caption=' + caption +
-			  '&description=' + message +
-			  '&redirect_uri=' + redirect_url;
-*/
-	
-	openPopup( url, 'share via url' );
-}
-
-
-/**
- * Opens a Multifriend-Selector Dialog
- * @param message Message send to the user. The user will only see the message, if he authorized your facebook app before.
- * @param redirect_url Url the request receiver will be redirected to, if he accepts the request
- * @param popup_title Title of the multi friend selector popup
- */
-function friendRequestViaUrl( message, redirect_url, popup_title) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Apprequest";
-    }
-	var url = 'https://www.facebook.com/dialog/apprequests' +
-			  '?app_id=' + fb_app_id +
-			  '&message=' + message + 
-			  '&redirect_uri=' + redirect_url;
-	openPopup( url, popup_title );
-}
-
-function callback(response) {
-	var_dump( response, '#api_response', true );
-    console.log(response);
 }
 
 /**
@@ -279,16 +125,6 @@ function enableForm() {
     $( 'body' ).find( 'select' ).each( function(){
         $(this).removeAttr( 'disabled' );
     });
-}
-
-function openPopup( url, name ) {
-	
-	popup = window.open( url, name, 'target=_blank,width=820,height=800' );
-	if ( window.focus ) {
-		popup.focus();
-	}
-	return false;
-	
 }
 
 function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
