@@ -155,11 +155,3 @@ function urlencode(str) {
 function urldecode(str) {
     return decodeURIComponent((str + '').replace(/\+/g, '%20'));
 }
-
-function openPopup( url, name ) {
-    popup = window.open( url, name, 'target=_blank,width=820,height=800' );
-    if ( window.focus ) {
-        popup.focus();
-    }
-    return false;
-}
