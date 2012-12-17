@@ -69,7 +69,8 @@ include_once ( '../init.php' );
                             <input type="text" name="data" id="data" value="{ test-data:'abc',
                                                                               a_number:22 }" />
                             <i class="icon-info-sign rel-tooltip"
-                               data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
+                               data-original-title="You can pass a json array here. All parameters can be accessed on
+                                                    the landing page, after a user accepts the request."></i>
                         </div>
                         <span class="help-block">Optional values which can be submitted with a <strong>friend request</strong></span>
                     </div>
@@ -127,10 +128,10 @@ include_once ( '../init.php' );
             <a class="btn" onclick="postToFeed('www.app-arena.com')">
                 <i class="icon-share"></i> Share
             </a>
-            <a class="btn" onclick="sendToFriend('www.app-arena.com')">
+            <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
                 <i class="icon-envelope"></i> Send
             </a>
-            <a class="btn" onclick="sendRequest( $( '#name' ).val(), $( '#message' ).val(), 'test')">
+            <a class="btn" onclick="sendRequest( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
                 <i class="icon-user"></i> Friendselector
             </a>
             <h4>Api response:</h4>

@@ -74,8 +74,6 @@ function show_msg(msg, type, delay) {
 }
 
 function postToFeed(link, picture_url, name, caption, desc) {
-
-	// USE values from INPUT fields here too!
 	var obj = {
         method:'feed',
         link: $( '#link' ).val(),
@@ -84,38 +82,64 @@ function postToFeed(link, picture_url, name, caption, desc) {
         caption: $( '#caption' ).val(),
         description: $( '#message' ).val()
     };
-	
-/*
-    // calling the API ...
-    var obj = {
-        method:'feed',
-        link:link,
-        picture:picture_url,
-        name:name,
-        caption:caption,
-        description:desc
-    };
-*/
-    
-
     FB.ui(obj, callback);
 }
 
+/**
+ *
+ * @param name
+ * @param link
+ * @param display Can be: page, popup, iframe, or touch @see https://developers.facebook.com/docs/reference/dialogs/#display
+ * @param callback
+ */
+function fb_send( name, message, link, picture, redirect_uri, to, display, callback ) {
+    if ( typeof( display ) == 'undefined' ) {
+        display = "page";
+    }
 
-function sendToFriend( link, name ) {
     FB.ui({
         method:'send',
-        name: $( '#name' ).val(),
-        link: $( '#link' ).val()
+        name: name,
+        description: message,
+        link: link,
+        picture: picture,
+        redirect_uri: redirect_uri,
+        to: to,
+        display: display
     }, callback);
 }
 
+/**
+ * Opens a popup with a send dialog. Easy to use...
+ * @param message Main message of the send dialog
+ * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
+ * @param link
+ * @param title Title of the send dialog popup
+ */
+function fb_send_url( message, redirect_url, link, popup_title ) {
+    if ( typeof( popup_title ) == 'undefined' ) {
+        popup_title = "Share";
+    }
+    var url = 'https://www.facebook.com/dialog/send' +
+        '?app_id=' + fb_app_id +
+        '&message=' + message +
+        '&link=' + link +
+        '&redirect_uri=' + redirect_url;
+    openPopup( url, popup_title );
+}
 
-function sendRequest( name, message, data ) {
+/**
+ * Opens the facebook multi friend selector dialog.
+ * @param name Title of the request
+ * @param message Message send to the user. The user will only see the message, if he authorized your facebook app before.
+ * @param data Additional parameter, which can be passed with the request.
+ * @param callback Callback function
+ */
+function sendRequest( name, message, data, callback ) {
     // Use FB.ui to send the Request(s)
     FB.ui({method:'apprequests',
-        title: $( '#name' ).val(),
-        message: $( '#message' ).val(),
+        title: name,
+        message: message,
         data:data
     }, callback);
 }
@@ -179,24 +203,7 @@ function sharerViaUrl( message ) {
 	
 	openPopup( url, 'share via url' );
 }
-/**
- * Opens a popup with a send dialog. Easy to use...
- * @param message Main message of the send dialog
- * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
- * @param link
- * @param title Title of the send dialog popup
- */
-function sendViaUrl( message, redirect_url, link, popup_title ) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
-	var url = 'https://www.facebook.com/dialog/send' +
-			  '?app_id=' + fb_app_id +
-			  '&message=' + message +
-			  '&link=' + link +
-			  '&redirect_uri=' + redirect_url;
-	openPopup( url, popup_title );
-}
+
 
 /**
  * Opens a Multifriend-Selector Dialog
