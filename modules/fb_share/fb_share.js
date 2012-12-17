@@ -6,6 +6,22 @@
  */
 
 /**
+ * App-Arenas method for the best facebook sharing experience
+ * @param name
+ * @param message
+ * @param link
+ * @param picture
+ */
+function aa_share( name, message, link, picture ) {
+
+    // 1. Check the environment for the sharing modal
+
+    // 2. If user is authenticated, then we can use the friend selector
+
+}
+
+
+/**
  *
  * @param name
  * @param link

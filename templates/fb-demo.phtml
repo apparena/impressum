@@ -25,10 +25,13 @@ include_once ( '../init.php' );
         </div>
     </div>
 
-
 	<div class="row">
 		<div class="span10">
             <h1>Demos:</h1>
+            <p>
+                <button class="btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
+            </p>
+
 		</div>
         <form class="form-vertical">
             <div class="span5">
@@ -66,8 +69,7 @@ include_once ( '../init.php' );
                     <div class="control-group">
                         <label>Data:</label>
                         <div class="controls">
-                            <input type="text" name="data" id="data" value="{ test-data:'abc',
-                                                                              a_number:22 }" />
+                            <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }" />
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="You can pass a json array here. All parameters can be accessed on
                                                     the landing page, after a user accepts the request."></i>
@@ -125,7 +127,8 @@ include_once ( '../init.php' );
 	<div class="row">
         <div class="span5">
             <h2>Sharing with JS</h2>
-            <a class="btn" onclick="postToFeed('www.app-arena.com')">
+            <a class="btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
+                                               $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
                 <i class="icon-share"></i> Share
             </a>
             <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
@@ -140,16 +143,28 @@ include_once ( '../init.php' );
 
         <div class="span5">
             <h2>Direct Link Sharing</h2>
-            <p> 
-                <a class="btn" onclick="shareViaUrl($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+            <p>
+                <ul>
+                    <li>
+                        fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br>
+                        <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
                                                     $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                    <i class="icon-share"></i> Share
-                </a>
+                            <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
+                        </a>
+                    </li>
+                    <li>
+                        fb_send_url();<br>
+                        <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                            <i class="icon-share"></i> Send
+                        </a>
+                    </li>
+                </ul>
+
                 <!--<a class="btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
-                <a class="btn" onclick="sendViaUrl($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
                     <i class="icon-share"></i> Send
                 </a>
-                <a class="btn" onclick="friendRequestViaUrl( $( '#message' ).val(), $( '#url' ).val());">
+                <a class="btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
                     <i class="icon-user"></i> Friendselector
                 </a>
             </p>
