@@ -124,49 +124,100 @@ include_once ( '../init.php' );
 				http://example.com/response?error_code=ERROR_CODE&amp;error_msg=ERROR_MSG
 		</div>
 	</div>-->
-	<div class="row">
-        <div class="span5">
-            <h2>Sharing with JS</h2>
-            <a class="btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Signature</th>
+                <th>Documentation</th>
+                <th>Demo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="4">Sharing with JS</th>
+            </tr>
+            <tr>
+                <td>Share</td>
+                <td>https://developers.facebook.com/docs/reference/dialogs/feed/</td>
+                <td><a class="btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
                                                $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
-                <i class="icon-share"></i> Share
-            </a>
-            <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
-                <i class="icon-envelope"></i> Send
-            </a>
-            <a class="btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
-                <i class="icon-user"></i> Friendselector
-            </a>
+                    <i class="icon-share"></i> Share
+                </a></td>
+            </tr>
+            <tr>
+                <td>Send</td>
+                <td>https://developers.facebook.com/docs/reference/dialogs/send/</td>
+                <td>
+                    <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
+                        <i class="icon-envelope"></i> Send
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Multi-Friend-Selector</td>
+                <td>https://developers.facebook.com/docs/reference/dialogs/requests/</td>
+                <td>
+                    <a class="btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
+                        <i class="icon-user"></i> Friendselector
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4">Direct Link Sharing</th>
+            </tr>
+            <tr>
+                <td>Share</td>
+                <td>https://developers.facebook.com/docs/reference/dialogs/feed/</td>
+                <td>
+                    <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                        <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Send</td>
+                <td>https://developers.facebook.com/docs/reference/dialogs/send/</td>
+                <td>
+                    <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                        <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+	<div class="row">
+        <div class="span10">
             <h4>Api response:</h4>
             <pre id="api_response"></pre>
         </div>
+
 
         <div class="span5">
             <h2>Direct Link Sharing</h2>
             <p>
                 <ul>
                     <li>
-                        fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br>
-                        <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
-                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                            <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
-                        </a>
+                        fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br />
+
                     </li>
                     <li>
-                        fb_send_url();<br>
+                        fb_send_url( message, redirect_url, link, popup_title );<br />
                         <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
                             <i class="icon-share"></i> Send
                         </a>
                     </li>
+                    <li>
+                        fb_mfs_url( message, redirect_url, link, popup_title );<br />
+                        <a class="btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
+                            <i class="icon-user"></i> Friendselector
+                        </a>
+                    </li>
                 </ul>
-
-                <!--<a class="btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
-                <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
-                    <i class="icon-share"></i> Send
-                </a>
-                <a class="btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
-                    <i class="icon-user"></i> Friendselector
-                </a>
             </p>
         </div>
 	</div>

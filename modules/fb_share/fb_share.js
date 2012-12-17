@@ -25,7 +25,7 @@ function aa_share( name, message, link, picture ) {
  *
  * @param name
  * @param link
- * @param display Can be: page, popup, iframe, or touch @see https://developers.facebook.com/docs/reference/dialogs/#display
+ * @param display Can be: page, popup, iframe, or touch, @see https://developers.facebook.com/docs/reference/dialogs/#display
  * @param callback
  */
 function fb_send( name, message, link, picture, redirect_uri, to, display, callback ) {
@@ -52,7 +52,7 @@ function fb_send( name, message, link, picture, redirect_uri, to, display, callb
  * @param link
  * @param title Title of the send dialog popup
  */
-function fb_send_url( message, redirect_url, link, popup_title ) {
+function fb_get_send_url( message, redirect_url, link, popup_title ) {
     if ( typeof( popup_title ) == 'undefined' ) {
         popup_title = "Share";
     }
@@ -86,7 +86,7 @@ function fb_mfs( name, message, data, callback ) {
  * @param redirect_url Url the request receiver will be redirected to, if he accepts the request
  * @param popup_title Title of the multi friend selector popup
  */
-function fb_mfs_url( message, redirect_url, popup_title) {
+function fb_get_mfs_url( message, redirect_url, popup_title) {
     if ( typeof( popup_title ) == 'undefined' ) {
         popup_title = "Apprequest";
     }
@@ -128,7 +128,7 @@ function fb_share( name, message, link, picture, caption, callback) {
  * @param caption Subtitle for the sharing message
  * @param popup_title Sharing dialog popup title
  */
-function fb_share_url( name, message, redirect_url, link, picture, caption, popup_title) {
+function fb_get_share_url( name, message, redirect_url, link, picture, caption, popup_title) {
     if ( typeof( popup_title ) == 'undefined' ) {
         popup_title = "Share";
     }
@@ -151,7 +151,7 @@ function fb_share_url( name, message, redirect_url, link, picture, caption, popu
  * @param picture Url of a picture shared with this message
  * @param popup_title Title of the popup window
  */
-function fb_sharer_url( name, message, link, picture, popup_title ) {
+function fb_get_sharer_url( name, message, link, picture, popup_title ) {
     if ( typeof( popup_title ) == 'undefined' ) {
         popup_title = "Share";
     }
@@ -161,42 +161,6 @@ function fb_sharer_url( name, message, link, picture, popup_title ) {
     url+='&amp;&amp;p[images][0]='+urlencode(picture);
     openPopup( url, popup_title );
 }
-
-
-/*function sharerViaUrl( message ) {
-    var message      = $( '#message' ).val();
-    var redirect_url = $( '#url' ).val();
-    var link         = $( '#link' ).val();
-    var picture      = $( '#picture' ).val();
-    var caption      = $( '#caption' ).val();
-    var name         = $( '#name' ).val();
-
-    /*
-     var html='<button name="fb_share" class="btn btn-inverse btn-share" onclick="window.open(\''+url+'\',\'sharer\',\'toolbar=0,status=0,width='+params.width+',height='+params.height+'\');" href="javascript: void(0)">';
-     html+='<i class="icon-bullhorn icon-white"></i> ';
-     html+=__e('share');
-     html+='</button>';
-
-
-    var url='http://www.facebook.com/sharer.php?s=100&amp;p[title]=' + urlencode( name );
-    url += '&amp;p[summary]=' + urlencode( message );
-    url += '&amp;p[url]=' + urlencode( redirect_url );
-    url += '&amp;&amp;p[images][0]=' + urlencode( picture );
-
-
-    /*
-     var url = 'https://www.facebook.com/sharer/sharer.php' +
-     '?app_id=' + fb_app_id +
-     '&link=' + link +
-     '&picture=' + picture +
-     '&name=' + name +
-     '&caption=' + caption +
-     '&description=' + message +
-     '&redirect_uri=' + redirect_url;
-
-
-    openPopup( url, 'share via url' );
-}*/
 
 function urlencode(str) {
     str = (str + '').toString();
