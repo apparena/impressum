@@ -61,7 +61,7 @@ function fb_get_send_url( message, redirect_url, link, popup_title ) {
         '&message=' + message +
         '&link=' + link +
         '&redirect_uri=' + redirect_url;
-    openPopup( url, popup_title );
+    return url;
 }
 
 /**
