@@ -1,5 +1,5 @@
-<?php 
-include_once ( '../init.php' );
+<?php
+include_once ('../init.php');
 ?>
 
 <!-- Include Facebook sharing lib -->
@@ -25,21 +25,23 @@ include_once ( '../init.php' );
         </div>
     </div>
 
-	<div class="row">
-		<div class="span10">
+    <div class="row">
+        <div class="span10">
             <h1>Demos:</h1>
+
             <p>
-                <button class="btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
+                <button class="fb-btn tbn-large" onclick="aa_share()"><i class="icon-bullhorn"></i> Share</button>
             </p>
 
-		</div>
+        </div>
         <form class="form-vertical">
             <div class="span5">
                 <fieldset>
                     <div class="control-group">
                         <label>Your message:</label>
+
                         <div class="controls">
-                            <input type="text" name="message" id="message" value="I need YOU in this app..." />
+                            <input type="text" name="message" id="message" value="I need YOU in this app..."/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="You can choose a message of your choice."></i>
                         </div>
@@ -48,8 +50,10 @@ include_once ( '../init.php' );
 
                     <div class="control-group">
                         <label>Redirect url:</label>
+
                         <div class="controls">
-                            <input type="text" name="url" id="url" value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php" />
+                            <input type="text" name="url" id="url"
+                                   value="https://www.app-arena.com/app/aa_template/dev/libs/AA/fb_share.php"/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="This redirect url will be called after the user confirms the dialog. The url MUST be a derivative of the domain the app specifies in the FB-app-settings."></i>
                         </div>
@@ -58,8 +62,9 @@ include_once ( '../init.php' );
 
                     <div class="control-group">
                         <label>Direct link:</label>
+
                         <div class="controls">
-                            <input type="text" name="link" id="link" value="http://www.google.de" />
+                            <input type="text" name="link" id="link" value="http://www.google.de"/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="This link will be called when a user clicks on the title or on the image in an invitation."></i>
                         </div>
@@ -68,13 +73,15 @@ include_once ( '../init.php' );
 
                     <div class="control-group">
                         <label>Data:</label>
+
                         <div class="controls">
-                            <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }" />
+                            <input type="text" name="data" id="data" value="{ test-data:'abc', a_number:22 }"/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="You can pass a json array here. All parameters can be accessed on
                                                     the landing page, after a user accepts the request."></i>
                         </div>
-                        <span class="help-block">Optional values which can be submitted with a <strong>friend request</strong></span>
+                        <span class="help-block">Optional values which can be submitted with a <strong>friend
+                            request</strong></span>
                     </div>
                 </fieldset>
             </div>
@@ -82,8 +89,10 @@ include_once ( '../init.php' );
                 <fieldset>
                     <div class="control-group">
                         <label>Picture url:</label>
+
                         <div class="controls">
-                            <input type="text" name="picture" id="picture" value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png" />
+                            <input type="text" name="picture" id="picture"
+                                   value="https://www.app-arena.com/app/aa_template/dev/img/AA_image.png"/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="This link-url must refer to a valid image. The image will then be shown in the invitation."></i>
                         </div>
@@ -92,8 +101,9 @@ include_once ( '../init.php' );
 
                     <div class="control-group">
                         <label>Caption:</label>
+
                         <div class="controls">
-                            <input type="text" name="caption" id="caption" value="This app rocks the vote!!" />
+                            <input type="text" name="caption" id="caption" value="This app rocks the vote!!"/>
                             <i class="icon-info-sign rel-tooltip"
                                data-original-title="Enter a subtitle-message of your choice."></i>
                         </div>
@@ -102,6 +112,7 @@ include_once ( '../init.php' );
 
                     <div class="control-group">
                         <label>Name:</label>
+
                         <div class="controls">
                             <input type="text" name="name" id="name" value="Storm The Front!"/>
                             <i class="icon-info-sign rel-tooltip"
@@ -112,8 +123,8 @@ include_once ( '../init.php' );
                 </fieldset>
             </div>
         </form>
-	</div>
-	
+    </div>
+
     <!--<div class="row">
 		<div class="alert alert-info span10">
 	          	assuming your redirect url is &quot;http://example.com/response&quot;:
@@ -124,17 +135,17 @@ include_once ( '../init.php' );
 				http://example.com/response?error_code=ERROR_CODE&amp;error_msg=ERROR_MSG
 		</div>
 	</div>-->
-	<div class="row">
+    <div class="row">
         <div class="span5">
             <h2>Sharing with JS</h2>
-            <a class="btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
+            <a class="fb-btn" onclick="fb_share( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val(),
                                                $( '#picture' ).val(), $( '#caption' ).val(), callback() )">
                 <i class="icon-share"></i> Share
             </a>
-            <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
+            <a class="fb-btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
                 <i class="icon-envelope"></i> Send
             </a>
-            <a class="btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
+            <a class="fb-btn" onclick="fb_mfs( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
                 <i class="icon-user"></i> Friendselector
             </a>
             <h4>Api response:</h4>
@@ -143,53 +154,61 @@ include_once ( '../init.php' );
 
         <div class="span5">
             <h2>Direct Link Sharing</h2>
-            <p>
-                <ul>
-                    <li>
-                        fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br>
-                        <a class="btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
-                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
-                            <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption, popup_title )
-                        </a>
-                    </li>
-                    <li>
-                        fb_send_url();<br>
-                        <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
-                            <i class="icon-share"></i> Send
-                        </a>
-                    </li>
-                </ul>
 
-                <!--<a class="btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
-                <a class="btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
-                    <i class="icon-share"></i> Send
-                </a>
-                <a class="btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
-                    <i class="icon-user"></i> Friendselector
-                </a>
+            <p>
+            <ul>
+                <li>
+                    fb_share_url( name, message, redirect_url, link, picture, caption, popup_title );<br>
+                    <a class="fb-btn" onclick="fb_share_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val(),
+                                                    $( '#picture' ).val(), $( '#caption' ).val(), $( '#name' ).val());">
+                        <i class="icon-share"></i> fb_share_url( name, message, redirect_url, link, picture, caption,
+                        popup_title )
+                    </a>
+                </li>
+                <li>
+                    fb_send_url();<br>
+                    <a class="fb-btn"
+                       onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                        <i class="icon-share"></i> Send
+                    </a>
+                </li>
+            </ul>
+
+            <!--<a class="fb-btn" onclick="sharerViaUrl();"><i class="icon-share"></i> Sharer</a>-->
+            <a class="fb-btn" onclick="fb_send_url($( '#message' ).val(), $( '#url' ).val(), $( '#link' ).val());">
+                <i class="icon-share"></i> Send
+            </a>
+            <a class="fb-btn" onclick="fb_mfs_url( $( '#message' ).val(), $( '#url' ).val());">
+                <i class="icon-user"></i> Friendselector
+            </a>
             </p>
         </div>
-	</div>
-	<div class="row">
+    </div>
+    <div class="row">
         <div class="span10">
             <h1>Native Facebook social plugins</h1>
+
             <h3>Like-Button</h3>
-            <div class="fb-like" data-href="http://www.app-arena.com" data-send="false" data-width="450" data-show-faces="true"></div>
+
+            <div class="fb-like" data-href="http://www.app-arena.com" data-send="false" data-width="450"
+                 data-show-faces="true"></div>
 
             <h3>Send-Button</h3>
+
             <div class="fb-send" data-href="http://www.app-arena.com"></div>
 
             <h3>Comment-Box</h3>
+
             <div class="fb-comments" data-href="http://www.app-arena.com" data-width="470" data-num-posts="5"></div>
         </div>
     </div>
 </div>
 <script>
-	$(document).ready( function(){
-		$( '.rel-tooltip' ).tooltip();
-	});
+    $(document).ready(function () {
+        $('.rel-tooltip').tooltip();
+    });
     function callback(response) {
-        var_dump( response, '#api_response', true );
+        var_dump(response, '#api_response', true);
         console.log(response);
     }
 </script>
