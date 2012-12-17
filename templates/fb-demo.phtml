@@ -128,10 +128,10 @@ include_once ( '../init.php' );
             <a class="btn" onclick="postToFeed('www.app-arena.com')">
                 <i class="icon-share"></i> Share
             </a>
-            <a class="btn" onclick="sendToFriend('www.app-arena.com')">
+            <a class="btn" onclick="fb_send( $( '#name' ).val(), $( '#message' ).val(), $( '#link' ).val());">
                 <i class="icon-envelope"></i> Send
             </a>
-            <a class="btn" onclick="sendRequest( $( '#name' ).val(), $( '#message' ).val(), 'test')">
+            <a class="btn" onclick="sendRequest( $( '#name' ).val(), $( '#message' ).val(), $( '#data' ).val())">
                 <i class="icon-user"></i> Friendselector
             </a>
             <h4>Api response:</h4>
