@@ -28,11 +28,7 @@ function aa_share( name, message, link, picture ) {
  * @param display Can be: page, popup, iframe, or touch, @see https://developers.facebook.com/docs/reference/dialogs/#display
  * @param callback
  */
-function fb_send( name, message, link, picture, redirect_uri, to, display, callback ) {
-    if ( typeof( display ) == 'undefined' ) {
-        display = "page";
-    }
-
+function fb_send( name, message, link, picture, redirect_uri, to, callback ) {
     FB.ui({
         method:'send',
         name: name,
@@ -40,8 +36,7 @@ function fb_send( name, message, link, picture, redirect_uri, to, display, callb
         link: link,
         picture: picture,
         redirect_uri: redirect_uri,
-        to: to,
-        display: display
+        to: to
     }, callback);
 }
 
