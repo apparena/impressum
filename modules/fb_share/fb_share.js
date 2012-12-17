@@ -46,15 +46,15 @@ function fb_send( name, message, link, picture, redirect_uri, to, callback ) {
  * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
  * @param link
  */
-function fb_get_send_url( message, redirect_url, link ) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Share";
-    }
+function fb_get_send_url( name, message, link, picture, redirect_url, to ) {
     var url = 'https://www.facebook.com/dialog/send' +
         '?app_id=' + fb_app_id +
+        '&name=' + name +
         '&message=' + message +
         '&link=' + link +
-        '&redirect_uri=' + redirect_url;
+        '&picture=' + picture +
+        '&redirect_uri=' + redirect_url +
+        '&to=' + to;
     return url;
 }
 
@@ -80,15 +80,13 @@ function fb_mfs( name, message, data, callback ) {
  * @param redirect_url Url the request receiver will be redirected to, if he accepts the request
  * @param popup_title Title of the multi friend selector popup
  */
-function fb_get_mfs_url( message, redirect_url, popup_title) {
-    if ( typeof( popup_title ) == 'undefined' ) {
-        popup_title = "Apprequest";
-    }
+function fb_get_mfs_url( name, message, redirect_url) {
     var url = 'https://www.facebook.com/dialog/apprequests' +
         '?app_id=' + fb_app_id +
+        '&name=' + name +
         '&message=' + message +
         '&redirect_uri=' + redirect_url;
-    openPopup( url, popup_title );
+    return url;
 }
 
 /**
