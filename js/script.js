@@ -127,4 +127,12 @@ function enableForm() {
     });
 }
 
+function open_popup( url, name ) {
+    popup = window.open( url, name, 'target=_blank,width=820,height=800' );
+    if ( window.focus ) {
+        popup.focus();
+    }
+    return false;
+}
+
 function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
