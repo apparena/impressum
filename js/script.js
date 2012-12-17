@@ -169,32 +169,39 @@ function sharerViaUrl( message ) {
 	openPopup( url, 'share via url' );
 }
 /**
- *
+ * Opens a popup with a send dialog. Easy to use...
  * @param message Main message of the send dialog
  * @param redirect_url Url behind the title of the post (User will be redirected to this url, when he clicks on the title)
  * @param link
  * @param title Title of the send dialog popup
  */
-function sendViaUrl( message, redirect_url, link, title ) {
-    if ( typeof( title ) == 'undefined' ) {
-        title = "Share";
+function sendViaUrl( message, redirect_url, link, popup_title ) {
+    if ( typeof( popup_title ) == 'undefined' ) {
+        popup_title = "Share";
     }
 	var url = 'https://www.facebook.com/dialog/send' +
 			  '?app_id=' + fb_app_id +
 			  '&message=' + message +
 			  '&link=' + link +
 			  '&redirect_uri=' + redirect_url;
-	openPopup( url, title );
+	openPopup( url, popup_title );
 }
 
-function friendRequestViaUrl() {
-	var message = $( '#message' ).val();
-	var redirect_url = $( '#url' ).val();
+/**
+ * Opens a Multifriend-Selector Dialog
+ * @param message Message send to the user. The user will only see the message, if he authorized your facebook app before.
+ * @param redirect_url Url the request receiver will be redirected to, if he accepts the request
+ * @param popup_title Title of the multi friend selector popup
+ */
+function friendRequestViaUrl( message, redirect_url, popup_title) {
+    if ( typeof( popup_title ) == 'undefined' ) {
+        popup_title = "Apprequest";
+    }
 	var url = 'https://www.facebook.com/dialog/apprequests' +
 			  '?app_id=' + fb_app_id +
 			  '&message=' + message + 
 			  '&redirect_uri=' + redirect_url;
-	openPopup( url, 'apprequest via url' );
+	openPopup( url, popup_title );
 }
 
 function callback(response) {
