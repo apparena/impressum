@@ -13,8 +13,9 @@ function aa_tmpl_load(tmpl_filename, data) {
     } else {
     	data = '&' + data;
     }
+    var url = "templates/" + tmpl_filename + "?aa_inst_id=" + aa_inst_id + data;
     $("#main").slideUp(0, function () {
-        $("#main").load("templates/" + tmpl_filename + "?aa_inst_id=" + aa_inst_id + data, function () {
+        $("#main").load( url, function () {
             $("#main").slideDown(600, function () {
                 //reinit facebook
                 if (typeof(FB) === "object" && FB._apiKey === null) {
