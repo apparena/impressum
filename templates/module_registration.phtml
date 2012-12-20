@@ -149,7 +149,7 @@
 <h2>Use it...</h2>
 <h3>With javascript</h3>
 <pre>
-<script src="modules/newsletter/newsletter.js"></script>
+<!-- <script src="modules/newsletter/newsletter.js"></script> -->
 <script>
     send_newsletter(aa_inst_id, email, name);
 </script>
@@ -165,3 +165,77 @@ include_once 'modules/newsletter/send_newsletter_confirmation.php';
     This still has to be written
 </div>
 
+<script>
+$(document).ready(function() {
+	$(".form-registration").validate( $.register_bootstrap_form ); // use the register_bootstrap_form variable from the registration.js
+    $.register_fb_widget( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id, '#fb_registration_widget' ); // show demo registration widget
+    //register_fb_widget( 'name,birthday,gender,location,email', 'https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=' + aa_inst_id, '#fb_registration_widget' ); // show demo registration widget
+});
+
+function register_via_connect() {
+    disableForm();
+    $( '#progress-connect' ).show();
+    var scope = $( '#scope' ).val();
+    $.register_fb_connect( scope, callbackSuccessConnect );
+}
+function callbackSuccessConnect( data ) {
+
+    $( '#progress-connect' ).after(
+        '<button class="btn btn-success" id="saveUserData" onclick="$.register_save_user_data();">' +
+        '<i class="icon-download-alt icon-white"></i> Save user data</button>'
+    );
+    $( '#progress-connect' ).hide();
+    $( '#user_profile' ).html(
+        $.register_user_data[ 'name' ] + '&nbsp;&nbsp;&nbsp;'
+        + '<a href="https://www.facebook.com/' + $.register_user_data[ 'key' ] + '" target="_blank">'
+        + '<img class="profile-picture" src="https://graph.facebook.com/'
+        + $.register_user_data[ 'key' ]
+        + '/picture?type=square" title="visit the users facebook profile..." /></a>'
+    );
+    $( '#container_log' ).fadeIn( 300 );
+    enableForm();
+}
+
+function register_via_widget() {
+    disableForm();
+    $( '#progress-register' ).show();
+    var url = $( '#url').val();
+    var fields = $( '#fields' ).val();
+    var put_to = '#fb_registration_widget';
+    var response = $.register_fb_widget( fields, url, put_to );
+    enableForm();
+    $( '#progress-register' ).hide();
+}
+
+function register_via_form() {
+    disableForm();
+    $( '#progress-form' ).show();
+    $.register_form( '#myForm', callbackSuccessForm );
+}
+function callbackSuccessForm( data ) {
+
+    $( '#progress-form' ).after(
+        '<button class="btn btn-success" id="saveUserData" onclick="$.register_save_user_data(' + aa_inst_id + ');">' +
+        '<i class="icon-download-alt icon-white"></i> Save user data</button>'
+    );
+    $( '#progress-form' ).hide();
+    $( '#container_log' ).fadeIn( 300 );
+    enableForm();
+}
+
+function log_action() {
+
+    disableForm();
+    $( '#progress-log' ).show();
+    var action = $( '#action' ).val();
+    var data = $( '#data' ).val();
+    $.register_log_action( aa_inst_id, action, data, callbackSuccessLog );
+
+}
+function callbackSuccessLog( data ) {
+
+    $( '#progress-log' ).hide();
+    enableForm();
+
+}
+</script>
