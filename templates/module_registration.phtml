@@ -10,3 +10,34 @@
     <div>&lt;script src="modules/registration/registration.js" type="text/javascript" /&gt;</div>
     <div>Note that there has to be valid data for the database connection in root/config.php.</div>
 </div>
+
+<hr />
+
+<div class="row">
+	<div class="span10">
+		<div id="container_connect">
+			<h2>Facebook connect</h2>
+			<hr />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span5">
+        <p><strong id="user_profile"></strong></p>
+        <button class="btn btn-primary" onclick="register_via_connect();"><i class="icon-retweet icon-white"></i> Connect</button>
+        <span id="progress-connect" class="hide progress"><img src="img/loading_progress.gif" /></span>
+        <label class="control-label" for="scope" title="enter a FB scope list here, such as 'email' or 'email,publish_stream'">Scope
+            <input type="text" value="email" id="scope" name="scope" />
+        </label>
+    </div>
+    <div class="span4">
+        <span>
+            Connect your users with a simple login procedure.
+            The FB-API is used to log the user in and return a
+            JSON containing the data you requested through the
+            scope(s).
+        </span>
+        <span><a href="https://developers.facebook.com/docs/reference/javascript/FB.login/">https://developers.facebook.com/docs/reference/javascript/FB.login/</a></span>
+        <span><a href="https://developers.facebook.com/docs/reference/javascript/FB.api/">https://developers.facebook.com/docs/reference/javascript/FB.api/</a></span>
+    </div>
+</div>
