@@ -41,3 +41,127 @@
         <span><a href="https://developers.facebook.com/docs/reference/javascript/FB.api/">https://developers.facebook.com/docs/reference/javascript/FB.api/</a></span>
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="span10">
+        <div id="container_register">
+            <h2>Facebook registration</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span5">
+        <button class="btn btn-primary" onclick="register_via_widget();"><i class="icon-random icon-white"></i> refresh Registration</button>
+        <!--<button class="btn btn-primary" onclick="fb_register_debug();"><i class="icon-random icon-white"></i> refresh Registration</button>-->
+
+        <span id="progress-register" class="hide progress"><img src="img/loading_progress.gif" /></span>
+        <label class="control-label" for="fields" title="enter a FB field list here, such as 'name' or 'name,birthday,gender,location,email'">Fields
+            <input type="text" value="name" id="fields" name="fields" />
+        </label>
+        <label class="control-label" for="url" title="enter an url which will be opened by the registration plugin">URL
+            <input type="text" value="https://www.app-arena.com/app/aa_template/dev/modules/registration/save_user.php?aa_inst_id=<?php echo $aa_inst_id; ?>" id="url" name="url" />
+        </label>
+    </div>
+    <div class="span4">
+        <span>
+            Connect your users with a registration procedure.
+            XFBML is used to log the user in and return a
+            JSON containing the data you requested through the
+            field(s).
+        </span>
+        <span><a href="https://developers.facebook.com/docs/plugins/registration/">https://developers.facebook.com/docs/plugins/registration/</a></span>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <span id="fb_registration_widget">
+    </span>
+</div>
+<hr />
+<div class="row">
+	<div class="span10">
+		<div id="container_form">
+			<h2>Form registration</h2>
+			<hr />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span5">
+        <form class="form-registration" action="javascript:register_via_form();" id="myForm">
+            <div class="control-group">
+                <label class="control-label" for="name">Name</label>
+                <div class="controls">
+                    <!-- The id/name attribute is needed by the validation. For the registration you should supply at least an id. -->
+                    <input type="text" id="name" name="name" placeholder="Your name" class="required">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                    <input type="text" id="email" name="email" placeholder="Your email address" class="required email">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox"><input id="option_1" type="checkbox"> Yes, we can!</label>
+                    <button type="submit" class="btn"><i class="icon-envelope"></i> Submit</button>
+                </div>
+            </div>
+        </form>
+        <span id="progress-form" class="hide progress"><img src="img/loading_progress.gif" /></span>
+    </div>
+    <div class="span4">
+        <span>
+            Connect your users with a simple form.
+            The FB-API is not used here.
+            This will return a JSON object containing the data
+            from fields you put into the form.
+        </span>
+    </div>
+</div>
+
+<hr />
+<div id="container_log" class="row hide">
+	<div class="span10">
+		<h2>Log action</h2>
+		<hr />
+		<button class="btn btn-primary" onclick="log_action();"><i class="icon-download-alt icon-white"></i> Log action for current user</button>
+		<span id="progress-log" class="hide progress"><img src="img/loading_progress.gif" /></span>
+		<label class="control-label" for="action" title="Enter an action type here, such as 'register' or 'invite'">Action to log
+			<input type="text" value="register" id="action" name="action" />
+		</label>
+        <label class="control-label" for="data" title="Enter some data here, like &quot;What was the user registring for actually?&quot;">Data to log
+            <input type="text" value="sample data" id="data" name="data" />
+        </label>
+	</div>
+</div>
+
+<h1>Module: Newsletter</h1>
+<p>Use a double-opt-in Newsletter registration with just two lines of code. :-)</p>
+
+<h2>Requirements</h2>
+<ul>
+    <li>App-Arena App-Manager Connection</li>
+</ul>
+
+<h2>Use it...</h2>
+<h3>With javascript</h3>
+<pre>
+<script src="modules/newsletter/newsletter.js"></script>
+<script>
+    send_newsletter(aa_inst_id, email, name);
+</script>
+</pre>
+
+<h3>With php</h3>
+<pre>
+include_once 'modules/newsletter/send_newsletter_confirmation.php';
+</pre>
+
+<h2>Demo</h2>
+<div class="alert">
+    This still has to be written
+</div>
+
