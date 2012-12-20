@@ -8,8 +8,13 @@
  */
 function aa_tmpl_load(tmpl_filename, data) {
     show_loading(); // show the loading screen
+    if ( typeof( data ) == 'undefined' ) {
+    	data = '';
+    } else {
+    	data = '&' + data;
+    }
     $("#main").slideUp(0, function () {
-        $("#main").load("templates/" + tmpl_filename + "?aa_inst_id=" + aa_inst_id + "&" + data, function () {
+        $("#main").load("templates/" + tmpl_filename + "?aa_inst_id=" + aa_inst_id + data, function () {
             $("#main").slideDown(600, function () {
                 //reinit facebook
                 if (typeof(FB) === "object" && FB._apiKey === null) {
