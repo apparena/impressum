@@ -45,7 +45,7 @@
 		
 		<?php 
 			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
-				<div class="page_non_fans_layer"> 
+				<div class="page_non_fans_layer">
 					<div class="img_non_fans">
 						<img src="<?php echo $aa['config']['nofan_image']['value']?>" />
 					</div>
@@ -107,49 +107,33 @@
 				?>
 			</div>
 		</footer>
-	
+
+        <!-- Show admin panel if user is admin -->
+        <?php
+        //if (is_fb_user_admin()) {
+        //include_once 'modules/admin_panel/admin_panel.php';?>
+        <?php //} ?>
+
 		<!-- Debug mode -->
 		<?php if ( isset( $aa['config']['admin_debug_mode']['value'] ) && $aa['config']['admin_debug_mode']['value'] ) {?>
 			<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 			<div id="_debug" style="display:none;">
-				<h1>Debug information</h1>
+				<h2>Debug information</h2>
 				<h3>$aa['fb']</h3>
-				<pre>
-				<?php var_dump($aa['fb']);?>
-				</pre>
+				<pre><?php var_dump($aa['fb']);?></pre>
 				<h3>$aa['instance']</h3>
-				<pre>
-				<?php var_dump($aa['instance']);?>
-				</pre>
+				<pre><?php var_dump($aa['instance']);?></pre>
 				<h3>$aa['locale']</h3>
-				<pre>
-				<?php var_dump($aa['locale']);?>
-				</pre>
+				<pre><?php var_dump($aa['locale']);?></pre>
 				<h3>$aa['config']</h3>
-				<pre>
-				<?php var_dump($aa['config']);?>
-				</pre>
+				<pre><?php var_dump($aa['config']);?></pre>
 				<h3>$_COOKIE</h3>
-				<pre>
-				<?php var_dump($_COOKIE);?>
-				</pre>
+				<pre><?php var_dump($_COOKIE);?></pre>
 			</div>
 		<?php } ?>
-		
-		<?php 
-	 		// Include the file for the loading screen. Use it later from Javascript to hide_loading() or show_loading().
-	 		require_once( dirname(__FILE__).'/templates/loading_screen.phtml' );
-	 	?>
-	 	
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-		
-		<!-- scripts concatenated and minified via ant build script-->
-		<!-- <script src="js/libs/modernizr-2.5.2-respond-1.1.0.min.js"></script> -->
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/plugins.js"></script>
-		<script src="js/script.js?v5"></script>
-		<!-- end scripts-->
+
+        <!-- Show loading screen -->
+		<?php require_once( dirname(__FILE__).'/templates/loading_screen.phtml' ); ?>
 		
 		<!-- google analytics stuff -->
 		<script>
@@ -163,56 +147,8 @@
 			g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
 			s.parentNode.insertBefore(g,s)}(document,'script'));
 		</script>
-		
-		<!--[if lt IE 7 ]>
-			<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
-			<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
-		<![endif]-->
-		
-		<div id="fb-root"></div>
-		<script type="text/javascript">
+        <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
+        <script data-main="scripts/main" src="scripts/require.js"></script>
 
-			fb_app_id     = '<?php echo $aa['instance']["fb_app_id"]?>';
-			fb_canvas_url = '<?php echo $aa['instance']["fb_canvas_url"]?>';
-			aa_inst_id    = '<?php echo $aa['instance']["aa_inst_id"]?>';
-
-			// jquerys document ready function gets fired when the DOM has been finished loading.
-			$(document).ready(function() {
-				show_loading(); // uses the formerly included "loading_screen.phtml" files function
-				aa_tmpl_load("index.phtml");
-				
-				$('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });
-			});
-			
-
-			window.fbAsyncInit = function() {
-			    FB.init({
-			      appId      : fb_app_id, // App ID
-			      channelUrl : fb_canvas_url + 'channel.html', // Channel File
-			      status     : true, // check login status
-			      cookie     : true, // enable cookies to allow the server to access the session
-			      xfbml      : true  // parse XFBML
-			    });
-
-			    FB.Canvas.setAutoGrow(); // Grow facebook page, when iframe content is growing (>> no scrollbar)
-			    // Additional initialization code here
-			};
-			
-			// Load the SDK Asynchronously
-			(function(d){
-				var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-				if (d.getElementById(id)) {return;}
-				js = d.createElement('script'); js.id = id; js.async = true;
-				js.src = "//connect.facebook.net/de_DE/all.js";
-				ref.parentNode.insertBefore(js, ref);
-			}(document));
-		</script>
-		
-		<!-- Show admin panel if user is admin -->
-		<?php
-		//if (is_fb_user_admin()) {
-			//include_once 'modules/admin_panel/admin_panel.php';?>		
-		<?php //} ?>
-		
 	</body>
 </html>
