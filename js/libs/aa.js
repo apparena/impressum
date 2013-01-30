@@ -127,6 +127,7 @@ aa.translate.is_enable=function(){
    }
 }
 
+
 aa.translate.__t = function( args ){
 	//support  parameter as an array or as normal
 	if(aa.is_object(args) ){
