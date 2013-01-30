@@ -36,7 +36,7 @@ require([
     'bootstrap',
     'script',
     'aa'
-], function ($, FB, bootstrap, script, aa) {
+], function ($, FB, bootstrap, script, aa2) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
