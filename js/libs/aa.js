@@ -3,10 +3,6 @@
  * @version 0.5
  * @see http://www.app-arena.com/docs/display/developer/Javascript+SDK
  */
-
-//var aa=new Object();
-aa = aa || {};
-
 aa.is_object=function( value ) {
   value=this.convert_value(value);
   return (typeof(value) == 'object'); 

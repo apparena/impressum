@@ -129,7 +129,6 @@
         ?>
 
         <script>
-            aa = aa || {};
             aa = <?php echo json_encode($aaForJs); ?>;
         </script>
 
