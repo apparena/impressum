@@ -111,11 +111,11 @@ function fb_get_mfs_url( name, message, redirect_url) {
 function fb_share( name, message, link, picture, caption, callback) {
     var obj = {
         method:'feed',
-        name: $( '#name' ).val(),
-        description: $( '#message' ).val(),
-        link: $( '#link' ).val(),
-        picture: $( '#picture' ).val(),
-        caption: $( '#caption' ).val()
+        name: name,
+        description: message,
+        link: link,
+        picture: picture,
+        caption: caption
     };
     FB.ui(obj, callback);
 }
