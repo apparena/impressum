@@ -4,7 +4,6 @@ require.config({
     paths:{
         jquery:'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
         bootstrap:'//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
-        //registration: '../modules/registration/registration', // Example of an internal module
         facebook:'//connect.facebook.net/de_DE/all',
         script:'script'
     },
@@ -15,10 +14,6 @@ require.config({
         bootstrap:{
             deps:[ 'jquery' ]
         },
-        /* registration:{ // Example internal module integration
-         exports:'REG',
-         deps:[ 'jquery' ]
-         },*/
         facebook:{
             exports:'FB'
         },
@@ -33,9 +28,9 @@ require.config({
 require([
     'jquery',
     'facebook',
-    /* 'registration', // Example internal module integration*/
-    'bootstrap'
-], function ($, FB, /*REG,*/ bootstrap) {
+    'bootstrap',
+    'script'
+], function ($, FB, bootstrap, script) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
