@@ -148,7 +148,7 @@
 			s.parentNode.insertBefore(g,s)}(document,'script'));
 		</script>
         <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
-        <script data-main="scripts/main" src="scripts/require.js"></script>
+        <script data-main="js/main" src="js/require.js"></script>
 
 	</body>
 </html>
