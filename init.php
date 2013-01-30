@@ -117,6 +117,7 @@ $aaForJs = array(
     "fb" => false
 );
 if ( isset( $aa['fb'] ) ) {  $aaForJs["fb"] = $aa['fb']; }
+// Remove sensitive data from js object
 if ( isset( $aaForJs['inst']['fb_app_secret'] ) ) {  unset( $aaForJs['inst']['fb_app_secret'] ); }
 if ( isset( $aaForJs['inst']['aa_app_secret'] ) ) {  unset( $aaForJs['inst']['aa_app_secret'] ); }
 ?>
