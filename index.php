@@ -114,6 +114,25 @@
         //include_once 'modules/admin_panel/admin_panel.php';?>
         <?php //} ?>
 
+        <?php
+        /* Initialize App-Arena variable in js */
+        $aaForJs = array(
+            "t" => $aa['locale'][$aa_locale_current],
+            "conf" => $aa['config'],
+            "inst" => $aa['instance'],
+            "fb" => false
+        );
+        if (isset($aa['fb'])) { $aaForJs["fb"] = $aa['fb']; }
+        // Remove sensitive data from js object
+        if (isset($aaForJs['inst']['fb_app_secret'])) { unset($aaForJs['inst']['fb_app_secret']); }
+        if (isset($aaForJs['inst']['aa_app_secret'])) { unset($aaForJs['inst']['aa_app_secret']); }
+        ?>
+
+        <script>
+            aa = aa || {};
+            aa = <?php echo json_encode($aaForJs); ?>;
+        </script>
+
 		<!-- Debug mode -->
 		<?php if ( isset( $aa['config']['admin_debug_mode']['value'] ) && $aa['config']['admin_debug_mode']['value'] ) {?>
 			<span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>

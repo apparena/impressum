@@ -108,20 +108,3 @@ if ($db_activated) {
         mysql_query("set names utf8;");
     }
 }
-
-/* Initialize App-Arena variable in js */
-$aaForJs = array(
-    "t" => $aa['locale'][$aa_locale_current],
-    "conf" => $aa['config'],
-    "inst" => $aa['instance'],
-    "fb" => false
-);
-if ( isset( $aa['fb'] ) ) {  $aaForJs["fb"] = $aa['fb']; }
-// Remove sensitive data from js object
-if ( isset( $aaForJs['inst']['fb_app_secret'] ) ) {  unset( $aaForJs['inst']['fb_app_secret'] ); }
-if ( isset( $aaForJs['inst']['aa_app_secret'] ) ) {  unset( $aaForJs['inst']['aa_app_secret'] ); }
-?>
-<script>
-    aa = aa || {};
-    aa = <?php echo json_encode( $aaForJs ); ?>;
-</script>
