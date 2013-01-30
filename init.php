@@ -119,6 +119,8 @@ $aaForJs = array(
 if (isset($aa['fb'])) {
     $aaForJs["fb"] = $aa['fb'];
 }
+unset($aaForJs['inst']['fb_app_secret']);
+unset($aaForJs['inst']['aa_app_secret']);
 ?>
 <script>
     aa = <?php echo json_encode($aaForJs); ?>;
