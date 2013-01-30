@@ -4,16 +4,15 @@
  * @see http://www.app-arena.com/docs/display/developer/Javascript+SDK
  */
 
-var aa=new Object();
+//var aa=new Object();
+aa = aa || {};
 
-aa.is_object=function(value)
-{
+aa.is_object=function( value ) {
   value=this.convert_value(value);
   return (typeof(value) == 'object'); 
 }
 
-aa.is_string=function(value)
-{
+aa.is_string=function(value) {
   value=this.convert_value(value);
 
   return (typeof(value) == 'string');
@@ -22,8 +21,7 @@ aa.is_string=function(value)
  *  change value to a normal value,  no undefined, no false
  *  @param string  to_type transform to which type of variable
  */
-aa.convert_value=function(value,totype)
-{
+aa.convert_value=function(value,totype) {
   if(typeof(value) == 'undefined') return false;
 
   if(value == null) return false;
@@ -84,7 +82,6 @@ aa.object.prototype.get=function(key){
   {
     return false;
   }
-
   return this[key];
 }
 
@@ -121,7 +118,6 @@ aa.object.prototype.unset=function(key){
     return delete(this[key]);
   }
 }
-
 
 aa.translate=new aa.object();
 aa.translate.is_enable=function(){
@@ -189,22 +185,6 @@ function set_locale(key,value){
 function __e()
 {
   return aa.translate.__t(arguments);
-}
-
-
-/**
- * Loads a phtml template from the templates folder to the #main container of the page with a sliding effect.
- * @param filename Filename including extension. E.g. welcome.phtml
- * @param aa_inst_id Current app-arena instance id
- */
-function loadTemplate(filename, aa_inst_id){
-	//set the first menu item as the landing content.
-	$("#main").slideUp( 0, function(){
-		$("#main").load( "templates/" + filename + "?aa_inst_id=" + aa_inst_id, function(){
-			$("#main").slideDown();
-			hide_loading();
-		});
-	});
 }
 
 
