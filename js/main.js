@@ -5,7 +5,8 @@ require.config({
         jquery:'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
         bootstrap:'//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
         //registration: '../modules/registration/registration', // Example of an internal module
-        facebook:'//connect.facebook.net/de_DE/all'
+        facebook:'//connect.facebook.net/de_DE/all',
+        script:'script'
     },
     shim:{ // load required non AMD modules here...
         jquery:{
@@ -15,11 +16,14 @@ require.config({
             deps:[ 'jquery' ]
         },
         /* registration:{ // Example internal module integration
-            exports:'REG',
-            deps:[ 'jquery' ]
-        },*/
+         exports:'REG',
+         deps:[ 'jquery' ]
+         },*/
         facebook:{
             exports:'FB'
+        },
+        script:{
+            deps:[ 'jquery' ]
         }
     }
 });
@@ -31,7 +35,7 @@ require([
     'facebook',
     /* 'registration', // Example internal module integration*/
     'bootstrap'
-], function ( $, FB, /*REG,*/ bootstrap ) {
+], function ($, FB, /*REG,*/ bootstrap) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
@@ -45,6 +49,8 @@ require([
     FB.Canvas.setAutoGrow();
 
     aa_tmpl_load("index.phtml");
-    $('#terms-link').click(function() { aa_tmpl_load('terms.phtml'); });
+    $('#terms-link').click(function () {
+        aa_tmpl_load('terms.phtml');
+    });
 
 });
