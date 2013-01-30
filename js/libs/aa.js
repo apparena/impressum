@@ -15,7 +15,7 @@ aa.translate.is_enable=function(){
    }
 }
 
-aa.translate.__t=function(args){
+aa.translate.__t = function( args ){
 	//support  parameter as an array or as normal
 	if(aa.is_object(args) ){
 	  arguments=args;
@@ -66,6 +66,6 @@ function set_locale(key,value){
  * Returns a translated string from the current js translation object
  * @returns Translated string
  */
-function __e() {
+function __e( ) {
   return aa.translate.__t(arguments);
 }
