@@ -6,8 +6,7 @@ require.config({
         jquery:'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
         bootstrap:'//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
         facebook:'//connect.facebook.net/de_DE/all',
-        script:'script',
-        aa:'libs/aa'
+        script:'script'
     },
     shim:{ // load required non AMD modules here...
         jquery:{
@@ -21,9 +20,6 @@ require.config({
         },
         script:{
             deps:[ 'jquery', 'facebook' ]
-        },
-        aa:{
-            deps:[ 'jquery' ]
         }
     }
 });
@@ -34,9 +30,8 @@ require([
     'jquery',
     'facebook',
     'bootstrap',
-    'script',
-    'aa'
-], function ($, FB, bootstrap, script, aa2) {
+    'script'
+], function ($, FB, bootstrap, script) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
