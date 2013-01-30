@@ -3,6 +3,118 @@
  * @type {aa.object}
  */
 
+aa.is_object=function( value ) {
+    value=this.convert_value(value);
+    return (typeof(value) == 'object');
+}
+
+aa.is_string=function(value) {
+    value=this.convert_value(value);
+
+    return (typeof(value) == 'string');
+}
+/**
+ *  change value to a normal value,  no undefined, no false
+ *  @param string  to_type transform to which type of variable
+ */
+aa.convert_value=function(value,totype) {
+    if(typeof(value) == 'undefined') return false;
+
+    if(value == null) return false;
+
+
+    //handle different type
+    if(totype == 'boolean')
+    {
+        if(this.is_boolean(value) )
+        {
+            return value;
+        }
+        else if(this.is_array(value) )
+        {
+            if(value.length == 0 )
+                return false;
+        }
+        else if(this.is_object(value))
+        {
+            if(count(value) == 0 )
+                return false;
+        }
+        else if(this.is_int(value))
+        {
+            if(value == 0 )
+                return false;
+        }
+        else if(this.is_string(value) )
+        {
+            if(trim(value) == '' )
+                return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        return value;
+    }
+}
+
+
+/** extend Object **/
+aa.object=function(){};
+
+aa.object.prototype.isset=function(key){
+    var value=this[key];
+    return typeof value != 'undefined';
+}
+
+aa.object.prototype.has=function(key){
+    var value=this[key];
+    return typeof value != 'undefined';
+}
+
+aa.object.prototype.get=function(key){
+    if( this.has(key) == false)
+    {
+        return false;
+    }
+    return this[key];
+}
+
+aa.object.prototype.set=function(key,value){
+    this[key]=value;
+}
+
+aa.object.prototype.add=function(key,value){
+    this.set(key,value);
+}
+
+aa.object.prototype.set_data=function(object){
+    for(var k in object)
+    {
+        this.set(k,object[k]);
+    }
+}
+aa.object.prototype.each=function(callback){
+    for(var k in this)
+    {
+        if(this.hasOwnProperty(k) == false)
+        {
+            continue;
+        }
+
+        callback(k,this.get(k));
+    }
+}
+
+
+aa.object.prototype.unset=function(key){
+    if(this.isset(key))
+    {
+        return delete(this[key]);
+    }
+}
+
 aa.translate=new aa.object();
 aa.translate.is_enable=function(){
    if(this.count() == 0)
@@ -14,6 +126,7 @@ aa.translate.is_enable=function(){
       return true;
    }
 }
+
 
 aa.translate.__t = function( args ){
 	//support  parameter as an array or as normal
@@ -69,3 +182,4 @@ function set_locale(key,value){
 function __e( ) {
   return aa.translate.__t(arguments);
 }
+
