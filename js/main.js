@@ -18,7 +18,7 @@ require.config({
             exports:'FB'
         },
         script:{
-            deps:[ 'jquery', 'FB' ]
+            deps:[ 'jquery', 'facebook' ]
         }
     }
 });
