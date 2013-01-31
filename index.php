@@ -70,7 +70,7 @@
 		<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 		
 		<?php 
-			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
+			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['value']) { ?>
 				<div class="page_non_fans_layer">
 					<div class="img_non_fans">
                         <?php if ( $session->config['fangate_closable']['value'] ) {?>
