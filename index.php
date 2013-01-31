@@ -31,9 +31,35 @@
 		<style type="text/css">
 			<?php 
 				echo $aa['config']['css_bootstrap']['value'];
-				echo $aa['config']['css']['value'];
+				echo $aa['config']['css_app']['value'];
+                echo $aa['config']['css_user']['value'];
 			?>
 		</style>
+
+        <?php if ( $aa['config']['footer_branding']['value'] == 'apparena' ) { ?>
+        <!-- Google Publisher -->
+        <script type='text/javascript'>
+            var googletag = googletag || {};
+            googletag.cmd = googletag.cmd || [];
+            (function() {
+                var gads = document.createElement('script');
+                gads.async = true;
+                gads.type = 'text/javascript';
+                var useSSL = 'https:' == document.location.protocol;
+                gads.src = (useSSL ? 'https:' : 'http:') +
+                        '//www.googletagservices.com/tag/js/gpt.js';
+                var node = document.getElementsByTagName('script')[0];
+                node.parentNode.insertBefore(gads, node);
+            })();
+        </script>
+        <script type='text/javascript'>
+            googletag.cmd.push(function() {
+                googletag.defineSlot('/114327208/10000-Template-App-Footer', [810, 90], 'div-gpt-ad-1359627691750-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        </script>
+        <?php } ?>
 		
 	</head>
 	
@@ -47,6 +73,16 @@
 			if ( $aa['fb']['is_fb_user_fan'] == false && $aa['config']['nofan_image_activated']['value']) { ?>
 				<div class="page_non_fans_layer">
 					<div class="img_non_fans">
+                        <?php if ( $session->config['fangate_closable']['value'] ) {?>
+                            <a id="btnclosefangate" class="btn">X</a>
+                        <?php } ?>
+                        <div class="like-button">
+                            <div class="fb-like" data-href="<?=$session->instance['fb_page_url']?>" data-send="false"
+                                 data-layout="box_count" data-width="200"
+                                 data-show-faces="false" data-colorscheme="light" data-action="like">
+                            </div>
+                        </div>
+
 						<img src="<?php echo $aa['config']['nofan_image']['value']?>" />
 					</div>
 					<div id="non_fan_background">&nbsp;</div>
@@ -89,24 +125,33 @@
 				echo $aa['config']['custom_footer']['value'];
 			?>
 		</div>
-		
-		<footer>
-			<div class="terms-container">
-				<?php
-					$terms_and_conditions_link = "<a id='terms-link'>" . __t("terms_and_conditions") . "</a>";
-        			__p("footer_terms", $terms_and_conditions_link);
-				?>
-			</div>
-			
-			<div class="branding">
-				<?php 
-					// The app arena branding will be shown if the app instance is a basic one.
-					if ( isset( $aa['config']['footer_activated']['value'] ) && $aa['config']['footer_activated']['value'] == '1' ) {
-						echo $aa['config']['footer']['value'];
-					}
-				?>
-			</div>
-		</footer>
+
+        <footer>
+            <?php if ($aa['config']['tac_activated']['value'] == 'apparena') { ?>
+            <div class="tac">
+                <?php
+                $terms_and_conditions_link = "<a class='clickable' id='terms-link'>" . __t("terms_and_conditions") . "</a>";
+                __p("footer_terms", $terms_and_conditions_link);
+                ?>
+            </div>
+            <?php } ?>
+
+            <?php if ($aa['config']['footer_branding']['value'] == 'apparena') { ?>
+            <div class="banner">
+                <div class="tagline pull-left"><?php __p("new_on_app_arena_com"); ?></div>
+                <div class="like-button pull-right">
+                    <div class="fb-like" data-href="http://www.facebook.com/apparena" data-send="false"
+                         data-layout="button_count" data-width="200" data-show-faces="false"></div>
+                </div>
+                <!-- 10000-Template-App-Footer -->
+                <div id='div-gpt-ad-1359627691750-0' style='width:810px; height:90px;'>
+                    <script type='text/javascript'>
+                        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1359627691750-0'); });
+                    </script>
+                </div>
+            </div>
+            <?php } ?>
+        </footer>
 
         <!-- Show admin panel if user is admin -->
         <?php
