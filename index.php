@@ -78,7 +78,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
 <div class="fangate">
     <div class="img_non_fans">
         <?php if ( $aa['config']['fangate_closable']['value'] ) { ?>
-        <a id="btnclosefangate" class="btn pull-right">X</a>
+        <a class="btn pull-right" onclick="$('fangate').hide();">&times;</a>
         <?php } ?>
         <div class="like-button">
             <div class="fb-like" data-href="<?=$aa['instance']['fb_page_url']?>" data-send="false"
@@ -87,7 +87,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
             </div>
         </div>
 
-        <img src="<?php echo $aa['config']['nofan_image']['value']?>"/>
+        <img src="<?php echo $aa['config']['fangate']['value']?>"/>
     </div>
     <div class="backdrop">&nbsp;</div>
 </div>
