@@ -43,6 +43,10 @@ require([
         frictionlessRequests:true
     });
     FB.Canvas.setAutoGrow();
+    /* Hide Fangate, if user clicks the like button */
+    FB.Event.subscribe('edge.create', function(response) {
+        $('#fangate').hide();
+    });
 
     aa_tmpl_load("index.phtml");
     $('#terms-link').click(function () {
