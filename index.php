@@ -75,10 +75,10 @@ include_once("init.php");
 <?php
 if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['value']) {
     ?>
-<div class="fangate">
+<div id="fangate" class="fangate">
     <div class="img_non_fans">
         <?php if ( $aa['config']['fangate_closable']['value'] ) { ?>
-        <a class="btn pull-right" onclick="$('fangate').hide();">&times;</a>
+        <a class="btn pull-right" onclick="$('#fangate').hide();">&times;</a>
         <?php } ?>
         <div class="like-button">
             <div class="fb-like" data-href="<?=$aa['instance']['fb_page_url']?>" data-send="false"
