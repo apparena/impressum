@@ -91,6 +91,7 @@ include_once("init.php");
             <i class="icon-remove"></i>&nbsp; <? __p('close') ?> </a>
         </div>
     </div>
+<?php }?>
 
 <!-- Facebook Fangate -->
 <?php if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['value']) {  ?>
