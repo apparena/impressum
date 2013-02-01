@@ -213,7 +213,8 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <!-- Show loading screen -->
 <?php require_once(dirname(__FILE__) . '/templates/loading_screen.phtml'); ?>
 
-<!-- google analytics stuff -->
+<?php if ( $aa['config']['ga_activated']['value'] ) { ?>
+<!-- google analytics Integration -->
 <script>
     var _gaq = _gaq || [];
     var ga_id = '<?php if ( isset( $aa['config']["ga_id"]["value"] ) ) echo $aa['config']["ga_id"]["value"]; ?>';
@@ -228,6 +229,8 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
         s.parentNode.insertBefore(g, s)
     }(document, 'script'));
 </script>
+<?php } ?>
+
 <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
 <script data-main="js/main" src="js/require.js"></script>
 
