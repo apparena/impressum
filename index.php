@@ -72,26 +72,45 @@ include_once("init.php");
     different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
     to experience this site.</p><![endif]-->
 
-<?php
-if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['value']) {
-    ?>
-<div id="fangate" class="fangate">
-    <div class="img_non_fans">
-        <?php if ( $aa['config']['fangate_closable']['value'] ) { ?>
-        <a class="btn pull-right" onclick="$('#fangate').hide();">&times;</a>
-        <?php } ?>
-        <div class="like-button">
-            <div class="fb-like" data-href="<?=$aa['instance']['fb_page_url']?>" data-send="false"
-                 data-layout="box_count" data-width="200"
-                 data-show-faces="false" data-colorscheme="light" data-action="like">
-            </div>
-        </div>
-
-        <img src="<?php echo $aa['config']['fangate']['value']?>"/>
+<?  if ( $aa['fb']['is_fb_user_admin'] ) {  ?>
+    <div class="admin_div">
+        <? require_once dirname(__FILE__) . '/modules/admin_panel/admin_panel.php'; ?>
     </div>
-    <div class="backdrop">&nbsp;</div>
-</div>
-    <?php }?>
+    <div class="modal hide fade" id="admin_modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <? __p('admin_panel_functionality')?>
+        </div>
+        <div class="modal-body">
+            <?php echo $aa['config']["admin_popup"]['value']?>
+        </div>
+        <div class="modal-footer">
+            <label class="checkbox"><input type="checkbox" id="admin-intro">
+                <? __p('do_not_show_any_more') ?></label><a href="#" class="btn" data-dismiss="modal"
+                                                            onclick="setAdminIntroCookie();">
+            <i class="icon-remove"></i>&nbsp; <? __p('close') ?> </a>
+        </div>
+    </div>
+
+<!-- Facebook Fangate -->
+<?php if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['value']) {  ?>
+    <div id="fangate" class="fangate">
+        <div class="img_non_fans">
+            <?php if ( $aa['config']['fangate_closable']['value'] ) { ?>
+            <a class="btn pull-right" onclick="$('#fangate').hide();">&times;</a>
+            <?php } ?>
+            <div class="like-button">
+                <div class="fb-like" data-href="<?=$aa['instance']['fb_page_url']?>" data-send="false"
+                     data-layout="box_count" data-width="200"
+                     data-show-faces="false" data-colorscheme="light" data-action="like">
+                </div>
+            </div>
+
+            <img src="<?php echo $aa['config']['fangate']['value']?>"/>
+        </div>
+        <div class="backdrop">&nbsp;</div>
+    </div>
+<?php }?>
 
 
 <div class="navbar navbar-fixed-top">
@@ -115,9 +134,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
 <div id="msg-container"></div>
 
 <div class="custom-header">
-    <?php
-    echo $aa['config']['header_custom']['value'];
-    ?>
+    <?php  echo $aa['config']['header_custom']['value'];  ?>
 </div>
 
 <div id="main" class="container">
@@ -126,9 +143,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
 <!-- #main -->
 
 <div class="custom-footer">
-    <?php
-    echo $aa['config']['footer_custom']['value'];
-    ?>
+    <?php  echo $aa['config']['footer_custom']['value'];  ?>
 </div>
 
 <footer>
@@ -161,12 +176,6 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
     </div>
     <?php } ?>
 </footer>
-
-<!-- Show admin panel if user is admin -->
-<?php
-//if (is_fb_user_admin()) {
-//include_once 'modules/admin_panel/admin_panel.php';?>
-<?php //} ?>
 
 <?php
 /* Initialize App-Arena variable in js */
