@@ -56,7 +56,7 @@ include_once("init.php");
     </script>
     <script type='text/javascript'>
         googletag.cmd.push(function () {
-            googletag.defineSlot('/114327208/10000-Template-App-Footer', [810, 90], 'div-gpt-ad-1359627691750-0').addService(googletag.pubads());
+            googletag.defineSlot('/114327208/<?=$aa['config']['footer_branding_dfp_inv_name']['value']?>', [810, 90], '<?=$aa['config']['footer_branding_dfp_div_id']['value']?>').addService(googletag.pubads());
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
         });
@@ -116,7 +116,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
 
 <div class="custom-header">
     <?php
-    echo $aa['config']['custom_header']['value'];
+    echo $aa['config']['header_custom']['value'];
     ?>
 </div>
 
@@ -127,7 +127,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
 
 <div class="custom-footer">
     <?php
-    echo $aa['config']['custom_footer']['value'];
+    echo $aa['config']['footer_custom']['value'];
     ?>
 </div>
 
@@ -150,10 +150,10 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
         </div>
         <?php if ( $aa['config']['footer_branding']['value'] == 'banner' ) { ?>
         <!-- 10000-Template-App-Footer -->
-        <div id='div-gpt-ad-1359627691750-0' style='width:810px; height:90px;'>
+        <div id='<?=$aa['config']['footer_branding_dfp_div_id']['value']?>' style='width:810px; height:90px;'>
             <script type='text/javascript'>
                 googletag.cmd.push(function () {
-                    googletag.display('div-gpt-ad-1359627691750-0');
+                    googletag.display('<?=$aa['config']['footer_branding_dfp_div_id']['value']?>');
                 });
             </script>
         </div>
