@@ -80,16 +80,16 @@ include_once("init.php");
     <div class="modal hide fade" id="admin_modal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <? __p('admin_panel_functionality')?>
+            <? __p('admin_intro_header')?>
         </div>
         <div class="modal-body">
-            <?php echo $aa['config']["admin_popup"]['value']?>
+            <?php echo $aa['config']["admin_intro"]['value']?>
         </div>
         <div class="modal-footer">
-            <label class="checkbox"><input type="checkbox" id="admin-intro">
-                <? __p('do_not_show_any_more') ?></label><a href="#" class="btn" data-dismiss="modal"
-                                                            onclick="setAdminIntroCookie();">
-            <i class="icon-remove"></i>&nbsp; <? __p('close') ?> </a>
+            <label class="checkbox"><input type="checkbox" id="admin-intro"><? __p('do_not_show_any_more') ?></label>
+            <a href="#" class="btn" data-dismiss="modal" onclick="setAdminIntroCookie();">
+                <i class="icon-remove"></i> <? __p('close') ?>
+            </a>
         </div>
     </div>
 <?php }?>
