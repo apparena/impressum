@@ -72,7 +72,7 @@ include_once("init.php");
     different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
     to experience this site.</p><![endif]-->
 
-<?  if ( $aa['fb']['is_fb_user_admin'] ) {  ?>
+<?  if ( $aa['fb']['page']['admin'] ) {  ?>
     <div class="admin_div">
         <? require_once dirname(__FILE__) . '/modules/admin_panel/admin_panel.php'; ?>
     </div>
