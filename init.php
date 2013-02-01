@@ -78,8 +78,11 @@ if (isset ($_REQUEST["signed_request"])) {
         "is_fb_user_fan" => $is_fb_user_fan,
         "signed_request" => $fb_signed_request,
     );
-    if (isset($fb_signed_request['page']['id'])) {
-        $fb_data['fb_page_id'] = $fb_signed_request['page']['id'];
+    if (isset($fb_signed_request['page'])) {
+        $fb_data['page'] = $fb_signed_request['page'];
+    }
+    if (isset($fb_signed_request['user'])) {
+        $fb_data['user'] = $fb_signed_request['user'];
     }
     if (isset($fb_signed_request['user_id'])) {
         $fb_data['fb_user_id'] = $fb_signed_request['user_id'];
