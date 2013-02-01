@@ -38,7 +38,7 @@ include_once("init.php");
         ?>
     </style>
 
-    <?php if ($aa['config']['footer_branding']['value'] == 'apparena') { ?>
+    <?php if ($aa['config']['footer_branding']['value'] == 'banner') { ?>
     <!-- Google Publisher -->
     <script type='text/javascript'>
         var googletag = googletag || {};
@@ -141,13 +141,14 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
     </div>
     <?php } ?>
 
-    <?php if ($aa['config']['footer_branding']['value'] == 'apparena') { ?>
+    <?php if ( $aa['config']['footer_branding']['value'] == 'banner' || $aa['config']['footer_branding']['value'] == 'text' ) { ?>
     <div class="banner">
         <div class="tagline pull-left"><?php __p("new_on_app_arena_com"); ?></div>
         <div class="like-button pull-right">
             <div class="fb-like" data-href="http://www.facebook.com/apparena" data-send="false"
                  data-layout="button_count" data-width="200" data-show-faces="false"></div>
         </div>
+        <?php if ( $aa['config']['footer_branding']['value'] == 'banner' ) { ?>
         <!-- 10000-Template-App-Footer -->
         <div id='div-gpt-ad-1359627691750-0' style='width:810px; height:90px;'>
             <script type='text/javascript'>
@@ -156,6 +157,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
                 });
             </script>
         </div>
+        <?php } ?>
     </div>
     <?php } ?>
 </footer>
