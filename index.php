@@ -145,7 +145,7 @@ if ($aa['fb']['is_fb_user_fan'] == false && $aa['config']['fangate_activated']['
     <div class="banner">
         <div class="tagline pull-left"><?php __p("powered_by"); ?></div>
         <div class="like-button pull-right">
-            <div class="fb-like" data-href="http://www.facebook.com/apparena" data-send="false"
+            <div class="fb-like" data-href="<?=$aa['config']['footer_branding_fblike_url']['value']?>" data-send="false"
                  data-layout="button_count" data-width="200" data-show-faces="false"></div>
         </div>
         <?php if ( $aa['config']['footer_branding']['value'] == 'banner' ) { ?>
