@@ -179,6 +179,9 @@ include_once("init.php");
     <?php } ?>
 </footer>
 
+<!-- Modal container -->
+<div id="modal" class="modal hide fade"></div>
+
 <?php
 /* Initialize App-Arena variable in js */
 $aaForJs = array(

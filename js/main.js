@@ -18,6 +18,9 @@ require.config({
         facebook:{
             exports:'FB'
         },
+        ui:{
+            deps:[ 'jquery', 'bootstrap' ]
+        },
         script:{
             deps:[ 'jquery', 'facebook' ]
         }
@@ -30,8 +33,9 @@ require([
     'jquery',
     'facebook',
     'bootstrap',
+    'ui',
     'script'
-], function ($, FB, bootstrap, script) {
+], function ($, FB, bootstrap, ui, script) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
