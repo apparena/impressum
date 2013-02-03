@@ -254,8 +254,8 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <script>
     require(
             [
-                'js/components/admin_panel/ui',
-                'js/components/flight/tools/debug/debug'
+                'components/admin_panel/ui',
+                'components/flight/tools/debug/debug'
             ],
 
             function(apanel, debug) {
