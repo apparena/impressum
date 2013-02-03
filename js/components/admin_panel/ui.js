@@ -21,6 +21,7 @@ define(
             this.openPanel = function(ev, data) {
                 //this.trigger('uiMailItemsRequested', {folder: data.selectedIds[0]});
                 console.log('Open my admin panel now');
+                this.trigger('adminOpenEvent');
             }
 
             this.after('initialize', function() {
