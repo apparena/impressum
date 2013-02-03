@@ -14,6 +14,7 @@ define(
             this.defaultAttrs({
                 selectedClass: 'selected',
                 selectionChangedEvent: 'uiFolderSelectionChanged',
+                adminPanelButton: '#admin_panel_new'
             });
 
             // Opens up the admin panel
@@ -23,7 +24,7 @@ define(
             }
 
             this.after('initialize', function() {
-                this.on('#admin_panel_new', 'click', this.openPanel);
+                this.on('click', { 'adminPanelButton': this.openPanel });
             });
         }
     }
