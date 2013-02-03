@@ -1,3 +1,6 @@
 [submodule "libs/fb-php-sdk/3.2"]
 	path = libs/fb-php-sdk/3.2
 	url = git://github.com/facebook/facebook-php-sdk.git
+[submodule "js/components/flight"]
+	path = js/components/flight
+	url = git://github.com/twitter/flight.git

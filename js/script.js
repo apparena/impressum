@@ -32,4 +32,16 @@ function open_popup( url, name ) {
     return false;
 }
 
+function setAdminIntroCookie() {
+    if ($('#admin-intro').is(':checked')) {
+        setCookie('admin_intro_' + aa_inst_id, true);
+    } else {
+        setCookie('admin_intro_' + aa_inst_id, false);
+    }
+}
+
+function show_admin_info() {
+    $('#admin_modal').modal("show");
+}
+
 function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
