@@ -23,7 +23,7 @@ define(
             }
 
             this.after('initialize', function() {
-                this.on('click', this.openPanel);
+                this.on('#admin_panel_new', 'click', this.openPanel);
             });
         }
     }
