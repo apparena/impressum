@@ -5,7 +5,7 @@ define(
         'components/flight/lib/component'
     ],
 
-    function(defineComponent, withSelect) {
+    function(defineComponent) {
 
         return defineComponent(admin_panel);
 
