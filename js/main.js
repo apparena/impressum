@@ -27,11 +27,10 @@ require.config({
 // the main.js uses REQUIRE instead of define to set up the scripts (aliases) our app needs to run
 // (the aliases are mapped in the require.config() above).
 require([
-    'jquery',
     'facebook',
     'bootstrap',
     'script'
-], function ($, FB, bootstrap, script) {
+], function (FB, bootstrap, script) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
