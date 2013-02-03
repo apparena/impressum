@@ -245,10 +245,27 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 </script>
 <?php } ?>
 
-<!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
-<script data-main="js/main" src="js/require.js"></script>
 
 <button id="admin_panel_new">New Admin Panel Button</button>
 
+<!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
+<script data-main="js/main" src="js/require.js"></script>
+
+<script>
+    require(
+            [
+                'js/components/admin_panel/ui',
+                'js/components/flight/tools/debug/debug'
+            ],
+
+            function(apanel, debug) {
+                debug.enable(true);
+                //compose.mixin(registry, [advice.withAdvice, withLogging]);
+                /*require(['app/boot/page'], function(initialize) {
+                    initialize();
+                });*/
+            }
+    );
+</script>
 </body>
 </html>
