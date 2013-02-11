@@ -24,3 +24,6 @@ Variables:
 
 4. Translation:
 confirm_newsletter_registration		-	Confirm newsletter registration
+
+5. include the newsletter.js file
+<script src="modules/newsletter/newsletter.js"></script>
