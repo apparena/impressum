@@ -63,6 +63,29 @@ include_once("init.php");
     </script>
     <?php } ?>
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var latlng;
+            var myAddressQuery = '<?=$aa['config']["map_address"]['value']?>';
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode(
+                    { address:myAddressQuery,
+                        region:'no'
+                    }, function (results, status, geometry) {
+                        latlng = results[0].geometry.location;
+                        var myOptions = {
+                            zoom:15,
+                            center:latlng,
+                            mapTypeId:google.maps.MapTypeId.ROADMAP
+                        };
+                        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                        var marker = new google.maps.Marker({
+                            map:map,
+                            position:latlng
+                        });
+                    });
+        }
+    </script>
 </head>
 
 <body>
@@ -125,56 +148,28 @@ include_once("init.php");
 
 <div id="main" class="container">
     <div id="top"></div>
-    <script type="text/javascript">
-        function initialize() {
-            var latlng;
-            var myAddressQuery = '<?=$aa['config']["map_address"]['value']?>';
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode(
-                    { address:myAddressQuery,
-                        region:'no'
-                    }, function (results, status, geometry) {
-                        latlng = results[0].geometry.location;
-                        var myOptions = {
-                            zoom:15,
-                            center:latlng,
-                            mapTypeId:google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                        var marker = new google.maps.Marker({
-                            map:map,
-                            position:latlng
-                        });
-                    });
-        }
-    </script>
-
-    <div class="welcome-container">
-        <div class="row">
-            <div class="span10">
-                <div class="impressum">
-                    <?php echo $aa['config']['impressum']['value']; ?>
-                </div>
-                <?php if ( $aa['config']['map_activated']['value'] ){ ?>
-                <div id="map" class="map">
-                    <div id="map_canvas"></div>
-                </div>
-                <script type="text/javascript">
-                    initialize();
-                </script>
-                <?php } ?>
-                <?php if ( $aa['config']['disclaimer_activated']['value'] ){ ?>
-                <div class="disclaimer">
-                    <?php echo $aa['config']['disclaimer']['value']; ?>
-                </div>
-                <?php } ?>
-                <div id="like">
-                    <div class="fb-like" data-href="<?=$session['instance']['fb_page_url'];?>" data-send="true" data-width="450" data-show-faces="false" data-font="arial">
-                    </div>
-                </div>
+    <div id="content">
+        <div class="impressum">
+            <?php echo $aa['config']['impressum']['value']; ?>
+        </div>
+        <?php if ( $aa['config']['map_activated']['value'] ){ ?>
+        <div id="map" class="map">
+            <div id="map_canvas"></div>
+        </div>
+        <script type="text/javascript">
+            initialize();
+        </script>
+        <?php } ?>
+        <?php if ( $aa['config']['disclaimer_activated']['value'] ){ ?>
+        <div class="disclaimer">
+            <?php echo $aa['config']['disclaimer']['value']; ?>
+        </div>
+        <?php } ?>
+        <div id="like">
+            <div class="fb-like" data-href="<?=$aa['instance']['fb_page_url'];?>" data-send="true" data-width="450" data-show-faces="false" data-font="arial">
             </div>
         </div>
-    </div> <!-- End welcome div live -->
+    </div>
     <div id="bottom"></div>
 </div>
 <!-- #main -->
