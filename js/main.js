@@ -47,9 +47,9 @@ require([
         $('#fangate').hide();
     });
 
-    aa_tmpl_load("index.phtml");
+    /*aa_tmpl_load("index.phtml");
     $('#terms-link').click(function () {
         aa_tmpl_load('terms.phtml');
-    });
+    });*/
 
 });
