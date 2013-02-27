@@ -7,7 +7,7 @@ $aa_app_id = 253;
 $aa_app_secret = "d457c07c935596fe137f223feb4c19cb";
 
 /**
- * Setup your database access data
+ * Setup your database access data 123
  */
 $db_activated = true;
 $db_host = "localhost";
