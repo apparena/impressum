@@ -124,6 +124,7 @@ include_once("init.php");
 </div>
 
 <div id="main" class="container">
+    <div id="top"></div>
     <script type="text/javascript">
         function initialize() {
             var latlng;
@@ -174,6 +175,7 @@ include_once("init.php");
             </div>
         </div>
     </div> <!-- End welcome div live -->
+    <div id="bottom"></div>
 </div>
 <!-- #main -->
 
