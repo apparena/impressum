@@ -21,7 +21,7 @@ if (is_fb_user_admin()) {
         </span>
         -->
         <span class="configure-app">
-            <a class="app_config" href="/manager/index.php/wizard/instance_id/<?=$aa['instance']['aa_inst_id'];?>/"
+            <a class="app_config" href="<?=$aa['config']['admin_wizard_base_url']['value'];?>index.php/wizard/instance_id/<?=$aa['instance']['aa_inst_id'];?>/"
                target="_blank">
                 <button class="btn "><i class="icon-cog"></i> <?php __p("Configure_App")?></button>
             </a>
