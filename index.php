@@ -245,7 +245,7 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <?php } ?>
 
 <!-- Show loading screen -->
-<?php require_once(dirname(__FILE__) . '/templates/loading_screen.phtml'); ?>
+<?php //require_once(dirname(__FILE__) . '/templates/loading_screen.phtml'); ?>
 
 <?php if ( $aa['config']['ga_activated']['value'] ) { ?>
 <!-- google analytics Integration -->
