@@ -115,23 +115,6 @@ include_once("init.php");
 <?php }?>
 
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <nav>
-                <ul class="nav">
-                    <li><a onclick="aa_tmpl_load('index.phtml');"><?php __p("Home");?></a></li>
-                    <li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
-                    <li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("FB");?></a></li>
-                    <li><a onclick="aa_tmpl_load('module_registration.phtml');"><?php __p("Register");?></a></li>
-                    <li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Validation");?></a></li>
-                    <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
 <!-- this is the div you can append info/alert/error messages to (will be showing between the menu and the content by default) -->
 <div id="msg-container"></div>
 
@@ -149,15 +132,6 @@ include_once("init.php");
 </div>
 
 <footer>
-    <?php if ($aa['config']['tac_activated']['value'] == 'apparena') { ?>
-    <div class="tac-container">
-        <?php
-        $terms_and_conditions_link = "<a class='clickable' id='terms-link'>" . __t("terms_and_conditions") . "</a>";
-        __p("footer_terms", $terms_and_conditions_link);
-        ?>
-    </div>
-    <?php } ?>
-
     <?php if ( $aa['config']['footer_branding']['value'] == 'banner' || $aa['config']['footer_branding']['value'] == 'text' ) { ?>
     <div class="banner">
         <div class="tagline pull-left"><?php __p("powered_by"); ?></div>
@@ -246,27 +220,10 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <?php } ?>
 
 
-<button id="admin_panel_new">New Admin Panel Button</button>
 
 <script src="js/components/jquery/jquery-1.7.1.min.js"></script>
 <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
 <script data-main="js/main" src="js/require.js"></script>
 
-<script>
-    require(
-            [
-                'components/admin_panel/ui',
-                'components/flight/tools/debug/debug'
-            ],
-
-            function(apanel, debug) {
-                debug.enable(true);
-                //compose.mixin(registry, [advice.withAdvice, withLogging]);
-                /*require(['app/boot/page'], function(initialize) {
-                    initialize();
-                });*/
-            }
-    );
-</script>
 </body>
 </html>
