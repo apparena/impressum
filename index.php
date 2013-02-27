@@ -146,7 +146,7 @@ include_once("init.php");
     <?php  echo $aa['config']['header_custom']['value'];  ?>
 </div>
 
-<div id="main" class="container">
+<div id="main">
     <div id="top"></div>
     <div id="content">
         <div class="impressum">
