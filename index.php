@@ -62,6 +62,7 @@ include_once("init.php");
         });
     </script>
     <?php } ?>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 </head>
 
 <body>
