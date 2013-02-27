@@ -167,6 +167,10 @@ include_once("init.php");
                     <?php echo $aa['config']['disclaimer']['value']; ?>
                 </div>
                 <?php } ?>
+                <div id="like">
+                    <div class="fb-like" data-href="<?=$session['instance']['fb_page_url'];?>" data-send="true" data-width="450" data-show-faces="false" data-font="arial">
+                    </div>
+                </div>
             </div>
         </div>
     </div> <!-- End welcome div live -->
