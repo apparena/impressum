@@ -64,7 +64,7 @@ include_once("init.php");
     <?php } ?>
 </head>
 
-<body>
+<body onload="initialize();">
 <!-- Here starts the header -->
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
      chromium.org/developers/how-tos/chrome-frame-getting-started -->
@@ -218,8 +218,6 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
     }(document, 'script'));
 </script>
 <?php } ?>
-
-
 
 <script src="js/components/jquery/jquery-1.7.1.min.js"></script>
 <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
