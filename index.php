@@ -64,7 +64,7 @@ include_once("init.php");
     <?php } ?>
 </head>
 
-<body onload="initialize();">
+<body>
 <!-- Here starts the header -->
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
      chromium.org/developers/how-tos/chrome-frame-getting-started -->
