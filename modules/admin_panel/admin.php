@@ -9,7 +9,7 @@ if (is_fb_user_admin()) {
     <div class="panel-content">
         <span id="show_inst_id">ID:&nbsp;<?=$aa['instance']['aa_inst_id'];?></span>
         <!--
-        <span class="export-participants">
+        <span class="export-participants">  ...
             <span class="btn "
                   onclick="return popup('modules/admin_panel/index.php?p=exportparticipants&aa_inst_id=<?php echo $aa['instance']['aa_inst_id']; ?>');"><i
                     class="icon-download-alt"></i> <?php __p("Export participants")?></span>
